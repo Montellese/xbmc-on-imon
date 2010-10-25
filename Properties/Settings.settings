@@ -1,0 +1,45 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="iMon.XBMC.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="XbmcIp" Type="System.String" Scope="User">
+      <Value Profile="(Default)">127.0.0.1</Value>
+    </Setting>
+    <Setting Name="XbmcPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">8080</Value>
+    </Setting>
+    <Setting Name="XbmcUsername" Type="System.String" Scope="User">
+      <Value Profile="(Default)">xbmc</Value>
+    </Setting>
+    <Setting Name="XbmcPassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="GeneralStartupAuto" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="GeneralStartupConnect" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="GeneralTrayEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="GeneralTrayStartMinimized" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="XbmcConnectionInterval" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="GeneralTrayHideOnClose" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="GeneralTrayHideOnMinimize" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ImonAutoInitialize" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ImonUninitializeOnError" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
