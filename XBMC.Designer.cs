@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
             ""}, 0, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("Microsoft Sans Serif", 1.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))));
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
             ""}, 1, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("Microsoft Sans Serif", 1.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))));
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
             ""}, 2, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("Microsoft Sans Serif", 1.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))));
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XBMC));
             this.menu = new System.Windows.Forms.MenuStrip();
@@ -247,16 +247,16 @@
             // 
             this.lvOptions.AutoArrange = false;
             this.lvOptions.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            listViewItem1.Tag = "General";
-            listViewItem1.ToolTipText = "General";
-            listViewItem2.Tag = "iMON";
-            listViewItem2.ToolTipText = "iMON";
-            listViewItem3.Tag = "XBMC";
-            listViewItem3.ToolTipText = "XBMC";
+            listViewItem4.Tag = "General";
+            listViewItem4.ToolTipText = "General";
+            listViewItem5.Tag = "iMON";
+            listViewItem5.ToolTipText = "iMON";
+            listViewItem6.Tag = "XBMC";
+            listViewItem6.ToolTipText = "XBMC";
             this.lvOptions.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3});
+            listViewItem4,
+            listViewItem5,
+            listViewItem6});
             this.lvOptions.LargeImageList = this.iLOptions;
             this.lvOptions.Location = new System.Drawing.Point(6, 3);
             this.lvOptions.MultiSelect = false;
@@ -634,6 +634,7 @@
             this.Name = "XBMC";
             this.Text = "XBMC on iMON";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.xbmc_FormClosing);
+            this.Load += new System.EventHandler(this.xbmc_Load);
             this.Resize += new System.EventHandler(this.XBMC_Resize);
             this.menu.ResumeLayout(false);
             this.menu.PerformLayout();

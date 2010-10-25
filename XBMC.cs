@@ -11,6 +11,8 @@ namespace iMon.XBMC
         public XBMC()
         {
             this.InitializeComponent();
+            // Needed to avoid a flicker if "Hide on startup" is activated
+            this.Opacity = 0;
 
             this.tabOptions.SelectTab(this.tpGeneral);
 
@@ -20,6 +22,22 @@ namespace iMon.XBMC
         }
 
         #region GUI action handling
+
+        private void xbmc_Load(object sender, EventArgs e)
+        {
+            if (Settings.Default.GeneralTrayEnabled && Settings.Default.GeneralTrayStartMinimized)
+            {
+                this.BeginInvoke(new MethodInvoker(delegate()
+                {
+                    this.Hide();
+                    this.Opacity = 1;
+                }));
+            }
+            else
+            {
+                this.Opacity = 1;
+            }
+        }
 
         private void xbmc_FormClosing(object sender, FormClosingEventArgs e)
         {
