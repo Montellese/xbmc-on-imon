@@ -38,6 +38,9 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NavigationButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="XbmcHandler.cs" />
     <Compile Include="DisplayTextHandler.cs" />
     <Compile Include="DisplayTextHandler.Text.cs" />
