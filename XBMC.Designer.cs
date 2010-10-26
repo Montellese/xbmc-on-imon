@@ -29,12 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
-            ""}, 0, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("Microsoft Sans Serif", 1.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))));
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
-            ""}, 1, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("Microsoft Sans Serif", 1.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))));
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
-            ""}, 2, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("Microsoft Sans Serif", 1.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))));
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XBMC));
             this.menu = new System.Windows.Forms.MenuStrip();
             this.miGeneral = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,7 +46,6 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.miAboutXbmcOniMon = new System.Windows.Forms.ToolStripMenuItem();
             this.splitter = new System.Windows.Forms.SplitContainer();
-            this.lvOptions = new System.Windows.Forms.ListView();
             this.iLOptions = new System.Windows.Forms.ImageList(this.components);
             this.tabOptions = new System.Windows.Forms.TabControl();
             this.tpImon = new System.Windows.Forms.TabPage();
@@ -89,6 +82,10 @@
             this.trayMenuImon = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.trayMenuClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.pNavigation = new System.Windows.Forms.Panel();
+            this.bNavigationGeneral = new System.Windows.Forms.Button();
+            this.bNavigationImon = new System.Windows.Forms.Button();
+            this.bNavigationXbmc = new System.Windows.Forms.Button();
             this.menu.SuspendLayout();
             this.splitter.Panel1.SuspendLayout();
             this.splitter.Panel2.SuspendLayout();
@@ -103,6 +100,7 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudXbmcConnectionInterval)).BeginInit();
             this.trayMenu.SuspendLayout();
+            this.pNavigation.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -234,40 +232,14 @@
             // 
             // splitter.Panel1
             // 
-            this.splitter.Panel1.Controls.Add(this.lvOptions);
+            this.splitter.Panel1.Controls.Add(this.pNavigation);
             // 
             // splitter.Panel2
             // 
             this.splitter.Panel2.Controls.Add(this.tabOptions);
             this.splitter.Size = new System.Drawing.Size(533, 260);
-            this.splitter.SplitterDistance = 141;
+            this.splitter.SplitterDistance = 128;
             this.splitter.TabIndex = 1;
-            // 
-            // lvOptions
-            // 
-            this.lvOptions.AutoArrange = false;
-            this.lvOptions.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            listViewItem4.Tag = "General";
-            listViewItem4.ToolTipText = "General";
-            listViewItem5.Tag = "iMON";
-            listViewItem5.ToolTipText = "iMON";
-            listViewItem6.Tag = "XBMC";
-            listViewItem6.ToolTipText = "XBMC";
-            this.lvOptions.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem4,
-            listViewItem5,
-            listViewItem6});
-            this.lvOptions.LargeImageList = this.iLOptions;
-            this.lvOptions.Location = new System.Drawing.Point(6, 3);
-            this.lvOptions.MultiSelect = false;
-            this.lvOptions.Name = "lvOptions";
-            this.lvOptions.Scrollable = false;
-            this.lvOptions.ShowGroups = false;
-            this.lvOptions.ShowItemToolTips = true;
-            this.lvOptions.Size = new System.Drawing.Size(126, 252);
-            this.lvOptions.TabIndex = 0;
-            this.lvOptions.UseCompatibleStateImageBehavior = false;
-            this.lvOptions.SelectedIndexChanged += new System.EventHandler(this.lvOptions_SelectedIndexChanged);
             // 
             // iLOptions
             // 
@@ -283,7 +255,7 @@
             this.tabOptions.Controls.Add(this.tpImon);
             this.tabOptions.Controls.Add(this.tpGeneral);
             this.tabOptions.Controls.Add(this.tpXBMC);
-            this.tabOptions.Location = new System.Drawing.Point(-23, -48);
+            this.tabOptions.Location = new System.Drawing.Point(-10, -48);
             this.tabOptions.Name = "tabOptions";
             this.tabOptions.SelectedIndex = 0;
             this.tabOptions.Size = new System.Drawing.Size(420, 318);
@@ -304,9 +276,9 @@
             // 
             this.groupBox3.Controls.Add(this.cbImonGeneralUninitializeOnError);
             this.groupBox3.Controls.Add(this.cbImonGeneralAutoInitialize);
-            this.groupBox3.Location = new System.Drawing.Point(23, 30);
+            this.groupBox3.Location = new System.Drawing.Point(9, 30);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(372, 68);
+            this.groupBox3.Size = new System.Drawing.Size(386, 68);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "General";
@@ -349,9 +321,9 @@
             this.groupBox4.Controls.Add(this.cbGeneralTrayHideOnClose);
             this.groupBox4.Controls.Add(this.cbGeneralTrayStartMinimized);
             this.groupBox4.Controls.Add(this.cbGeneralTrayEnabled);
-            this.groupBox4.Location = new System.Drawing.Point(22, 104);
+            this.groupBox4.Location = new System.Drawing.Point(9, 104);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(373, 115);
+            this.groupBox4.Size = new System.Drawing.Size(386, 115);
             this.groupBox4.TabIndex = 1;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Tray Icon";
@@ -401,9 +373,9 @@
             // 
             this.groupBox2.Controls.Add(this.cbGeneralStartupConnect);
             this.groupBox2.Controls.Add(this.cbGeneralStartupAuto);
-            this.groupBox2.Location = new System.Drawing.Point(22, 30);
+            this.groupBox2.Location = new System.Drawing.Point(9, 30);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(373, 68);
+            this.groupBox2.Size = new System.Drawing.Size(386, 68);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Startup";
@@ -452,9 +424,9 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.tbXbmcConnectionIp);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(22, 29);
+            this.groupBox1.Location = new System.Drawing.Point(9, 29);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(373, 103);
+            this.groupBox1.Size = new System.Drawing.Size(386, 103);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Connection";
@@ -501,16 +473,16 @@
             // 
             // tbXbmcConnectionPassword
             // 
-            this.tbXbmcConnectionPassword.Location = new System.Drawing.Point(258, 47);
+            this.tbXbmcConnectionPassword.Location = new System.Drawing.Point(260, 47);
             this.tbXbmcConnectionPassword.Name = "tbXbmcConnectionPassword";
             this.tbXbmcConnectionPassword.PasswordChar = '*';
-            this.tbXbmcConnectionPassword.Size = new System.Drawing.Size(104, 20);
+            this.tbXbmcConnectionPassword.Size = new System.Drawing.Size(120, 20);
             this.tbXbmcConnectionPassword.TabIndex = 7;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(196, 50);
+            this.label4.Location = new System.Drawing.Point(198, 50);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(56, 13);
             this.label4.TabIndex = 6;
@@ -520,7 +492,7 @@
             // 
             this.tbXbmcConnectionUsername.Location = new System.Drawing.Point(70, 47);
             this.tbXbmcConnectionUsername.Name = "tbXbmcConnectionUsername";
-            this.tbXbmcConnectionUsername.Size = new System.Drawing.Size(104, 20);
+            this.tbXbmcConnectionUsername.Size = new System.Drawing.Size(120, 20);
             this.tbXbmcConnectionUsername.TabIndex = 5;
             // 
             // label3
@@ -536,7 +508,7 @@
             // 
             this.tbXbmcConnectionPort.Location = new System.Drawing.Point(312, 19);
             this.tbXbmcConnectionPort.Name = "tbXbmcConnectionPort";
-            this.tbXbmcConnectionPort.Size = new System.Drawing.Size(50, 20);
+            this.tbXbmcConnectionPort.Size = new System.Drawing.Size(68, 20);
             this.tbXbmcConnectionPort.TabIndex = 3;
             // 
             // label2
@@ -621,6 +593,64 @@
             this.trayMenuClose.Text = "Close";
             this.trayMenuClose.Click += new System.EventHandler(this.trayMenuClose_Click);
             // 
+            // pNavigation
+            // 
+            this.pNavigation.BackColor = System.Drawing.Color.White;
+            this.pNavigation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pNavigation.Controls.Add(this.bNavigationXbmc);
+            this.pNavigation.Controls.Add(this.bNavigationImon);
+            this.pNavigation.Controls.Add(this.bNavigationGeneral);
+            this.pNavigation.Location = new System.Drawing.Point(4, 4);
+            this.pNavigation.Name = "pNavigation";
+            this.pNavigation.Size = new System.Drawing.Size(116, 253);
+            this.pNavigation.TabIndex = 0;
+            // 
+            // bNavigationGeneral
+            // 
+            this.bNavigationGeneral.BackColor = System.Drawing.Color.Transparent;
+            this.bNavigationGeneral.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.bNavigationGeneral.FlatAppearance.BorderSize = 0;
+            this.bNavigationGeneral.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bNavigationGeneral.ImageIndex = 0;
+            this.bNavigationGeneral.ImageList = this.iLOptions;
+            this.bNavigationGeneral.Location = new System.Drawing.Point(23, 8);
+            this.bNavigationGeneral.Name = "bNavigationGeneral";
+            this.bNavigationGeneral.Size = new System.Drawing.Size(68, 68);
+            this.bNavigationGeneral.TabIndex = 0;
+            this.bNavigationGeneral.UseVisualStyleBackColor = false;
+            this.bNavigationGeneral.Click += new System.EventHandler(this.bNavigationGeneral_Click);
+            this.bNavigationGeneral.MouseHover += new System.EventHandler(this.bNavigationGeneral_MouseHover);
+            // 
+            // bNavigationImon
+            // 
+            this.bNavigationImon.BackColor = System.Drawing.Color.Transparent;
+            this.bNavigationImon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.bNavigationImon.FlatAppearance.BorderSize = 0;
+            this.bNavigationImon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bNavigationImon.ImageIndex = 1;
+            this.bNavigationImon.ImageList = this.iLOptions;
+            this.bNavigationImon.Location = new System.Drawing.Point(23, 93);
+            this.bNavigationImon.Name = "bNavigationImon";
+            this.bNavigationImon.Size = new System.Drawing.Size(68, 68);
+            this.bNavigationImon.TabIndex = 1;
+            this.bNavigationImon.UseVisualStyleBackColor = false;
+            this.bNavigationImon.Click += new System.EventHandler(this.bNavigationImon_Click);
+            // 
+            // bNavigationXbmc
+            // 
+            this.bNavigationXbmc.BackColor = System.Drawing.Color.Transparent;
+            this.bNavigationXbmc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.bNavigationXbmc.FlatAppearance.BorderSize = 0;
+            this.bNavigationXbmc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bNavigationXbmc.ImageIndex = 2;
+            this.bNavigationXbmc.ImageList = this.iLOptions;
+            this.bNavigationXbmc.Location = new System.Drawing.Point(23, 174);
+            this.bNavigationXbmc.Name = "bNavigationXbmc";
+            this.bNavigationXbmc.Size = new System.Drawing.Size(68, 68);
+            this.bNavigationXbmc.TabIndex = 2;
+            this.bNavigationXbmc.UseVisualStyleBackColor = false;
+            this.bNavigationXbmc.Click += new System.EventHandler(this.bNavigationXbmc_Click);
+            // 
             // XBMC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -655,6 +685,7 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudXbmcConnectionInterval)).EndInit();
             this.trayMenu.ResumeLayout(false);
+            this.pNavigation.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -677,7 +708,6 @@
         private System.Windows.Forms.ToolStripMenuItem miImonInitialize;
         private System.Windows.Forms.ToolStripMenuItem miImonUninitialize;
         private System.Windows.Forms.SplitContainer splitter;
-        private System.Windows.Forms.ListView lvOptions;
         private System.Windows.Forms.ImageList iLOptions;
         private System.Windows.Forms.TabControl tabOptions;
         private System.Windows.Forms.TabPage tpGeneral;
@@ -715,6 +745,10 @@
         private System.Windows.Forms.CheckBox cbGeneralTrayHideOnMinimize;
         private System.Windows.Forms.CheckBox cbImonGeneralUninitializeOnError;
         private System.Windows.Forms.CheckBox cbImonGeneralAutoInitialize;
+        private System.Windows.Forms.Panel pNavigation;
+        private System.Windows.Forms.Button bNavigationXbmc;
+        private System.Windows.Forms.Button bNavigationImon;
+        private System.Windows.Forms.Button bNavigationGeneral;
 
 
     }

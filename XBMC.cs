@@ -3,6 +3,7 @@ using System.Windows.Forms;
 
 using iMon.DisplayApi;
 using iMon.XBMC.Properties;
+using System.Drawing;
 
 namespace iMon.XBMC
 {
@@ -82,33 +83,19 @@ namespace iMon.XBMC
             this.xbmcDisconnect(true);
         }
 
-        private void lvOptions_SelectedIndexChanged(object sender, EventArgs e)
+        private void bNavigationGeneral_Click(object sender, EventArgs e)
         {
-            if (this.lvOptions.SelectedIndices.Count <= 0 || this.lvOptions.SelectedIndices[0] < 0)
-            {
-                return;
-            }
+            this.tabOptions.SelectTab(this.tpGeneral);
+        }
 
-            TabPage newPage = null;
-            switch (this.lvOptions.SelectedIndices[0])
-            {
-                case 0:
-                    newPage = this.tpGeneral;
-                    break;
+        private void bNavigationImon_Click(object sender, EventArgs e)
+        {
+            this.tabOptions.SelectTab(this.tpImon);
+        }
 
-                case 1:
-                    newPage = this.tpImon;
-                    break;
-
-                case 2:
-                    newPage = this.tpXBMC;
-                    break;
-            }
-
-            if (newPage != null)
-            {
-                this.tabOptions.SelectTab(newPage);
-            }
+        private void bNavigationXbmc_Click(object sender, EventArgs e)
+        {
+            this.tabOptions.SelectTab(this.tpXBMC);
         }
 
         private void cbGeneralTrayEnabled_CheckedChanged(object sender, EventArgs e)
@@ -173,5 +160,10 @@ namespace iMon.XBMC
         }
 
         #endregion
+
+        private void bNavigationGeneral_MouseHover(object sender, EventArgs e)
+        {
+            this.bNavigationGeneral.BackColor = Color.Transparent;
+        }
     }
 }
