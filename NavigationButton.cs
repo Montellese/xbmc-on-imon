@@ -131,6 +131,7 @@ namespace iMon.XBMC
             }
 
             this.ImageIndex = this.activeImageIndex;
+            this.currentImageIndex = this.activeImageIndex;
         }
 
         public void Deactivate()
@@ -146,6 +147,13 @@ namespace iMon.XBMC
         #endregion
 
         #region Overrides of Button
+
+        protected override void OnClick(EventArgs e)
+        {
+            this.Activate();
+
+            base.OnClick(e);
+        }
 
         protected override void OnMouseEnter(EventArgs e)
         {

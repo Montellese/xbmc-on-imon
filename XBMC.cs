@@ -16,6 +16,7 @@ namespace iMon.XBMC
             this.Opacity = 0;
 
             this.tabOptions.SelectTab(this.tpGeneral);
+            this.bNavigationGeneral.Activate();
 
             this.trayIcon.ContextMenuStrip = this.trayMenu;
 
@@ -86,16 +87,28 @@ namespace iMon.XBMC
         private void bNavigationGeneral_Click(object sender, EventArgs e)
         {
             this.tabOptions.SelectTab(this.tpGeneral);
+
+            //this.bNavigationGeneral.Activate();
+            this.bNavigationImon.Deactivate();
+            this.bNavigationXbmc.Deactivate();
         }
 
         private void bNavigationImon_Click(object sender, EventArgs e)
         {
             this.tabOptions.SelectTab(this.tpImon);
+
+            this.bNavigationGeneral.Deactivate();
+            //this.bNavigationImon.Activate();
+            this.bNavigationXbmc.Deactivate();
         }
 
         private void bNavigationXbmc_Click(object sender, EventArgs e)
         {
             this.tabOptions.SelectTab(this.tpXBMC);
+
+            this.bNavigationGeneral.Deactivate();
+            this.bNavigationImon.Deactivate();
+            //this.bNavigationXbmc.Activate();
         }
 
         private void cbGeneralTrayEnabled_CheckedChanged(object sender, EventArgs e)

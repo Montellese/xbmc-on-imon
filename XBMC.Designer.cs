@@ -113,7 +113,7 @@
             this.miAbout});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
-            this.menu.Size = new System.Drawing.Size(533, 24);
+            this.menu.Size = new System.Drawing.Size(487, 24);
             this.menu.TabIndex = 0;
             this.menu.Text = "menuStrip1";
             // 
@@ -226,7 +226,6 @@
             // 
             this.splitter.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitter.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitter.IsSplitterFixed = true;
             this.splitter.Location = new System.Drawing.Point(0, 24);
             this.splitter.Name = "splitter";
             // 
@@ -237,8 +236,8 @@
             // splitter.Panel2
             // 
             this.splitter.Panel2.Controls.Add(this.tabOptions);
-            this.splitter.Size = new System.Drawing.Size(533, 260);
-            this.splitter.SplitterDistance = 128;
+            this.splitter.Size = new System.Drawing.Size(487, 260);
+            this.splitter.SplitterDistance = 83;
             this.splitter.TabIndex = 1;
             // 
             // pNavigation
@@ -250,16 +249,22 @@
             this.pNavigation.Controls.Add(this.bNavigationGeneral);
             this.pNavigation.Location = new System.Drawing.Point(4, 4);
             this.pNavigation.Name = "pNavigation";
-            this.pNavigation.Size = new System.Drawing.Size(116, 253);
+            this.pNavigation.Size = new System.Drawing.Size(76, 253);
             this.pNavigation.TabIndex = 0;
             // 
             // iLOptions
             // 
             this.iLOptions.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("iLOptions.ImageStream")));
             this.iLOptions.TransparentColor = System.Drawing.Color.Transparent;
-            this.iLOptions.Images.SetKeyName(0, "Options.png");
-            this.iLOptions.Images.SetKeyName(1, "iMON.png");
-            this.iLOptions.Images.SetKeyName(2, "XBMC.png");
+            this.iLOptions.Images.SetKeyName(0, "General");
+            this.iLOptions.Images.SetKeyName(1, "GeneralActive");
+            this.iLOptions.Images.SetKeyName(2, "GeneralHover");
+            this.iLOptions.Images.SetKeyName(3, "iMON");
+            this.iLOptions.Images.SetKeyName(4, "iMONActive");
+            this.iLOptions.Images.SetKeyName(5, "iMONHover");
+            this.iLOptions.Images.SetKeyName(6, "XBMC");
+            this.iLOptions.Images.SetKeyName(7, "XBMCActive");
+            this.iLOptions.Images.SetKeyName(8, "XBMCHover");
             // 
             // tabOptions
             // 
@@ -267,7 +272,7 @@
             this.tabOptions.Controls.Add(this.tpImon);
             this.tabOptions.Controls.Add(this.tpGeneral);
             this.tabOptions.Controls.Add(this.tpXBMC);
-            this.tabOptions.Location = new System.Drawing.Point(-10, -48);
+            this.tabOptions.Location = new System.Drawing.Point(-11, -48);
             this.tabOptions.Name = "tabOptions";
             this.tabOptions.SelectedIndex = 0;
             this.tabOptions.Size = new System.Drawing.Size(420, 318);
@@ -607,42 +612,54 @@
             // 
             // bNavigationXbmc
             // 
+            this.bNavigationXbmc.ActiveImageIndex = 7;
             this.bNavigationXbmc.BackColor = System.Drawing.Color.Transparent;
+            this.bNavigationXbmc.DefaultImageIndex = 6;
             this.bNavigationXbmc.FlatAppearance.BorderSize = 0;
             this.bNavigationXbmc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bNavigationXbmc.ImageIndex = 2;
+            this.bNavigationXbmc.HoverImageIndex = 8;
+            this.bNavigationXbmc.ImageIndex = 6;
             this.bNavigationXbmc.ImageList = this.iLOptions;
-            this.bNavigationXbmc.Location = new System.Drawing.Point(23, 174);
+            this.bNavigationXbmc.Location = new System.Drawing.Point(-1, 147);
+            this.bNavigationXbmc.Margin = new System.Windows.Forms.Padding(0);
             this.bNavigationXbmc.Name = "bNavigationXbmc";
-            this.bNavigationXbmc.Size = new System.Drawing.Size(68, 68);
+            this.bNavigationXbmc.Size = new System.Drawing.Size(74, 74);
             this.bNavigationXbmc.TabIndex = 5;
             this.bNavigationXbmc.UseVisualStyleBackColor = false;
             this.bNavigationXbmc.Click += new System.EventHandler(this.bNavigationXbmc_Click);
             // 
             // bNavigationImon
             // 
+            this.bNavigationImon.ActiveImageIndex = 4;
             this.bNavigationImon.BackColor = System.Drawing.Color.Transparent;
+            this.bNavigationImon.DefaultImageIndex = 3;
             this.bNavigationImon.FlatAppearance.BorderSize = 0;
             this.bNavigationImon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bNavigationImon.ImageIndex = 1;
+            this.bNavigationImon.HoverImageIndex = 5;
+            this.bNavigationImon.ImageIndex = 3;
             this.bNavigationImon.ImageList = this.iLOptions;
-            this.bNavigationImon.Location = new System.Drawing.Point(23, 91);
+            this.bNavigationImon.Location = new System.Drawing.Point(-1, 73);
+            this.bNavigationImon.Margin = new System.Windows.Forms.Padding(0);
             this.bNavigationImon.Name = "bNavigationImon";
-            this.bNavigationImon.Size = new System.Drawing.Size(68, 68);
+            this.bNavigationImon.Size = new System.Drawing.Size(74, 74);
             this.bNavigationImon.TabIndex = 4;
             this.bNavigationImon.UseVisualStyleBackColor = false;
             this.bNavigationImon.Click += new System.EventHandler(this.bNavigationImon_Click);
             // 
             // bNavigationGeneral
             // 
+            this.bNavigationGeneral.ActiveImageIndex = 1;
             this.bNavigationGeneral.BackColor = System.Drawing.Color.Transparent;
+            this.bNavigationGeneral.DefaultImageIndex = 0;
             this.bNavigationGeneral.FlatAppearance.BorderSize = 0;
             this.bNavigationGeneral.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bNavigationGeneral.HoverImageIndex = 2;
             this.bNavigationGeneral.ImageIndex = 0;
             this.bNavigationGeneral.ImageList = this.iLOptions;
-            this.bNavigationGeneral.Location = new System.Drawing.Point(23, 8);
+            this.bNavigationGeneral.Location = new System.Drawing.Point(-1, -1);
+            this.bNavigationGeneral.Margin = new System.Windows.Forms.Padding(0);
             this.bNavigationGeneral.Name = "bNavigationGeneral";
-            this.bNavigationGeneral.Size = new System.Drawing.Size(68, 68);
+            this.bNavigationGeneral.Size = new System.Drawing.Size(74, 74);
             this.bNavigationGeneral.TabIndex = 3;
             this.bNavigationGeneral.UseVisualStyleBackColor = false;
             this.bNavigationGeneral.Click += new System.EventHandler(this.bNavigationGeneral_Click);
@@ -651,7 +668,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(533, 284);
+            this.ClientSize = new System.Drawing.Size(487, 284);
             this.Controls.Add(this.splitter);
             this.Controls.Add(this.menu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
