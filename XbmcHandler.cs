@@ -3,6 +3,8 @@
 using iMon.DisplayApi;
 using XBMC.JsonRpc;
 using System.Threading;
+using System.Timers;
+using System.Collections.Generic;
 
 namespace iMon.XBMC
 {
@@ -10,10 +12,20 @@ namespace iMon.XBMC
     {
         #region Private variables
 
+        private const int ProgressUpdateInterval = 5000;
+        private const int DefaultTextDelay = 2000;
+
         private bool disposed;
 
         private XbmcJsonRpcConnection xbmc;
-        private DisplayTextHandler text;
+        private DisplayHandler display;
+
+        private XbmcMediaPlayer player;
+        private XbmcPlayable currentlyPlaying;
+
+        private TimeSpan length;
+        private TimeSpan position;
+        private System.Timers.Timer progressTimer;
 
         #endregion
 
@@ -23,19 +35,19 @@ namespace iMon.XBMC
 
         #region Constructor
 
-        public XbmcHandler(XbmcJsonRpcConnection xbmc, DisplayTextHandler text)
+        public XbmcHandler(XbmcJsonRpcConnection xbmc, DisplayHandler display)
         {
             if (xbmc == null)
             {
                 throw new ArgumentNullException("xbmc");
             }
-            if (text == null)
+            if (display == null)
             {
-                throw new ArgumentNullException("text");
+                throw new ArgumentNullException("display");
             }
 
             this.xbmc = xbmc;
-            this.text = text;
+            this.display = display;
 
             this.xbmc.Player.PlaybackStarted        +=  this.xbmcPlaybackStarted;
             this.xbmc.Player.PlaybackPaused         +=  this.xbmcPlaybackPaused;
@@ -45,6 +57,11 @@ namespace iMon.XBMC
             this.xbmc.Player.PlaybackSeek           +=  this.xbmcPlaybackSeek;
             this.xbmc.Player.PlaybackSeekChapter    +=  this.xbmcPlaybackSeek;
             this.xbmc.Player.PlaybackSpeedChanged   +=  this.xbmcPlaybackSpeedChanged;
+
+            this.progressTimer = new System.Timers.Timer();
+            this.progressTimer.Interval = ProgressUpdateInterval;
+            this.progressTimer.Elapsed += progressTimerUpdate;
+            this.progressTimer.AutoReset = true;
         }
 
         #endregion
@@ -79,42 +96,164 @@ namespace iMon.XBMC
 
         private void xbmcPlaybackStarted(object sender, XbmcPlayerPlaybackChangedEventArgs e)
         {
-            // TODO: XBMC PlaybackStarted
+            if (e == null || e.Player == null)
+            {
+                return;
+            }
+
+            this.player = e.Player;
+
+            this.player.GetTime(out this.position, out this.length);
+            this.progressTimer.Start();
+
+            this.updateCurrentlyPlaying();
         }
 
         private void xbmcPlaybackPaused(object sender, XbmcPlayerPlaybackPositionChangedEventArgs e)
         {
-            this.text.Set("Pause", "Pause", e.Position.ToString());
+            if (e == null || e.Player == null)
+            {
+                return;
+            }
+
+            this.progressTimer.Stop();
+            this.position = e.Position;
+            this.updateProgress();
+
+            this.display.SetText("Pause", "Pause", e.Position.ToString());
         }
 
         private void xbmcPlaybackResumed(object sender, XbmcPlayerPlaybackPositionChangedEventArgs e)
         {
-            // TODO: XBMC PlaybackResumed
+            if (e == null || e.Player == null)
+            {
+                return;
+            }
+
+            this.position = e.Position;
+            this.updateProgress();
+            this.progressTimer.Start();
+
+            this.updateCurrentlyPlaying();
         }
 
         private void xbmcPlaybackStopped(object sender, EventArgs e)
         {
-            // TODO: XBMC PlaybackStopped
+            this.playbackStopped();
+            this.display.SetText("STOP", "Playback", "stopped", DefaultTextDelay);
+            this.display.SetText("XBMC");
         }
 
         private void xbmcPlaybackEnded(object sender, EventArgs e)
         {
-            // TODO: XBMC PlaybackEnded
+            this.playbackStopped();
+            this.display.SetText("Playback ended", "Playback", "ended", DefaultTextDelay);
+            this.display.SetText("XBMC");
         }
 
         private void xbmcPlaybackSeek(object sender, XbmcPlayerPlaybackPositionChangedEventArgs e)
         {
-            // TODO: XBMC PlaybackSeek
+            if (e == null || e.Player == null)
+            {
+                return;
+            }
+
+            this.length = e.Length;
+            this.position = e.Position;
+            this.updateProgress();
         }
 
         private void xbmcPlaybackSpeedChanged(object sender, XbmcPlayerPlaybackSpeedChangedEventArgs e)
         {
-            // TODO: XBMC PlaybackSpeedChanged
+            if (e == null || e.Player == null)
+            {
+                return;
+            }
+
+            // TODO: Handle progress on playback speed change
+
+            if (e.Speed < 0)
+            {
+                this.display.SetText("Rewinding (" + (-e.Speed) + "x)", "Rewinding", (-e.Speed).ToString());
+            }
+            else if (e.Speed > 1)
+            {
+                this.display.SetText("Forwarding (" + e.Speed + "x)", "Rewinding", e.Speed.ToString());
+            }
+            else
+            {
+                this.updateCurrentlyPlaying();
+            }
+        }
+
+        private void progressTimerUpdate(object sender, ElapsedEventArgs e) 
+        {
+            this.position += TimeSpan.FromMilliseconds(ProgressUpdateInterval);
+            this.updateProgress();
         }
 
         #endregion
 
         #region Private functions
+
+        private void updateProgress()
+        {
+            this.display.SetProgress(this.position, this.length);
+        }
+
+        private void playbackStopped()
+        {
+            this.player = null;
+            this.currentlyPlaying = null;
+
+            this.progressTimer.Stop();
+            this.position = new TimeSpan();
+            this.length = new TimeSpan();
+
+            this.updateProgress();
+
+            this.display.HideAllIcons();
+        }
+
+        private void updateCurrentlyPlaying()
+        {
+            this.display.SetIcon(iMonLcdIcons.Shuffle, this.player.Random);
+            this.display.SetIcon(iMonLcdIcons.Repeat, this.player.Repeat != XbmcRepeatTypes.Off);
+            iMonLcdIcons icon;
+            if (this.player is XbmcAudioPlayer)
+            {
+                icon = iMonLcdIcons.Music;
+                this.currentlyPlaying = this.xbmc.Playlist.Audio.GetCurrentItem();
+                this.display.SetText(((XbmcSong)this.currentlyPlaying).Artist + " - " + this.currentlyPlaying.Title);
+
+                XbmcAudioPlayer audio = (XbmcAudioPlayer)this.player;
+
+            }
+            else if (this.player is XbmcPicturePlayer)
+            {
+                icon = iMonLcdIcons.Photo;
+                this.display.SetText("SLIDESHOW", "Picture", "Slideshow");
+            }
+            else
+            {
+                icon = iMonLcdIcons.Movie;
+                this.currentlyPlaying = this.xbmc.Playlist.Video.GetCurrentItem();
+                if (this.currentlyPlaying is XbmcTvEpisode)
+                {
+                    XbmcTvEpisode ep = (XbmcTvEpisode)this.currentlyPlaying;
+                    this.display.SetText(ep.ShowTitle + ": S" + ep.Season.ToString("00") + "E" + ep.Episodes.ToString("00") + " " + ep.Title);
+                }
+                else
+                {
+                    this.display.SetText(this.currentlyPlaying.Title);
+                }
+
+                XbmcVideoPlayer video = (XbmcVideoPlayer)this.player;
+
+            }
+
+            this.display.SetIcon(icon, true);
+        }
 
         #endregion
     }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace iMon.XBMC
 {
-    internal partial class DisplayTextHandler
+    internal partial class DisplayHandler
     {
         private struct Text
         {

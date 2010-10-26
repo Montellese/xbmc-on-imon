@@ -38,12 +38,12 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DisplayHandler.cs" />
+    <Compile Include="DisplayHandler.Text.cs" />
     <Compile Include="NavigationButton.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="XbmcHandler.cs" />
-    <Compile Include="DisplayTextHandler.cs" />
-    <Compile Include="DisplayTextHandler.Text.cs" />
     <Compile Include="XBMC.cs">
       <SubType>Form</SubType>
     </Compile>

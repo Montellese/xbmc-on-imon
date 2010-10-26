@@ -5,7 +5,7 @@ using iMon.DisplayApi;
 
 namespace iMon.XBMC
 {
-    internal partial class DisplayTextHandler : IDisposable
+    internal partial class DisplayHandler : IDisposable
     {
         #region Private variables
 
@@ -28,7 +28,7 @@ namespace iMon.XBMC
 
         #region Constructor
 
-        public DisplayTextHandler(iMonWrapperApi imon)
+        public DisplayHandler(iMonWrapperApi imon)
         {
             if (imon == null)
             {
@@ -64,12 +64,22 @@ namespace iMon.XBMC
 
         #region Public functions
 
-        public void Set(string lcd, string vfdUpper, string vfdLower)
+        public void SetText(string text)
         {
-            this.Set(lcd, vfdUpper, vfdLower, 0);
+            this.SetText(text, text, string.Empty, 0);
         }
 
-        public void Set(string lcd, string vfdUpper, string vfdLower, int delay)
+        public void SetText(string text, int delay)
+        {
+            this.SetText(text, text, string.Empty, delay);
+        }
+
+        public void SetText(string lcd, string vfdUpper, string vfdLower)
+        {
+            this.SetText(lcd, vfdUpper, vfdLower, 0);
+        }
+
+        public void SetText(string lcd, string vfdUpper, string vfdLower, int delay)
         {
             lock (this.queueLock)
             {
@@ -81,16 +91,56 @@ namespace iMon.XBMC
             }
         }
 
-        public void Add(string lcd, string vfdUpper, string vfdLower)
+        public void AddText(string lcd, string vfdUpper, string vfdLower)
         {
-            this.Add(lcd, vfdUpper, vfdLower, 0);
+            this.AddText(lcd, vfdUpper, vfdLower, 0);
         }
 
-        public void Add(string lcd, string vfdUpper, string vfdLower, int delay)
+        public void AddText(string lcd, string vfdUpper, string vfdLower, int delay)
         {
             lock (this.queueLock)
             {
                 this.queue.Add(new Text(lcd, vfdUpper, vfdLower, delay));
+            }
+        }
+
+        public void SetProgress(int position, int total)
+        {
+            if (this.lcd)
+            {
+                this.imon.LCD.SetProgress(position, total);
+            }
+        }
+
+        public void SetProgress(TimeSpan position, TimeSpan total)
+        {
+            if (this.lcd)
+            {
+                this.imon.LCD.SetProgress(Convert.ToInt32(position.TotalMilliseconds), Convert.ToInt32(total.TotalMilliseconds));
+            }
+        }
+
+        public void SetIcon(iMonLcdIcons icon, bool show)
+        {
+            if (this.lcd)
+            {
+                this.imon.LCD.Icons.Set(icon, show);
+            }
+        }
+
+        public void SetIcons(IEnumerable<iMonLcdIcons> iconList, bool show)
+        {
+            if (this.lcd)
+            {
+                this.imon.LCD.Icons.Set(iconList, show);
+            }
+        }
+
+        public void HideAllIcons()
+        {
+            if (this.lcd)
+            {
+                this.imon.LCD.Icons.HideAll();
             }
         }
 
@@ -115,7 +165,7 @@ namespace iMon.XBMC
                         this.vfd = true;
                     }
 
-                    this.Set("XBMC", "XBMC", string.Empty);
+                    this.SetText("XBMC", "XBMC", string.Empty);
                 }
                 else
                 {
@@ -143,11 +193,6 @@ namespace iMon.XBMC
 
                 this.display(this.queue[this.position]);
 
-                if (this.queue[this.position].Delay > 0)
-                {
-                    System.Threading.Thread.Sleep(this.queue[this.position].Delay);
-                }
-
                 this.position += 1;
             }
         }
@@ -167,6 +212,11 @@ namespace iMon.XBMC
                 if (this.vfd)
                 {
                     this.imon.VFD.SetText(text.VfdUpper, text.VfdLower);
+                }
+
+                if (text.Delay > 0)
+                {
+                    System.Threading.Thread.Sleep(text.Delay);
                 }
             }
         }
