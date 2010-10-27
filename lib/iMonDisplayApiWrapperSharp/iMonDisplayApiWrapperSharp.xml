@@ -1,0 +1,258 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>iMonDisplayApiWrapperSharp</name>
+    </assembly>
+    <members>
+        <member name="T:iMon.DisplayApi.iMonLcdIcons">
+            <summary>
+            List of all available icons on the LCD
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.SpeakerFrontLeft">
+            <summary>
+            A sound box on the left front is in use.
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.SpeakerRearRight">
+            <summary>
+            A sound box on the right rear is in use.
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.SpeakerSPDIF">
+            <summary>
+            Sound uses the SPDIF output.
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.SpeakerRearLeft">
+            <summary>
+            A sound box on the left rear is in use.
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.SpeakerSideRight">
+            <summary>
+            A sound box on the right side is in use.
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.SpeakerLFE">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.SpeakerSideLeft">
+            <summary>
+            A sound box on the left side is in use.
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.SpeakerFrontRight">
+            <summary>
+            A sound box on the right front is in use.
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.SpeakerCenter">
+            <summary>
+            A sound box on the center front is in use.
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.NewsWeather">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.Webcast">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.Tv">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.CdDvd">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.Photo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.Movie">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.Music">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.AspectRatioScreen2">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.AspectRatioScreen1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.AspectRatioHDTV">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.AspectRatioTv">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.AspectRatioFIT">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.AspectRatioSource">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.VideoDTS">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.VideoAC3">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.VideoMPGAudio">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.VideoWMV">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.VideoXviD">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.VideoWMA">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.VideoDivX">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.VideoMPG">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.AudioOGG">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.AudioMP3">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.AudioWMA">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.AudioWAV">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.Time">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.Volume">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.Recording">
+            <summary>
+            Recording is active.
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.Alarm">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.Shuffle">
+            <summary>
+            Shuffle is active for the current playlist.
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.Repeat">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.DiscTopRight">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.DiscMiddleRight">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.DiscBottomRight">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.DiscBottomCenter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.DiscBottomLeft">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.DiscMiddleLeft">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.DiscTopLeft">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.DiscTopCenter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonLcdIcons.DiscCircle">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>

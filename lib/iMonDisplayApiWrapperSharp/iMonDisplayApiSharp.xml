@@ -1,0 +1,333 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>iMonDisplayApiSharp</name>
+    </assembly>
+    <members>
+        <member name="M:iMon.DisplayApi.iMonNativeApi.IMON_Display_Init(System.Int32,System.UInt32)">
+            <summary>
+            This function should be called to use other functions in iMON Display API.
+            When the caller application calls this function, API tries to request Display Plug-in Mode to iMON.
+            </summary>
+            <param name="hwndNoti">API will send/post message to this handle.</param>
+            <param name="uMsgNotification">API will send/post message to hwndNoti with this message identifier.</param>
+            <returns>This function will return one of DisplayResult enumeration value.
+            DisplayResult.Succeeded will be returned if succeeded. DisplayResult.InvalidArguments or DisplayResult.OutOfMemory can be returned when error occurs.</returns>
+        </member>
+        <member name="M:iMon.DisplayApi.iMonNativeApi.IMON_Display_Uninit">
+            <summary>
+            This function should be called when the caller application need not use this API any more.
+            If this function call is missed, iMON can't display other information.
+            </summary>
+            <returns>This function will return one of DisplayResult enumeration value.
+            DisplayResult.Succeeded will be returned if succeeded.</returns>
+        </member>
+        <member name="M:iMon.DisplayApi.iMonNativeApi.IMON_Display_IsInited">
+            <summary>
+            This function can be used when the caller application wants to know if API is initialized.
+            </summary>
+            <returns>This function will return one of DisplayResult enumeration value.
+            If API is initialized, this call will return DisplayResult.Initialized. Otherwise DisplayResult.ApiNotInitialized will be returned.</returns>
+        </member>
+        <member name="M:iMon.DisplayApi.iMonNativeApi.IMON_Display_IsPluginModeEnabled">
+            <summary>
+            This function can be used when the caller application wants to know if API can control iMON display.
+            </summary>
+            <returns>This function will return one of DisplayResult enumeration value.
+            If API can control iMON display, this call will return DisplayResult.InPluginMode. Otherwise DisplayResult.NotInPluginMode will be returned.</returns>
+        </member>
+        <member name="M:iMon.DisplayApi.iMonNativeApi.IMON_Display_SetVfdText(System.String,System.String)">
+            <summary>
+            This function can be used when the caller application wants to display text data on VFD module.
+            </summary>
+            <param name="line1">This string data will be displayed on the 1st line of VFD module.
+            It doesn't support multi-byte character and if string data is longer than 16 characters, it displays 16 characters from the first.</param>
+            <param name="line2">This string data will be displayed on the 2nd line of VFD module.
+            It doesn't support multi-byte character and if string data is longer than 16 characters, it displays 16 characters from the first.</param>
+            <returns>This function will return one of DisplayResult enumeration value.
+            DisplayResult.Succeeded will be returned if succeeded. DisplayResult.InvalidPointer, DisplayResult.NotInitialized or DisplayResult.Failed can be returned if failed.</returns>
+        </member>
+        <member name="M:iMon.DisplayApi.iMonNativeApi.IMON_Display_SetVfdEqData(iMon.DisplayApi.iMonNativeApi.iMonDisplayEqualizerData@)">
+            <summary>
+            This function can be used when the caller application wants to display equalizer data on VFD module.
+            </summary>
+            <param name="pEqData">Pointer of DisplayEqualizerData structure. The caller application should fill this structure with the equalizer data for 16 bands.</param>
+            <returns>This function will return one of DisplayResult enumeration value.
+            DisplayResult.Succeeded will be returned if succeeded. DisplayResult.InvalidPointer, DisplayResult.NotInitialized or DisplayResult.Failed can be returned if failed.</returns>
+        </member>
+        <member name="M:iMon.DisplayApi.iMonNativeApi.IMON_Display_SetLcdText(System.String)">
+            <summary>
+            This function can be used when the caller application wants to display text data on LCD module.
+            </summary>
+            <param name="line">This string data will be displayed on the LCD module.
+            It supports multi-byte character and if string data is longer than display area, it will start to scroll.
+            When text scrolling is finished, API will notify it with DisplayNotifyCode enumeration value, DisplayNotifyCode.LCDTextScrollDone.</param>
+            <returns>This function will return one of DisplayResult enumeration value.
+            DisplayResult.Succeeded will be returned if succeeded. DisplayResult.InvalidPointer, DisplayResult.NotInitialized or DisplayResult.Failed can be returned if failed.</returns>
+        </member>
+        <member name="M:iMon.DisplayApi.iMonNativeApi.IMON_Display_SetLcdEqData(iMon.DisplayApi.iMonNativeApi.iMonDisplayEqualizerData@,iMon.DisplayApi.iMonNativeApi.iMonDisplayEqualizerData@)">
+            <summary>
+            This function can be used when the caller application wants to display equalizer data on LCD module.
+            </summary>
+            <param name="pEqDataL">Pointer of DisplayEqualizerData structure. This parameter represents equalizer data of left channel.
+            The caller application should fill this structure with the equalizer data of left channel for 16 bands.</param>
+            <param name="pEqDataR">Pointer of DisplayEqualizerData structure. This parameter represents equalizer data of right channel.
+            The caller application should fill this structure with the equalizer data of right channel for 16 bands.</param>
+            <returns>This function will return one of DisplayResult enumeration value.
+            DisplayResult.Succeeded will be returned if succeeded. DisplayResult.InvalidPointer, DisplayResult.NotInitialized or DisplayResult.Failed can be returned if failed.</returns>
+        </member>
+        <member name="M:iMon.DisplayApi.iMonNativeApi.IMON_Display_SetLcdAllIcons(System.Boolean)">
+            <summary>
+            This function can be used when the caller application wants to turn on/off all icons on LCD module.
+            </summary>
+            <param name="bOn">If this value is TRUE, iMON will turn on all icons. Otherwise, iMON will turn off all icons.</param>
+            <returns>This function will return one of DisplayResult enumeration value.
+            DisplayResult.Succeeded will be returned if succeeded. DisplayResult.NotInitialized or DisplayResult.Failed can be returned if failed.</returns>
+        </member>
+        <member name="M:iMon.DisplayApi.iMonNativeApi.IMON_Display_SetLcdOrangeIcon(System.Byte,System.Byte)">
+            <summary>
+            This function can be used when the caller application wants to turn on/off orange shaped disk icons on the upper left part of LCD module.
+            Disk icons consist of 8 pieces of orange and orange peel.
+            </summary>
+            <param name="btIconData1">Each bit represents one of icons shaped the piece of orange.
+            MSB is used for the piece placed on top and the remaining bits are for the piece placed in CCW from top.</param>
+            <param name="btIconData2">MSB represents the orange peel shaped icon. Other bits are not used.</param>
+            <returns>This function will return one of DisplayResult enumeration value.
+            DisplayResult.Succeeded will be returned if succeeded. DisplayResult.NotInitialized or DisplayResult.Failed can be returned if failed.</returns>
+        </member>
+        <member name="M:iMon.DisplayApi.iMonNativeApi.IMON_Display_SetLcdMediaTypeIcon(System.Byte)">
+            <summary>
+            This function can be used when the caller application wants to turn on/off media type icons on the upper part of LCD module.
+            </summary>
+            <param name="btIconData">Each bit represents one of media type icons. From MSB each bit represents MUSIC, MOVIE, PHOTO, CD/DVD, TV, WEBCASTING and NEWS/WEATHER icon.</param>
+            <returns>This function will return one of DisplayResult enumeration value.
+            DisplayResult.Succeeded will be returned if succeeded. DisplayResult.NotInitialized or DisplayResult.Failed can be returned if failed.</returns>
+        </member>
+        <member name="M:iMon.DisplayApi.iMonNativeApi.IMON_Display_SetLcdSpeakerIcon(System.Byte,System.Byte)">
+            <summary>
+            This function can be used when the caller application wants to turn on/off speaker icons on the upper right part of LCD module.
+            </summary>
+            <param name="btIconData1">Each bit represents one of speaker icons.\nFrom MSB each bit represents L, C, R, SL, LFE, SR, RL and SPDIF icon.</param>
+            <param name="btIconData2">MSB represents RR icon. Other bits are not used.</param>
+            <returns>This function will return one of DisplayResult enumeration value.
+            DisplayResult.Succeeded will be returned if succeeded. DisplayResult.NotInitialized or DisplayResult.Failed can be returned if failed.</returns>
+        </member>
+        <member name="M:iMon.DisplayApi.iMonNativeApi.IMON_Display_SetLcdVideoCodecIcon(System.Byte)">
+            <summary>
+            This function can be used when the caller application wants to turn on/off codec icons for video file on the lower part of LCD module.
+            </summary>
+            <param name="btIconData">Each bit represents one of video codec icons. From MSB each bit represents MPG, DIVX, XVID, WMV, MPG, AC3, DTS and WMA icon.</param>
+            <returns>This function will return one of DisplayResult enumeration value.
+            DisplayResult.Succeeded will be returned if succeeded. DisplayResult.NotInitialized or DisplayResult.Failed can be returned if failed.</returns>
+        </member>
+        <member name="M:iMon.DisplayApi.iMonNativeApi.IMON_Display_SetLcdAudioCodecIcon(System.Byte)">
+            <summary>
+            This function can be used when the caller application wants to turn on/off codec icons for audio file on the lower part of LCD module.
+            </summary>
+            <param name="btIconData">Each bit represents one of audio codec icons. From MSB each bit represents MP3, OGG, WMA and WAV icon.</param>
+            <returns>This function will return one of DisplayResult enumeration value.
+            DisplayResult.Succeeded will be returned if succeeded. DisplayResult.NotInitialized or DisplayResult.Failed can be returned if failed.</returns>
+        </member>
+        <member name="M:iMon.DisplayApi.iMonNativeApi.IMON_Display_SetLcdAspectRatioIcon(System.Byte)">
+            <summary>
+            This function can be used when the caller application wants to turn on/off aspect ratio icons on the lower right part of LCD module.
+            </summary>
+            <param name="btIconData">Each bit represents one of aspect ratio icons. From MSB each bit represents SRC, FIT, TV, HDTV, SCR1 and SCR2 icon.</param>
+            <returns>This function will return one of DisplayResult enumeration value.
+            DisplayResult.Succeeded will be returned if succeeded. DisplayResult.NotInitialized or DisplayResult.Failed can be returned if failed.</returns>
+        </member>
+        <member name="M:iMon.DisplayApi.iMonNativeApi.IMON_Display_SetLcdEtcIcon(System.Byte)">
+            <summary>
+            This function can be used when the caller application wants to turn on/off icons on the lower left part of LCD module.
+            </summary>
+            <param name="btIconData">Each bit represents icon. From MSB each bit represents REPEAT, SHUFFLE, ALARM, REC, VOL and TIME icon.</param>
+            <returns>This function will return one of DisplayResult enumeration value.
+            DisplayResult.Succeeded will be returned if succeeded. DisplayResult.NotInitialized or DisplayResult.Failed can be returned if failed.</returns>
+        </member>
+        <member name="M:iMon.DisplayApi.iMonNativeApi.IMON_Display_SetLcdProgress(System.Int32,System.Int32)">
+            <summary>
+            This function can be used when the caller application wants to display progress bar on the upper and lower left part of text area of LCD module.
+            </summary>
+            <param name="nCurPos">It represents the current position of progress bar.</param>
+            <param name="nTotal">It represents the total length of progress bar.</param>
+            <returns>This function will return one of DisplayResult enumeration value.
+            DisplayResult.Succeeded will be returned if succeeded. DisplayResult.NotInitialized or DisplayResult.Failed can be returned if failed.</returns>
+        </member>
+        <member name="T:iMon.DisplayApi.iMonNativeApi.iMonDisplayType">
+            <summary>
+            These enumeration values represent display type.
+            Currently iMON Display API supports VFD and LCD products.
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayType.VFD">
+            <summary>
+            VFD products
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayType.LCD">
+            <summary>
+            LCD products
+            </summary>
+        </member>
+        <member name="T:iMon.DisplayApi.iMonNativeApi.iMonDisplayResult">
+            <summary>
+            These enumeration values represent the returned result for iMON Display API function calls.
+            All iMON Display API function calls return one of this result values.
+            For meaning of each result, refer the comment of each line below
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayResult.Succeeded">
+            <summary>
+            Function Call Succeeded Without Error
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayResult.Failed">
+            <summary>
+            Unspecified Failure
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayResult.OutOfMemory">
+            <summary>
+            Failed to Allocate Necessary Memory
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayResult.InvalidArguments">
+            <summary>
+            One or More Arguments Are Not Valid
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayResult.NotInitialized">
+            <summary>
+            API is Not Initialized
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayResult.InvalidPointer">
+            <summary>
+            Pointer is Not Valid
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayResult.Initialized">
+            <summary>
+            API is Initialized
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayResult.ApiNotInitialized">
+            <summary>
+            API is Not Initialized
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayResult.InPluginMode">
+            <summary>
+            API Can Control iMON Display (Display Plug-in Mode)
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayResult.NotInPluginMode">
+            <summary>
+            API Can't Control iMON Display
+            </summary>
+        </member>
+        <member name="T:iMon.DisplayApi.iMonNativeApi.iMonDisplayNotifyCode">
+            <summary>
+            These enumeration values represent the notification codes.
+            iMON Display API will send or post message to the caller application.
+            The caller application should assign the message and the winodw handle to receivce message with IMON_Display_Init fucntion.
+            These enumeration values are used with WPARAM parameter of the message.
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayNotifyCode.PluginSuccess">
+            <summary>
+            When API succeeds to get the control for the display, API will post caller-specified message with DSPNM_PLUGIN_SUCCEED as WPARAM parameter.
+            LPARAM represents DSPType. This value can be 0x01 (VFD), 0x02 (LCD) or 0x03 (VFD+LCD).
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayNotifyCode.PluginFailed">
+            <summary>
+            When API fails to get the control for the display, API will post caller-specified message with DSPNM_PLUGIN_FAILED as WPARAM parameter.
+            LPARAM represents error code with DSPNResult.
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayNotifyCode.iMonRestarted">
+            <summary>
+            When iMON starts, API will post caller-specified message with DSPNM_IMON_RESTARTED as WPARAM parameter.\n
+            LPARAM represents DSPType. This value can be 0 (No Display), 0x01 (VFD), 0x02 (LCD) or 0x03 (VFD+LCD).
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayNotifyCode.iMonClosed">
+            <summary>
+            When iMON closed, API will post caller-specified message with DSPNM_IMON_CLOSED as WPARAM parameter.\n
+            LPARAM is not used.
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayNotifyCode.HardwareConnected">
+            <summary>
+            When iMON HW newly connected, API will post caller-specified message with DSPNM_HW_CONNECTED as WPARAM parameter.\n
+            LPARAM represents DSPType. This value can be 0 (No Display), 0x01 (VFD), 0x02 (LCD) or 0x03 (VFD+LCD).
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayNotifyCode.HardwareDisconnected">
+            <summary>
+            When iMON HW disconnected, API will post caller-specified message with DSPNM_HW_DISCONNECTED as WPARAM parameter.\n
+            LPARAM is DSPNResult value, DSPN_ERR_HW_DISCONNECTED.
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayNotifyCode.LCDTextScrollDone">
+            <summary>
+            When iMON LCD finishes scrolling Text, API will post caller-specified message with DSPNM_LCD_TEXT_SCROLL_DONE as WPARAM parameter.\n
+            The caller application may need to know when text scroll is finished, for sending next text.\n
+            LPARAM is not used.
+            </summary>
+        </member>
+        <member name="T:iMon.DisplayApi.iMonNativeApi.iMonDisplayEqualizerData">
+            <summary>
+            This structure contains Equalizer data for 16 bands.
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayEqualizerData.BandData">
+            <summary>
+            Represents Equalizer data for 16 bands. Its range is from 0 to 100.
+            </summary>
+        </member>
+        <member name="T:iMon.DisplayApi.iMonNativeApi.iMonDisplayInitResult">
+            <summary>
+            These enumeration values represent the result status for requesting Display Plug-in Mode to iMON.
+            iMON Display API notifies one of this result values to the caller application after requesting Display Plug-in Mode to iMON.
+            For more information, refer the comment of each line below
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayInitResult.Succeeded">
+            <summary>
+            Display Plug-in Mode is Initialized Successfully
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayInitResult.PluginModeAlreadyInUse">
+            <summary>
+            Display Plug-in is Already Used by Other Application
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayInitResult.HardwareNotConnected">
+            <summary>
+            iMON HW is Not Connected
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayInitResult.HardwareNotSupported">
+            <summary>
+            The Connected iMON HW doesn't Support Display Plug-in
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayInitResult.PluginModeDisabled">
+            <summary>
+            Display Plug-in Mode Option is Disabled
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayInitResult.iMonNotResponding">
+            <summary>
+            The Latest iMON is Not Installed or iMON Not Running
+            </summary>
+        </member>
+        <member name="F:iMon.DisplayApi.iMonNativeApi.iMonDisplayInitResult.Unknown">
+            <summary>
+            Unknown Failure
+            </summary>
+        </member>
+    </members>
+</doc>

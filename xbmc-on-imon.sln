@@ -3,12 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xbmc-on-imon", "xbmc-on-imon.csproj", "{B36E6F27-8556-47B2-895B-FDD796573FAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iMonDisplayApi-Sharp", "..\imonapi-sharp\native\iMonDisplayApi-Sharp.csproj", "{68263030-B7E8-4205-B623-C03381F35511}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iMonDisplayApiWrapper-Sharp", "..\imonapi-sharp\wrapper\iMonDisplayApiWrapper-Sharp.csproj", "{9B947F96-CCC2-42F8-9577-867C804ADA46}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xbmc-jsonrpc-sharp", "..\xbmc-jsonrpc-sharp\xbmc-jsonrpc-sharp\xbmc-jsonrpc-sharp.csproj", "{FDD0FEA4-6C57-4364-BC06-3BA64995F3FB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,36 +23,6 @@ Global
 		{B36E6F27-8556-47B2-895B-FDD796573FAD}.Release|Mixed Platforms.Build.0 = Release|x86
 		{B36E6F27-8556-47B2-895B-FDD796573FAD}.Release|x86.ActiveCfg = Release|x86
 		{B36E6F27-8556-47B2-895B-FDD796573FAD}.Release|x86.Build.0 = Release|x86
-		{68263030-B7E8-4205-B623-C03381F35511}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{68263030-B7E8-4205-B623-C03381F35511}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{68263030-B7E8-4205-B623-C03381F35511}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{68263030-B7E8-4205-B623-C03381F35511}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{68263030-B7E8-4205-B623-C03381F35511}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{68263030-B7E8-4205-B623-C03381F35511}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{68263030-B7E8-4205-B623-C03381F35511}.Release|Any CPU.Build.0 = Release|Any CPU
-		{68263030-B7E8-4205-B623-C03381F35511}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{68263030-B7E8-4205-B623-C03381F35511}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{68263030-B7E8-4205-B623-C03381F35511}.Release|x86.ActiveCfg = Release|Any CPU
-		{9B947F96-CCC2-42F8-9577-867C804ADA46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B947F96-CCC2-42F8-9577-867C804ADA46}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B947F96-CCC2-42F8-9577-867C804ADA46}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{9B947F96-CCC2-42F8-9577-867C804ADA46}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{9B947F96-CCC2-42F8-9577-867C804ADA46}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{9B947F96-CCC2-42F8-9577-867C804ADA46}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B947F96-CCC2-42F8-9577-867C804ADA46}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9B947F96-CCC2-42F8-9577-867C804ADA46}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{9B947F96-CCC2-42F8-9577-867C804ADA46}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{9B947F96-CCC2-42F8-9577-867C804ADA46}.Release|x86.ActiveCfg = Release|Any CPU
-		{FDD0FEA4-6C57-4364-BC06-3BA64995F3FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FDD0FEA4-6C57-4364-BC06-3BA64995F3FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FDD0FEA4-6C57-4364-BC06-3BA64995F3FB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{FDD0FEA4-6C57-4364-BC06-3BA64995F3FB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{FDD0FEA4-6C57-4364-BC06-3BA64995F3FB}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{FDD0FEA4-6C57-4364-BC06-3BA64995F3FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FDD0FEA4-6C57-4364-BC06-3BA64995F3FB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FDD0FEA4-6C57-4364-BC06-3BA64995F3FB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{FDD0FEA4-6C57-4364-BC06-3BA64995F3FB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{FDD0FEA4-6C57-4364-BC06-3BA64995F3FB}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
