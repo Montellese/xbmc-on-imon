@@ -24,6 +24,11 @@ namespace iMon.XBMC
 
         #region Public variables
 
+        public bool Empty
+        {
+            get { return this.queue.Count <= 0; }
+        }
+
         #endregion
 
         #region Constructor
@@ -165,7 +170,15 @@ namespace iMon.XBMC
                         this.vfd = true;
                     }
 
-                    this.SetText("XBMC", "XBMC", string.Empty);
+                    if (this.Empty)
+                    {
+                        this.SetText("XBMC", "XBMC", string.Empty);
+                    }
+                    else
+                    {
+                        this.display(this.queue[0]);
+                        this.position = 1;
+                    }
                 }
                 else
                 {

@@ -49,6 +49,8 @@ namespace iMon.XBMC
             this.xbmc = xbmc;
             this.display = display;
 
+            this.xbmc.Connected                     +=  this.xbmcConnected;
+            this.xbmc.Aborted                       +=  this.xbmcAborted;
             this.xbmc.Player.PlaybackStarted        +=  this.xbmcPlaybackStarted;
             this.xbmc.Player.PlaybackPaused         +=  this.xbmcPlaybackPaused;
             this.xbmc.Player.PlaybackResumed        +=  this.xbmcPlaybackResumed;
@@ -93,6 +95,38 @@ namespace iMon.XBMC
         #endregion
 
         #region Event handlers
+
+        private void xbmcConnected(object sender, EventArgs e)
+        {
+            bool audio, video, pictures;
+            this.xbmc.Player.GetActivePlayers(out video, out audio, out pictures);
+
+            if (video)
+            {
+                this.player = this.xbmc.Player.Video;
+            }
+            else if (audio)
+            {
+                this.player = this.xbmc.Player.Audio;
+            }
+            else if (pictures)
+            {
+                this.player = this.xbmc.Player.Pictures;
+            }
+
+            if (this.player != null)
+            {
+                this.player.GetTime(out this.position, out this.length);
+                this.progressTimer.Start();
+
+                this.updateCurrentlyPlaying();
+            }
+        }
+
+        private void xbmcAborted(object sender, EventArgs e)
+        {
+            this.playbackStopped();
+        }
 
         private void xbmcPlaybackStarted(object sender, XbmcPlayerPlaybackChangedEventArgs e)
         {
@@ -170,19 +204,27 @@ namespace iMon.XBMC
                 return;
             }
 
-            // TODO: Handle progress on playback speed change
+            this.position = e.Position;
+            this.length = e.Length;
+            this.updateProgress();
 
             if (e.Speed < 0)
             {
                 this.display.SetText("Rewinding (" + (-e.Speed) + "x)", "Rewinding", (-e.Speed).ToString());
+
+                this.progressTimer.Stop();
             }
             else if (e.Speed > 1)
             {
                 this.display.SetText("Forwarding (" + e.Speed + "x)", "Rewinding", e.Speed.ToString());
+
+                this.progressTimer.Stop();
             }
             else
             {
                 this.updateCurrentlyPlaying();
+
+                this.progressTimer.Start();
             }
         }
 
