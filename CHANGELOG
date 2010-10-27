@@ -1,0 +1,13 @@
+﻿CHANGELOG for "XBMC on iMON Display"
+====================================
+
+v0.1.0.0 Beta: October 27, 2010
+-------------------------------
+ - Initial release
+ - Basic user interface with a few options
+ - Possibility to auto-connect to XBMC as soon as it starts (short delay depending on the configured interval)
+ - Output of the title of the currently playing song, movie or tv episode
+ - Display of the progress of the currently playing file using the top and bottom bars
+ - MUSIC/MOVIE/PHOTO icons indicate what kind of file is being played
+ - Repeat (RPT) and Shuffle (SFL) icons indicate whether the current playlist is set to repeat / is randomized
+   

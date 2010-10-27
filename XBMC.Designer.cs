@@ -47,10 +47,7 @@
             this.miAboutXbmcOniMon = new System.Windows.Forms.ToolStripMenuItem();
             this.splitter = new System.Windows.Forms.SplitContainer();
             this.pNavigation = new System.Windows.Forms.Panel();
-            this.bNavigationXbmc = new iMon.XBMC.NavigationButton();
             this.iLOptions = new System.Windows.Forms.ImageList(this.components);
-            this.bNavigationImon = new iMon.XBMC.NavigationButton();
-            this.bNavigationGeneral = new iMon.XBMC.NavigationButton();
             this.tabOptions = new System.Windows.Forms.TabControl();
             this.tpImon = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -86,6 +83,9 @@
             this.trayMenuImon = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.trayMenuClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.bNavigationXbmc = new iMon.XBMC.NavigationButton();
+            this.bNavigationImon = new iMon.XBMC.NavigationButton();
+            this.bNavigationGeneral = new iMon.XBMC.NavigationButton();
             this.menu.SuspendLayout();
             this.splitter.Panel1.SuspendLayout();
             this.splitter.Panel2.SuspendLayout();
@@ -252,24 +252,6 @@
             this.pNavigation.Size = new System.Drawing.Size(76, 253);
             this.pNavigation.TabIndex = 0;
             // 
-            // bNavigationXbmc
-            // 
-            this.bNavigationXbmc.ActiveImageIndex = 7;
-            this.bNavigationXbmc.BackColor = System.Drawing.Color.Transparent;
-            this.bNavigationXbmc.DefaultImageIndex = 6;
-            this.bNavigationXbmc.FlatAppearance.BorderSize = 0;
-            this.bNavigationXbmc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bNavigationXbmc.HoverImageIndex = 8;
-            this.bNavigationXbmc.ImageIndex = 6;
-            this.bNavigationXbmc.ImageList = this.iLOptions;
-            this.bNavigationXbmc.Location = new System.Drawing.Point(-1, 147);
-            this.bNavigationXbmc.Margin = new System.Windows.Forms.Padding(0);
-            this.bNavigationXbmc.Name = "bNavigationXbmc";
-            this.bNavigationXbmc.Size = new System.Drawing.Size(74, 74);
-            this.bNavigationXbmc.TabIndex = 5;
-            this.bNavigationXbmc.UseVisualStyleBackColor = false;
-            this.bNavigationXbmc.Click += new System.EventHandler(this.bNavigationXbmc_Click);
-            // 
             // iLOptions
             // 
             this.iLOptions.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("iLOptions.ImageStream")));
@@ -283,42 +265,6 @@
             this.iLOptions.Images.SetKeyName(6, "XBMC");
             this.iLOptions.Images.SetKeyName(7, "XBMCActive");
             this.iLOptions.Images.SetKeyName(8, "XBMCHover");
-            // 
-            // bNavigationImon
-            // 
-            this.bNavigationImon.ActiveImageIndex = 4;
-            this.bNavigationImon.BackColor = System.Drawing.Color.Transparent;
-            this.bNavigationImon.DefaultImageIndex = 3;
-            this.bNavigationImon.FlatAppearance.BorderSize = 0;
-            this.bNavigationImon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bNavigationImon.HoverImageIndex = 5;
-            this.bNavigationImon.ImageIndex = 3;
-            this.bNavigationImon.ImageList = this.iLOptions;
-            this.bNavigationImon.Location = new System.Drawing.Point(-1, 73);
-            this.bNavigationImon.Margin = new System.Windows.Forms.Padding(0);
-            this.bNavigationImon.Name = "bNavigationImon";
-            this.bNavigationImon.Size = new System.Drawing.Size(74, 74);
-            this.bNavigationImon.TabIndex = 4;
-            this.bNavigationImon.UseVisualStyleBackColor = false;
-            this.bNavigationImon.Click += new System.EventHandler(this.bNavigationImon_Click);
-            // 
-            // bNavigationGeneral
-            // 
-            this.bNavigationGeneral.ActiveImageIndex = 1;
-            this.bNavigationGeneral.BackColor = System.Drawing.Color.Transparent;
-            this.bNavigationGeneral.DefaultImageIndex = 0;
-            this.bNavigationGeneral.FlatAppearance.BorderSize = 0;
-            this.bNavigationGeneral.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bNavigationGeneral.HoverImageIndex = 2;
-            this.bNavigationGeneral.ImageIndex = 0;
-            this.bNavigationGeneral.ImageList = this.iLOptions;
-            this.bNavigationGeneral.Location = new System.Drawing.Point(-1, -1);
-            this.bNavigationGeneral.Margin = new System.Windows.Forms.Padding(0);
-            this.bNavigationGeneral.Name = "bNavigationGeneral";
-            this.bNavigationGeneral.Size = new System.Drawing.Size(74, 74);
-            this.bNavigationGeneral.TabIndex = 3;
-            this.bNavigationGeneral.UseVisualStyleBackColor = false;
-            this.bNavigationGeneral.Click += new System.EventHandler(this.bNavigationGeneral_Click);
             // 
             // tabOptions
             // 
@@ -664,6 +610,60 @@
             this.trayMenuClose.Size = new System.Drawing.Size(158, 22);
             this.trayMenuClose.Text = "Close";
             this.trayMenuClose.Click += new System.EventHandler(this.trayMenuClose_Click);
+            // 
+            // bNavigationXbmc
+            // 
+            this.bNavigationXbmc.ActiveImageIndex = 7;
+            this.bNavigationXbmc.BackColor = System.Drawing.Color.Transparent;
+            this.bNavigationXbmc.DefaultImageIndex = 6;
+            this.bNavigationXbmc.FlatAppearance.BorderSize = 0;
+            this.bNavigationXbmc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bNavigationXbmc.HoverImageIndex = 8;
+            this.bNavigationXbmc.ImageIndex = 6;
+            this.bNavigationXbmc.ImageList = this.iLOptions;
+            this.bNavigationXbmc.Location = new System.Drawing.Point(-1, 147);
+            this.bNavigationXbmc.Margin = new System.Windows.Forms.Padding(0);
+            this.bNavigationXbmc.Name = "bNavigationXbmc";
+            this.bNavigationXbmc.Size = new System.Drawing.Size(74, 74);
+            this.bNavigationXbmc.TabIndex = 5;
+            this.bNavigationXbmc.UseVisualStyleBackColor = false;
+            this.bNavigationXbmc.Click += new System.EventHandler(this.bNavigationXbmc_Click);
+            // 
+            // bNavigationImon
+            // 
+            this.bNavigationImon.ActiveImageIndex = 4;
+            this.bNavigationImon.BackColor = System.Drawing.Color.Transparent;
+            this.bNavigationImon.DefaultImageIndex = 3;
+            this.bNavigationImon.FlatAppearance.BorderSize = 0;
+            this.bNavigationImon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bNavigationImon.HoverImageIndex = 5;
+            this.bNavigationImon.ImageIndex = 3;
+            this.bNavigationImon.ImageList = this.iLOptions;
+            this.bNavigationImon.Location = new System.Drawing.Point(-1, 73);
+            this.bNavigationImon.Margin = new System.Windows.Forms.Padding(0);
+            this.bNavigationImon.Name = "bNavigationImon";
+            this.bNavigationImon.Size = new System.Drawing.Size(74, 74);
+            this.bNavigationImon.TabIndex = 4;
+            this.bNavigationImon.UseVisualStyleBackColor = false;
+            this.bNavigationImon.Click += new System.EventHandler(this.bNavigationImon_Click);
+            // 
+            // bNavigationGeneral
+            // 
+            this.bNavigationGeneral.ActiveImageIndex = 1;
+            this.bNavigationGeneral.BackColor = System.Drawing.Color.Transparent;
+            this.bNavigationGeneral.DefaultImageIndex = 0;
+            this.bNavigationGeneral.FlatAppearance.BorderSize = 0;
+            this.bNavigationGeneral.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bNavigationGeneral.HoverImageIndex = 2;
+            this.bNavigationGeneral.ImageIndex = 0;
+            this.bNavigationGeneral.ImageList = this.iLOptions;
+            this.bNavigationGeneral.Location = new System.Drawing.Point(-1, -1);
+            this.bNavigationGeneral.Margin = new System.Windows.Forms.Padding(0);
+            this.bNavigationGeneral.Name = "bNavigationGeneral";
+            this.bNavigationGeneral.Size = new System.Drawing.Size(74, 74);
+            this.bNavigationGeneral.TabIndex = 3;
+            this.bNavigationGeneral.UseVisualStyleBackColor = false;
+            this.bNavigationGeneral.Click += new System.EventHandler(this.bNavigationGeneral_Click);
             // 
             // XBMC
             // 
