@@ -1,6 +1,13 @@
 ﻿CHANGELOG for "XBMC on iMON Display"
 ====================================
 
+v0.2.0.0 Beta: November ??, 2010
+-------------------------------
+ - iMON:
+   - Custom delay at the end of a scrolling text before the next / same text starts scrolling again
+ - XBMC:
+   - Option to enable/disable displaying a custom static text when XBMC is idle (no file is playing)
+
 v0.1.0.0 Beta: October 27, 2010
 -------------------------------
  - Initial release

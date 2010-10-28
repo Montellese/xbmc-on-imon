@@ -124,14 +124,19 @@ namespace iMon.XBMC
             this.cbGeneralTrayHideOnMinimize.Checked = Settings.Default.GeneralTrayHideOnMinimize;
             this.cbGeneralTrayHideOnClose.Checked = Settings.Default.GeneralTrayHideOnClose;
 
+            this.cbImonGeneralAutoInitialize.Checked = Settings.Default.ImonAutoInitialize;
+            this.cbImonGeneralUninitializeOnError.Checked = Settings.Default.ImonUninitializeOnError;
+
+            this.nudImonLcdScrollingDelay.Value = Settings.Default.ImonLcdScrollingDelay;
+
             this.tbXbmcConnectionIp.Text = Settings.Default.XbmcIp;
             this.tbXbmcConnectionPort.Text = Settings.Default.XbmcPort.ToString();
             this.tbXbmcConnectionUsername.Text = Settings.Default.XbmcUsername;
             this.tbXbmcConnectionPassword.Text = Settings.Default.XbmcPassword;
             this.nudXbmcConnectionInterval.Value = Settings.Default.XbmcConnectionInterval;
 
-            this.cbImonGeneralAutoInitialize.Checked = Settings.Default.ImonAutoInitialize;
-            this.cbImonGeneralUninitializeOnError.Checked = Settings.Default.ImonUninitializeOnError;
+            this.cbXbmcIdleStaticTextEnable.Checked = Settings.Default.XbmcIdleStaticTextEnable;
+            this.tbXbmcIdleStaticText.Text = Settings.Default.XbmcIdleStaticText;
 
             this.trayIcon.Visible = Settings.Default.GeneralTrayEnabled;
             this.xbmcConnectionTimer.Interval = Settings.Default.XbmcConnectionInterval * 1000;
@@ -173,16 +178,22 @@ namespace iMon.XBMC
             Settings.Default.GeneralTrayHideOnMinimize = this.cbGeneralTrayHideOnMinimize.Checked;
             Settings.Default.GeneralTrayHideOnClose = this.cbGeneralTrayHideOnClose.Checked;
 
+            Settings.Default.ImonAutoInitialize = this.cbImonGeneralAutoInitialize.Checked;
+            Settings.Default.ImonUninitializeOnError = this.cbImonGeneralUninitializeOnError.Checked;
+
+            Settings.Default.ImonLcdScrollingDelay = Convert.ToInt32(this.nudImonLcdScrollingDelay.Value);
+
             Settings.Default.XbmcIp = this.tbXbmcConnectionIp.Text;
             Settings.Default.XbmcPort = Int32.Parse(this.tbXbmcConnectionPort.Text);
             Settings.Default.XbmcUsername = this.tbXbmcConnectionUsername.Text;
             Settings.Default.XbmcPassword = this.tbXbmcConnectionPassword.Text;
             Settings.Default.XbmcConnectionInterval = Convert.ToInt32(this.nudXbmcConnectionInterval.Value);
 
-            Settings.Default.ImonAutoInitialize = this.cbImonGeneralAutoInitialize.Checked;
-            Settings.Default.ImonUninitializeOnError = this.cbImonGeneralUninitializeOnError.Checked;
+            Settings.Default.XbmcIdleStaticTextEnable = this.cbXbmcIdleStaticTextEnable.Checked;
+            Settings.Default.XbmcIdleStaticText = this.tbXbmcIdleStaticText.Text;
 
             Settings.Default.Save();
+            this.xbmcHandler.Update();
 
             this.trayIcon.Visible = Settings.Default.GeneralTrayEnabled;
         }

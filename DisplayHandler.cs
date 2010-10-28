@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using iMon.DisplayApi;
+using iMon.XBMC.Properties;
 
 namespace iMon.XBMC
 {
@@ -23,11 +24,6 @@ namespace iMon.XBMC
         #endregion
 
         #region Public variables
-
-        public bool Empty
-        {
-            get { return this.queue.Count <= 0; }
-        }
 
         #endregion
 
@@ -170,11 +166,7 @@ namespace iMon.XBMC
                         this.vfd = true;
                     }
 
-                    if (this.Empty)
-                    {
-                        this.SetText("XBMC", "XBMC", string.Empty);
-                    }
-                    else
+                    if (this.queue.Count > 0)
                     {
                         this.display(this.queue[0]);
                         this.position = 1;
@@ -190,7 +182,7 @@ namespace iMon.XBMC
 
         private void lcdScrollFinished(object sender, EventArgs e)
         {
-            System.Threading.Thread.Sleep(500);
+            System.Threading.Thread.Sleep(Settings.Default.ImonLcdScrollingDelay);
 
             lock (this.queueLock)
             {

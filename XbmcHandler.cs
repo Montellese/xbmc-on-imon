@@ -5,6 +5,7 @@ using XBMC.JsonRpc;
 using System.Threading;
 using System.Timers;
 using System.Collections.Generic;
+using iMon.XBMC.Properties;
 
 namespace iMon.XBMC
 {
@@ -64,11 +65,21 @@ namespace iMon.XBMC
             this.progressTimer.Interval = ProgressUpdateInterval;
             this.progressTimer.Elapsed += progressTimerUpdate;
             this.progressTimer.AutoReset = true;
+
+            this.displayIdle();
         }
 
         #endregion
 
         #region Public functions
+
+        public void Update()
+        {
+            if (this.player == null)
+            {
+                this.displayIdle();
+            }
+        }
 
         #endregion
 
@@ -175,14 +186,14 @@ namespace iMon.XBMC
         {
             this.playbackStopped();
             this.display.SetText("STOP", "Playback", "stopped", DefaultTextDelay);
-            this.display.SetText("XBMC");
+            this.displayIdle();
         }
 
         private void xbmcPlaybackEnded(object sender, EventArgs e)
         {
             this.playbackStopped();
             this.display.SetText("Playback ended", "Playback", "ended", DefaultTextDelay);
-            this.display.SetText("XBMC");
+            this.displayIdle();
         }
 
         private void xbmcPlaybackSeek(object sender, XbmcPlayerPlaybackPositionChangedEventArgs e)
@@ -237,6 +248,19 @@ namespace iMon.XBMC
         #endregion
 
         #region Private functions
+
+        private void displayIdle()
+        {
+            if (Settings.Default.XbmcIdleStaticTextEnable)
+            {
+                this.display.SetText(Settings.Default.XbmcIdleStaticText);
+            }
+            else
+            {
+                // Sending an empty string does not have any effect
+                this.display.SetText(" ");
+            }
+        }
 
         private void updateProgress()
         {

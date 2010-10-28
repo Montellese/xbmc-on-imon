@@ -41,5 +41,14 @@
     <Setting Name="ImonUninitializeOnError" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="XbmcIdleStaticTextEnable" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="XbmcIdleStaticText" Type="System.String" Scope="User">
+      <Value Profile="(Default)">XBMC</Value>
+    </Setting>
+    <Setting Name="ImonLcdScrollingDelay" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">500</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

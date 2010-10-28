@@ -158,6 +158,11 @@ namespace iMon.XBMC
             }
         }
 
+        private void cbXbmcIdleStaticTextEnable_CheckedChanged(object sender, EventArgs e)
+        {
+            this.tbXbmcIdleStaticText.Enabled = this.cbXbmcIdleStaticTextEnable.Checked;
+        }
+
         #endregion
 
         #region Event handling
@@ -173,10 +178,5 @@ namespace iMon.XBMC
         }
 
         #endregion
-
-        private void bNavigationGeneral_MouseHover(object sender, EventArgs e)
-        {
-            this.bNavigationGeneral.BackColor = Color.Transparent;
-        }
     }
 }

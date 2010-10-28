@@ -178,5 +178,41 @@ namespace iMon.XBMC.Properties {
                 this["ImonUninitializeOnError"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool XbmcIdleStaticTextEnable {
+            get {
+                return ((bool)(this["XbmcIdleStaticTextEnable"]));
+            }
+            set {
+                this["XbmcIdleStaticTextEnable"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("XBMC")]
+        public string XbmcIdleStaticText {
+            get {
+                return ((string)(this["XbmcIdleStaticText"]));
+            }
+            set {
+                this["XbmcIdleStaticText"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        public int ImonLcdScrollingDelay {
+            get {
+                return ((int)(this["ImonLcdScrollingDelay"]));
+            }
+            set {
+                this["ImonLcdScrollingDelay"] = value;
+            }
+        }
     }
 }
