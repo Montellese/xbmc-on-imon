@@ -163,6 +163,12 @@ namespace iMon.XBMC
             this.tbXbmcIdleStaticText.Enabled = this.cbXbmcIdleStaticTextEnable.Checked;
         }
 
+        private void cbXbmcIconsSoundSystemEnable_CheckedChanged(object sender, EventArgs e)
+        {
+            this.cbXbmcIconsSoundSystem.Enabled = this.cbXbmcIconsSoundSystemEnable.Checked;
+            this.cbXbmcIconsSPDIF.Enabled = this.cbXbmcIconsSoundSystemEnable.Checked;
+        }
+
         #endregion
 
         #region Event handling

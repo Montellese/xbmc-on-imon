@@ -24,6 +24,8 @@ namespace iMon.XBMC
         private List<Text> queue;
         private int position;
 
+        private Dictionary<iMonLcdIcons, bool> icons;
+
         #endregion
 
         #region Public variables
@@ -43,6 +45,12 @@ namespace iMon.XBMC
             this.imon.StateChanged += stateChanged;
             this.queue = new List<Text>();
 
+            this.icons = new Dictionary<iMonLcdIcons, bool>(Enum.GetValues(typeof(iMonLcdIcons)).Length);
+            foreach (iMonLcdIcons icon in Enum.GetValues(typeof(iMonLcdIcons)))
+            {
+                this.icons.Add(icon, false);
+            }
+
             this.WorkerReportsProgress = false;
             this.WorkerSupportsCancellation = true;
 
@@ -61,13 +69,25 @@ namespace iMon.XBMC
                 // Wait until a connection has been established
                 this.semReady.WaitOne();
 
+                if (this.lcd)
+                {
+                    foreach (KeyValuePair<iMonLcdIcons, bool> icon in this.icons)
+                    {
+                        this.imon.LCD.Icons.Set(icon.Key, icon.Value);
+                    }
+                }
+
                 if (this.queue.Count > 0)
                 {
                     this.display(this.queue[0]);
-                    this.position = 1;
+
+                    if (this.queue.Count > 1)
+                    {
+                        this.position = 1;
+                    }
                 }
 
-                while (this.lcd || this.vfd)
+                while (!this.CancellationPending && (this.lcd || this.vfd))
                 {
                     this.semWork.WaitOne();
 
@@ -109,7 +129,12 @@ namespace iMon.XBMC
                 this.queue.Add(new Text(lcd, vfdUpper, vfdLower, delay));
                 this.position = 0;
 
-                this.semWork.Release();
+                try
+                {
+                    this.semWork.Release();
+                }
+                catch (SemaphoreFullException)
+                { }
             }
         }
 
@@ -149,6 +174,8 @@ namespace iMon.XBMC
 
         public void SetIcon(iMonLcdIcons icon, bool show)
         {
+            this.icons[icon] = show;
+
             if (this.lcd)
             {
                 this.imon.LCD.Icons.Set(icon, show);
@@ -157,6 +184,11 @@ namespace iMon.XBMC
 
         public void SetIcons(IEnumerable<iMonLcdIcons> iconList, bool show)
         {
+            foreach (iMonLcdIcons icon in iconList)
+            {
+                this.icons[icon] = show;
+            }
+
             if (this.lcd)
             {
                 this.imon.LCD.Icons.Set(iconList, show);
@@ -165,6 +197,11 @@ namespace iMon.XBMC
 
         public void HideAllIcons()
         {
+            foreach (iMonLcdIcons icon in Enum.GetValues(typeof(iMonLcdIcons)))
+            {
+                this.icons[icon] = false;
+            }
+
             if (this.lcd)
             {
                 this.imon.LCD.Icons.HideAll();

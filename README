@@ -52,6 +52,8 @@ Open iMON Manager and go to "Options" --> "Plug-in Mode" and activate the "Use
 Display Plug-in Mode" checkbox. Then go to "iMON Utilities" --> "FrontView" and 
 make sure "Run FrontView When iMON Starts" is either set to "Always" or 
 "Automatically".
+Now go to "iMON Utilities" --> "FrontView" and open the "Media Information" tab.
+Here you need to disable the "XBMC" option under "Available Player".
 Also make sure that iMON Manager is running when you start "XBMC on iMON Display".
 
 XBMC

@@ -18,6 +18,9 @@ namespace iMon.XBMC
         private const int DefaultTextDelay = 2000;
 
         private Semaphore semReady;
+        private Semaphore semWork;
+
+        private bool connected;
 
         private XbmcJsonRpcConnection xbmc;
         private DisplayHandler display;
@@ -71,6 +74,7 @@ namespace iMon.XBMC
             this.WorkerSupportsCancellation = true;
 
             this.semReady = new Semaphore(0, 1);
+            this.semWork = new Semaphore(0, 1);
         }
 
         #endregion
@@ -79,10 +83,16 @@ namespace iMon.XBMC
 
         public void Update()
         {
-            if (this.player == null)
+            if (this.player != null)
+            {
+                this.updateCurrentlyPlaying();
+            }
+            else
             {
                 this.displayIdle();
             }
+
+            this.updateIcons();
         }
 
         #endregion
@@ -96,9 +106,12 @@ namespace iMon.XBMC
                 // Wait until a connection has been established
                 this.semReady.WaitOne();
 
-                this.displayIdle();
+                while (!this.CancellationPending && this.connected)
+                {
+                    this.semWork.WaitOne();
 
-                // TODO: Do something
+                    this.Update();
+                }
             }
 
             this.xbmc.Player.PlaybackStarted -= this.xbmcPlaybackStarted;
@@ -117,6 +130,8 @@ namespace iMon.XBMC
 
         private void xbmcConnected(object sender, EventArgs e)
         {
+            this.connected = true;
+
             bool audio, video, pictures;
             this.xbmc.Player.GetActivePlayers(out video, out audio, out pictures);
 
@@ -133,19 +148,21 @@ namespace iMon.XBMC
                 this.player = this.xbmc.Player.Pictures;
             }
 
+            this.semReady.Release();
+
             if (this.player != null)
             {
                 this.player.GetTime(out this.position, out this.length);
                 this.progressTimer.Start();
-
-                this.updateCurrentlyPlaying();
             }
 
-            this.semReady.Release();
+            this.update();
         }
 
         private void xbmcAborted(object sender, EventArgs e)
         {
+            this.connected = false;
+
             this.playbackStopped();
         }
 
@@ -161,7 +178,7 @@ namespace iMon.XBMC
             this.player.GetTime(out this.position, out this.length);
             this.progressTimer.Start();
 
-            this.updateCurrentlyPlaying();
+            this.update();
         }
 
         private void xbmcPlaybackPaused(object sender, XbmcPlayerPlaybackPositionChangedEventArgs e)
@@ -189,21 +206,23 @@ namespace iMon.XBMC
             this.updateProgress();
             this.progressTimer.Start();
 
-            this.updateCurrentlyPlaying();
+            this.update();
         }
 
         private void xbmcPlaybackStopped(object sender, EventArgs e)
         {
             this.playbackStopped();
             this.display.SetText("STOP", "Playback", "stopped", DefaultTextDelay);
-            this.displayIdle();
+
+            this.update();
         }
 
         private void xbmcPlaybackEnded(object sender, EventArgs e)
         {
             this.playbackStopped();
             this.display.SetText("Playback ended", "Playback", "ended", DefaultTextDelay);
-            this.displayIdle();
+
+            this.update();
         }
 
         private void xbmcPlaybackSeek(object sender, XbmcPlayerPlaybackPositionChangedEventArgs e)
@@ -243,7 +262,7 @@ namespace iMon.XBMC
             }
             else
             {
-                this.updateCurrentlyPlaying();
+                this.update();
 
                 this.progressTimer.Start();
             }
@@ -258,6 +277,77 @@ namespace iMon.XBMC
         #endregion
 
         #region Private functions
+
+        private void update()
+        {
+            try
+            {
+                this.semWork.Release();
+            }
+            catch (SemaphoreFullException)
+            { }
+        }
+
+        private void updateIcons()
+        {
+            this.display.HideAllIcons();
+            List<iMonLcdIcons> icons = new List<iMonLcdIcons>();
+            if (Settings.Default.XbmcGeneralSoundSystemEnable)
+            {
+                if (Settings.Default.XbmcGeneralSPDIF)
+                {
+                    icons.Add(iMonLcdIcons.SpeakerSPDIF);
+
+                    XbmcSoundSystems sound = (XbmcSoundSystems)Settings.Default.XbmcGeneralSoundSystem;
+                    if (sound == XbmcSoundSystems.Mono_1_0)
+                    {
+                        icons.Add(iMonLcdIcons.SpeakerCenter);
+                    }
+                    else
+                    {
+                        icons.Add(iMonLcdIcons.SpeakerFrontLeft);
+                        icons.Add(iMonLcdIcons.SpeakerFrontRight);
+
+                        switch (sound)
+                        {
+                            case XbmcSoundSystems.Stereo_2_1:
+                                icons.Add(iMonLcdIcons.SpeakerLFE);
+                                break;
+
+                            case XbmcSoundSystems.Quad_4_0:
+                                icons.Add(iMonLcdIcons.SpeakerRearLeft);
+                                icons.Add(iMonLcdIcons.SpeakerRearRight);
+                                break;
+
+                            case XbmcSoundSystems.Surround_5_1:
+                                icons.Add(iMonLcdIcons.SpeakerRearLeft);
+                                icons.Add(iMonLcdIcons.SpeakerRearRight);
+                                icons.Add(iMonLcdIcons.SpeakerCenter);
+                                icons.Add(iMonLcdIcons.SpeakerLFE);
+                                break;
+
+                            case XbmcSoundSystems.Side_5_1:
+                                icons.Add(iMonLcdIcons.SpeakerSideLeft);
+                                icons.Add(iMonLcdIcons.SpeakerSideRight);
+                                icons.Add(iMonLcdIcons.SpeakerCenter);
+                                icons.Add(iMonLcdIcons.SpeakerLFE);
+                                break;
+
+                            case XbmcSoundSystems.Surround_7_1:
+                                icons.Add(iMonLcdIcons.SpeakerSideLeft);
+                                icons.Add(iMonLcdIcons.SpeakerSideRight);
+                                icons.Add(iMonLcdIcons.SpeakerRearLeft);
+                                icons.Add(iMonLcdIcons.SpeakerRearRight);
+                                icons.Add(iMonLcdIcons.SpeakerCenter);
+                                icons.Add(iMonLcdIcons.SpeakerLFE);
+                                break;
+                        }
+                    }
+                }
+            }
+
+            this.display.SetIcons(icons, true);
+        }
 
         private void displayIdle()
         {
@@ -293,6 +383,11 @@ namespace iMon.XBMC
 
         private void updateCurrentlyPlaying()
         {
+            if (this.player == null)
+            {
+                return;
+            }
+
             this.display.SetIcon(iMonLcdIcons.Shuffle, this.player.Random);
             this.display.SetIcon(iMonLcdIcons.Repeat, this.player.Repeat != XbmcRepeatTypes.Off);
             iMonLcdIcons icon;

@@ -92,6 +92,10 @@ namespace iMon.XBMC
                 {
                     ((CheckBox)ctrl).CheckedChanged += settingsChanged;
                 }
+                if (ctrl is ComboBox)
+                {
+                    ((ComboBox)ctrl).SelectedValueChanged += settingsChanged;
+                }
                 else if (ctrl is TextBox)
                 {
                     ((TextBox)ctrl).Leave += settingsChanged;
@@ -144,6 +148,12 @@ namespace iMon.XBMC
 
             this.cbXbmcIdleStaticTextEnable.Checked = Settings.Default.XbmcIdleStaticTextEnable;
             this.tbXbmcIdleStaticText.Text = Settings.Default.XbmcIdleStaticText;
+
+            this.nudXbmcIconsUpdateInterval.Value = Settings.Default.XbmcGeneralUpdateInterval;
+            this.cbXbmcIconsSoundSystemEnable.Checked = Settings.Default.XbmcGeneralSoundSystemEnable;
+            this.cbXbmcIconsSoundSystem.SelectedIndex = Settings.Default.XbmcGeneralSoundSystem;
+            this.cbXbmcIconsSPDIF.Checked = Settings.Default.XbmcGeneralSPDIF;
+            this.cbXbmcIconsVolEnable.Checked = Settings.Default.XbmcGeneralShowVolume;
 
             this.trayIcon.Visible = Settings.Default.GeneralTrayEnabled;
             this.xbmcConnectionTimer.Interval = Settings.Default.XbmcConnectionInterval * 1000;
@@ -198,6 +208,12 @@ namespace iMon.XBMC
 
             Settings.Default.XbmcIdleStaticTextEnable = this.cbXbmcIdleStaticTextEnable.Checked;
             Settings.Default.XbmcIdleStaticText = this.tbXbmcIdleStaticText.Text;
+
+            Settings.Default.XbmcGeneralUpdateInterval = Convert.ToInt32(this.nudXbmcIconsUpdateInterval.Value);
+            Settings.Default.XbmcGeneralSoundSystemEnable = this.cbXbmcIconsSoundSystemEnable.Checked;
+            Settings.Default.XbmcGeneralSoundSystem = this.cbXbmcIconsSoundSystem.SelectedIndex;
+            Settings.Default.XbmcGeneralSPDIF = this.cbXbmcIconsSPDIF.Checked;
+            Settings.Default.XbmcGeneralShowVolume = this.cbXbmcIconsVolEnable.Checked;
 
             Settings.Default.Save();
             this.xbmcHandler.Update();

@@ -4,7 +4,7 @@
         <name>iMonDisplayApiSharp</name>
     </assembly>
     <members>
-        <member name="M:iMon.DisplayApi.iMonNativeApi.IMON_Display_Init(System.Int32,System.UInt32)">
+        <member name="M:iMon.DisplayApi.iMonNativeApi.IMON_Display_Init(System.IntPtr,System.UInt32)">
             <summary>
             This function should be called to use other functions in iMON Display API.
             When the caller application calls this function, API tries to request Display Plug-in Mode to iMON.
