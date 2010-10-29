@@ -1,22 +1,23 @@
 ﻿using System;
-
-using iMon.DisplayApi;
-using XBMC.JsonRpc;
 using System.Threading;
 using System.Timers;
 using System.Collections.Generic;
+using System.ComponentModel;
+
+using iMon.DisplayApi;
+using XBMC.JsonRpc;
 using iMon.XBMC.Properties;
 
 namespace iMon.XBMC
 {
-    internal class XbmcHandler : IDisposable
+    internal class XbmcHandler : BackgroundWorker
     {
         #region Private variables
 
         private const int ProgressUpdateInterval = 5000;
         private const int DefaultTextDelay = 2000;
 
-        private bool disposed;
+        private Semaphore semReady;
 
         private XbmcJsonRpcConnection xbmc;
         private DisplayHandler display;
@@ -66,7 +67,10 @@ namespace iMon.XBMC
             this.progressTimer.Elapsed += progressTimerUpdate;
             this.progressTimer.AutoReset = true;
 
-            this.displayIdle();
+            this.WorkerReportsProgress = false;
+            this.WorkerSupportsCancellation = true;
+
+            this.semReady = new Semaphore(0, 1);
         }
 
         #endregion
@@ -83,24 +87,28 @@ namespace iMon.XBMC
 
         #endregion
 
-        #region Implementations of IDisposable
+        #region Overrides of BackgroundWorker
 
-        public void Dispose()
+        protected override void OnDoWork(DoWorkEventArgs e)
         {
-            if (!this.disposed)
+            while (!this.CancellationPending)
             {
-                this.xbmc.Player.PlaybackStarted -= this.xbmcPlaybackStarted;
-                this.xbmc.Player.PlaybackPaused -= this.xbmcPlaybackPaused;
-                this.xbmc.Player.PlaybackResumed -= this.xbmcPlaybackResumed;
-                this.xbmc.Player.PlaybackStopped -= this.xbmcPlaybackStopped;
-                this.xbmc.Player.PlaybackEnded -= this.xbmcPlaybackEnded;
-                this.xbmc.Player.PlaybackSeek -= this.xbmcPlaybackSeek;
-                this.xbmc.Player.PlaybackSeekChapter -= this.xbmcPlaybackSeek;
-                this.xbmc.Player.PlaybackSpeedChanged -= this.xbmcPlaybackSpeedChanged;
+                // Wait until a connection has been established
+                this.semReady.WaitOne();
 
-                this.disposed = true;
-                GC.SuppressFinalize(this);
+                this.displayIdle();
+
+                // TODO: Do something
             }
+
+            this.xbmc.Player.PlaybackStarted -= this.xbmcPlaybackStarted;
+            this.xbmc.Player.PlaybackPaused -= this.xbmcPlaybackPaused;
+            this.xbmc.Player.PlaybackResumed -= this.xbmcPlaybackResumed;
+            this.xbmc.Player.PlaybackStopped -= this.xbmcPlaybackStopped;
+            this.xbmc.Player.PlaybackEnded -= this.xbmcPlaybackEnded;
+            this.xbmc.Player.PlaybackSeek -= this.xbmcPlaybackSeek;
+            this.xbmc.Player.PlaybackSeekChapter -= this.xbmcPlaybackSeek;
+            this.xbmc.Player.PlaybackSpeedChanged -= this.xbmcPlaybackSpeedChanged;
         }
 
         #endregion
@@ -132,6 +140,8 @@ namespace iMon.XBMC
 
                 this.updateCurrentlyPlaying();
             }
+
+            this.semReady.Release();
         }
 
         private void xbmcAborted(object sender, EventArgs e)

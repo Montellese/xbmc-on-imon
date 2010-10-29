@@ -12,6 +12,8 @@
     <AssemblyName>XbmcOniMon</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,10 +26,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -106,7 +106,9 @@
     <Compile Include="NavigationButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="XbmcHandler.cs" />
+    <Compile Include="XbmcHandler.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="XBMC.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -55,7 +55,7 @@ namespace iMon.XBMC
             this.xbmc.Aborted += xbmcShutdown;
 
             this.xbmcHandler = new XbmcHandler(this.xbmc, this.displayHandler);
-            // TODO: this.xbmcHandler.RunWorkerAsync();
+            this.xbmcHandler.RunWorkerAsync();
 
             this.xbmcConnectingDeletage = new XbmcConnectingDelegate(xbmcConnecting);
 
@@ -78,7 +78,7 @@ namespace iMon.XBMC
             this.displayHandler.CancelAsync();
             this.iMonUninitialize();
 
-            // TODO: this.xbmcHandler.CancelAsync();
+            this.xbmcHandler.CancelAsync();
             this.xbmcDisconnect(true);
             
             this.Close();
