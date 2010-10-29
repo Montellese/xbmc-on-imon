@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 using iMon.DisplayApi;
 using iMon.XBMC.Properties;
+using System.Threading;
 
 namespace iMon.XBMC
 {
-    internal partial class DisplayHandler : IDisposable
+    internal partial class DisplayHandler : BackgroundWorker
     {
         #region Private variables
 
-        private bool disposed;
+        private Semaphore semReady;
+        private Semaphore semWork;
 
         private iMonWrapperApi imon;
         private bool lcd;
@@ -37,28 +40,46 @@ namespace iMon.XBMC
             }
 
             this.imon = imon;
-
+            this.imon.StateChanged += stateChanged;
             this.queue = new List<Text>();
 
-            this.imon.StateChanged += stateChanged;
+            this.WorkerReportsProgress = false;
+            this.WorkerSupportsCancellation = true;
+
+            this.semReady = new Semaphore(0, 1);
+            this.semWork = new Semaphore(0, 1);
         }
 
         #endregion
 
-        #region Implementations of IDisposable
+        #region Overrides of BackgroundWorker
 
-        public void Dispose()
+        protected override void OnDoWork(DoWorkEventArgs e)
         {
-            if (!this.disposed)
+            while (!this.CancellationPending)
             {
-                if (this.lcd)
+                // Wait until a connection has been established
+                this.semReady.WaitOne();
+
+                if (this.queue.Count > 0)
                 {
-                    this.imon.LCD.ScrollFinished -= lcdScrollFinished;
+                    this.display(this.queue[0]);
+                    this.position = 1;
                 }
 
-                this.disposed = true;
-                GC.SuppressFinalize(this);
+                while (this.lcd || this.vfd)
+                {
+                    this.semWork.WaitOne();
+
+                    lock (this.queueLock)
+                    {
+                        this.display(this.queue[this.position]);
+                        this.position += 1;
+                    }
+                }
             }
+
+            this.imon.LCD.ScrollFinished -= lcdScrollFinished;
         }
 
         #endregion
@@ -88,7 +109,7 @@ namespace iMon.XBMC
                 this.queue.Add(new Text(lcd, vfdUpper, vfdLower, delay));
                 this.position = 0;
 
-                this.display(this.queue[0]);
+                this.semWork.Release();
             }
         }
 
@@ -102,6 +123,11 @@ namespace iMon.XBMC
             lock (this.queueLock)
             {
                 this.queue.Add(new Text(lcd, vfdUpper, vfdLower, delay));
+
+                if (this.queue.Count == 1)
+                {
+                    this.semWork.Release();
+                }
             }
         }
 
@@ -166,11 +192,7 @@ namespace iMon.XBMC
                         this.vfd = true;
                     }
 
-                    if (this.queue.Count > 0)
-                    {
-                        this.display(this.queue[0]);
-                        this.position = 1;
-                    }
+                    this.semReady.Release();
                 }
                 else
                 {
@@ -182,7 +204,7 @@ namespace iMon.XBMC
 
         private void lcdScrollFinished(object sender, EventArgs e)
         {
-            System.Threading.Thread.Sleep(Settings.Default.ImonLcdScrollingDelay);
+            Thread.Sleep(Settings.Default.ImonLcdScrollingDelay);
 
             lock (this.queueLock)
             {
@@ -196,9 +218,7 @@ namespace iMon.XBMC
                     return;
                 }
 
-                this.display(this.queue[this.position]);
-
-                this.position += 1;
+                this.semWork.Release();
             }
         }
 

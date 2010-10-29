@@ -16,7 +16,7 @@ namespace iMon.XBMC
         private bool closing;
 
         private iMonWrapperApi imon;
-        private DisplayHandler text;
+        private DisplayHandler displayHandler;
         private XbmcJsonRpcConnection xbmc;
         private XbmcHandler xbmcHandler;
 
@@ -41,7 +41,8 @@ namespace iMon.XBMC
             this.imon.StateChanged += wrapperApi_StateChanged;
             this.imon.Error += wrapperApi_Error;
 
-            this.text = new DisplayHandler(this.imon);
+            this.displayHandler = new DisplayHandler(this.imon);
+            this.displayHandler.RunWorkerAsync();
 
             // Setting up XBMC
             this.xbmc = new XbmcJsonRpcConnection(Settings.Default.XbmcIp, Settings.Default.XbmcPort,
@@ -53,7 +54,8 @@ namespace iMon.XBMC
             this.xbmc.System.Suspending += xbmcShutdown;
             this.xbmc.Aborted += xbmcShutdown;
 
-            this.xbmcHandler = new XbmcHandler(this.xbmc, this.text);
+            this.xbmcHandler = new XbmcHandler(this.xbmc, this.displayHandler);
+            // TODO: this.xbmcHandler.RunWorkerAsync();
 
             this.xbmcConnectingDeletage = new XbmcConnectingDelegate(xbmcConnecting);
 
@@ -72,8 +74,13 @@ namespace iMon.XBMC
             }
 
             this.closing = true;
+
+            this.displayHandler.CancelAsync();
             this.iMonUninitialize();
+
+            // TODO: this.xbmcHandler.CancelAsync();
             this.xbmcDisconnect(true);
+            
             this.Close();
         }
 
@@ -437,7 +444,7 @@ namespace iMon.XBMC
                 return;
             }
 
-            this.text.SetText("XBMC Shutdown", "XBMC", "Shutdown");
+            this.displayHandler.SetText("XBMC Shutdown", "XBMC", "Shutdown");
             System.Threading.Thread.Sleep(2000);
             this.xbmcDisconnect(false);
         }

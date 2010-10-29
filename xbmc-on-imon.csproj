@@ -99,7 +99,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DisplayHandler.cs" />
+    <Compile Include="DisplayHandler.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DisplayHandler.Text.cs" />
     <Compile Include="NavigationButton.cs">
       <SubType>Component</SubType>
@@ -173,7 +175,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy $(ProjectDir)lib\iMonDisplayApiWrapperSharp\iMONDisplay.dll $(TargetDir)iMONDisplay.dll</PostBuildEvent>
+    <PostBuildEvent>copy "$(ProjectDir)lib\iMonDisplayApiWrapperSharp\iMONDisplay.dll" "$(TargetDir)iMONDisplay.dll"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
