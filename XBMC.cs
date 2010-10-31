@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Drawing;
 
 using iMon.DisplayApi;
 using iMon.XBMC.Properties;
-using System.Drawing;
+using XBMC.JsonRpc;
+using System.Net.Sockets;
 
 namespace iMon.XBMC
 {
@@ -31,6 +33,7 @@ namespace iMon.XBMC
             {
                 this.BeginInvoke(new MethodInvoker(delegate()
                 {
+                    Logging.Log("Minimizing application to tray at startup");
                     this.Hide();
                     this.Opacity = 1;
                 }));
@@ -163,10 +166,10 @@ namespace iMon.XBMC
             this.tbXbmcIdleStaticText.Enabled = this.cbXbmcIdleStaticTextEnable.Checked;
         }
 
-        private void cbXbmcIconsSoundSystemEnable_CheckedChanged(object sender, EventArgs e)
+        private void cbImonSoundSystemEnable_CheckedChanged(object sender, EventArgs e)
         {
-            this.cbXbmcIconsSoundSystem.Enabled = this.cbXbmcIconsSoundSystemEnable.Checked;
-            this.cbXbmcIconsSPDIF.Enabled = this.cbXbmcIconsSoundSystemEnable.Checked;
+            this.cbImonSoundSystem.Enabled = this.cbImonSoundSystemEnable.Checked;
+            this.cbImonSoundSystemSPDIF.Enabled = this.cbImonSoundSystemEnable.Checked;
         }
 
         #endregion
@@ -181,6 +184,32 @@ namespace iMon.XBMC
         private void wrapperApi_Error(object sender, iMonErrorEventArgs e)
         {
             this.iMonError(e.Type);
+        }
+
+        private void wrapperApi_iMon_LogError(object sender, iMonLogErrorEventArgs e)
+        {
+            Logging.Error("iMON", e.Message, e.Exception);
+        }
+
+        private void wrapperApi_iMon_Log(object sender, iMonLogEventArgs e)
+        {
+            Logging.Log("iMON", e.Message, null);
+        }
+
+        private void wrapperApi_XBMC_LogError(object sender, XbmcJsonRpcLogErrorEventArgs e)
+        {
+            if (e.Exception != null && e.Exception is SocketException)
+            {
+                // We don't want to fill the error log with SocketExceptions
+                return;
+            }
+            
+            Logging.Error("XBMC", e.Message, e.Exception);
+        }
+
+        private void wrapperApi_XBMC_Log(object sender, XbmcJsonRpcLogEventArgs e)
+        {
+            Logging.Log("XBMC", e.Message, null);
         }
 
         #endregion

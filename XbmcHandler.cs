@@ -83,6 +83,8 @@ namespace iMon.XBMC
 
         public void Update()
         {
+            Logging.Log("XBMC Handler", "Update");
+
             if (this.player != null)
             {
                 this.updateCurrentlyPlaying();
@@ -106,13 +108,19 @@ namespace iMon.XBMC
                 // Wait until a connection has been established
                 this.semReady.WaitOne();
 
+                Logging.Log("XBMC Handler", "Start working");
+
                 while (!this.CancellationPending && this.connected)
                 {
                     this.semWork.WaitOne();
 
                     this.Update();
                 }
+
+                Logging.Log("XBMC Handler", "Stop working");
             }
+
+            Logging.Log("XBMC Handler", "Cancelled");
 
             this.xbmc.Player.PlaybackStarted -= this.xbmcPlaybackStarted;
             this.xbmc.Player.PlaybackPaused -= this.xbmcPlaybackPaused;
@@ -152,7 +160,7 @@ namespace iMon.XBMC
 
             if (this.player != null)
             {
-                this.player.GetTime(out this.position, out this.length);
+                this.getTime(out this.position, out this.length);
                 this.progressTimer.Start();
             }
 
@@ -173,9 +181,11 @@ namespace iMon.XBMC
                 return;
             }
 
+            Logging.Log("XBMC Handler", "Playback started");
+
             this.player = e.Player;
 
-            this.player.GetTime(out this.position, out this.length);
+            this.getTime(out this.position, out this.length);
             this.progressTimer.Start();
 
             this.update();
@@ -187,6 +197,8 @@ namespace iMon.XBMC
             {
                 return;
             }
+
+            Logging.Log("XBMC Handler", "Playback paused");
 
             this.progressTimer.Stop();
             this.position = e.Position;
@@ -202,6 +214,8 @@ namespace iMon.XBMC
                 return;
             }
 
+            Logging.Log("XBMC Handler", "Playback resumed");
+
             this.position = e.Position;
             this.updateProgress();
             this.progressTimer.Start();
@@ -211,6 +225,8 @@ namespace iMon.XBMC
 
         private void xbmcPlaybackStopped(object sender, EventArgs e)
         {
+            Logging.Log("XBMC Handler", "Playback stopped");
+
             this.playbackStopped();
             this.display.SetText("STOP", "Playback", "stopped", DefaultTextDelay);
 
@@ -219,6 +235,8 @@ namespace iMon.XBMC
 
         private void xbmcPlaybackEnded(object sender, EventArgs e)
         {
+            Logging.Log("XBMC Handler", "Playback ended");
+
             this.playbackStopped();
             this.display.SetText("Playback ended", "Playback", "ended", DefaultTextDelay);
 
@@ -232,6 +250,8 @@ namespace iMon.XBMC
                 return;
             }
 
+            Logging.Log("XBMC Handler", "Playback seek");
+
             this.length = e.Length;
             this.position = e.Position;
             this.updateProgress();
@@ -243,6 +263,8 @@ namespace iMon.XBMC
             {
                 return;
             }
+
+            Logging.Log("XBMC Handler", "Playback speed changed");
 
             this.position = e.Position;
             this.length = e.Length;
@@ -290,67 +312,86 @@ namespace iMon.XBMC
 
         private void updateIcons()
         {
-            this.display.HideAllIcons();
-            List<iMonLcdIcons> icons = new List<iMonLcdIcons>();
-            if (Settings.Default.XbmcGeneralSoundSystemEnable)
+            Logging.Log("XBMC Handler", "Updating icons");
+
+            // Updating Speaker icons
+            this.display.SetIcons(new List<iMonLcdIcons>()
             {
-                if (Settings.Default.XbmcGeneralSPDIF)
+                iMonLcdIcons.SpeakerFrontLeft, 
+                iMonLcdIcons.SpeakerCenter,
+                iMonLcdIcons.SpeakerFrontRight,
+                iMonLcdIcons.SpeakerSideLeft,
+                iMonLcdIcons.SpeakerLFE,
+                iMonLcdIcons.SpeakerSideRight,
+                iMonLcdIcons.SpeakerRearLeft,
+                iMonLcdIcons.SpeakerSPDIF,
+                iMonLcdIcons.SpeakerRearRight
+            }, false);
+
+            List<iMonLcdIcons> icons = new List<iMonLcdIcons>();
+            if (Settings.Default.ImonSoundSystemEnable)
+            {
+                if (Settings.Default.ImonSoundSystemSPDIF)
                 {
                     icons.Add(iMonLcdIcons.SpeakerSPDIF);
+                }
 
-                    XbmcSoundSystems sound = (XbmcSoundSystems)Settings.Default.XbmcGeneralSoundSystem;
-                    if (sound == XbmcSoundSystems.Mono_1_0)
+                XbmcSoundSystems sound = (XbmcSoundSystems)Settings.Default.ImonSoundSystem;
+                if (sound == XbmcSoundSystems.Mono_1_0)
+                {
+                    icons.Add(iMonLcdIcons.SpeakerCenter);
+                }
+                else
+                {
+                    icons.Add(iMonLcdIcons.SpeakerFrontLeft);
+                    icons.Add(iMonLcdIcons.SpeakerFrontRight);
+
+                    switch (sound)
                     {
-                        icons.Add(iMonLcdIcons.SpeakerCenter);
-                    }
-                    else
-                    {
-                        icons.Add(iMonLcdIcons.SpeakerFrontLeft);
-                        icons.Add(iMonLcdIcons.SpeakerFrontRight);
+                        case XbmcSoundSystems.Stereo_2_1:
+                            icons.Add(iMonLcdIcons.SpeakerLFE);
+                            break;
 
-                        switch (sound)
-                        {
-                            case XbmcSoundSystems.Stereo_2_1:
-                                icons.Add(iMonLcdIcons.SpeakerLFE);
-                                break;
+                        case XbmcSoundSystems.Quad_4_0:
+                            icons.Add(iMonLcdIcons.SpeakerRearLeft);
+                            icons.Add(iMonLcdIcons.SpeakerRearRight);
+                            break;
 
-                            case XbmcSoundSystems.Quad_4_0:
-                                icons.Add(iMonLcdIcons.SpeakerRearLeft);
-                                icons.Add(iMonLcdIcons.SpeakerRearRight);
-                                break;
+                        case XbmcSoundSystems.Surround_5_1:
+                            icons.Add(iMonLcdIcons.SpeakerRearLeft);
+                            icons.Add(iMonLcdIcons.SpeakerRearRight);
+                            icons.Add(iMonLcdIcons.SpeakerCenter);
+                            icons.Add(iMonLcdIcons.SpeakerLFE);
+                            break;
 
-                            case XbmcSoundSystems.Surround_5_1:
-                                icons.Add(iMonLcdIcons.SpeakerRearLeft);
-                                icons.Add(iMonLcdIcons.SpeakerRearRight);
-                                icons.Add(iMonLcdIcons.SpeakerCenter);
-                                icons.Add(iMonLcdIcons.SpeakerLFE);
-                                break;
+                        case XbmcSoundSystems.Side_5_1:
+                            icons.Add(iMonLcdIcons.SpeakerSideLeft);
+                            icons.Add(iMonLcdIcons.SpeakerSideRight);
+                            icons.Add(iMonLcdIcons.SpeakerCenter);
+                            icons.Add(iMonLcdIcons.SpeakerLFE);
+                            break;
 
-                            case XbmcSoundSystems.Side_5_1:
-                                icons.Add(iMonLcdIcons.SpeakerSideLeft);
-                                icons.Add(iMonLcdIcons.SpeakerSideRight);
-                                icons.Add(iMonLcdIcons.SpeakerCenter);
-                                icons.Add(iMonLcdIcons.SpeakerLFE);
-                                break;
-
-                            case XbmcSoundSystems.Surround_7_1:
-                                icons.Add(iMonLcdIcons.SpeakerSideLeft);
-                                icons.Add(iMonLcdIcons.SpeakerSideRight);
-                                icons.Add(iMonLcdIcons.SpeakerRearLeft);
-                                icons.Add(iMonLcdIcons.SpeakerRearRight);
-                                icons.Add(iMonLcdIcons.SpeakerCenter);
-                                icons.Add(iMonLcdIcons.SpeakerLFE);
-                                break;
-                        }
+                        case XbmcSoundSystems.Surround_7_1:
+                            icons.Add(iMonLcdIcons.SpeakerSideLeft);
+                            icons.Add(iMonLcdIcons.SpeakerSideRight);
+                            icons.Add(iMonLcdIcons.SpeakerRearLeft);
+                            icons.Add(iMonLcdIcons.SpeakerRearRight);
+                            icons.Add(iMonLcdIcons.SpeakerCenter);
+                            icons.Add(iMonLcdIcons.SpeakerLFE);
+                            break;
                     }
                 }
             }
 
             this.display.SetIcons(icons, true);
+
+            // TODO: Updating VOL/REP/SFL/... icons
         }
 
         private void displayIdle()
         {
+            Logging.Log("XBMC Handler", "Displaying Idle");
+
             if (Settings.Default.XbmcIdleStaticTextEnable)
             {
                 this.display.SetText(Settings.Default.XbmcIdleStaticText);
@@ -388,6 +429,8 @@ namespace iMon.XBMC
                 return;
             }
 
+            Logging.Log("XBMC Handler", "Updating currently playing file");
+
             this.display.SetIcon(iMonLcdIcons.Shuffle, this.player.Random);
             this.display.SetIcon(iMonLcdIcons.Repeat, this.player.Repeat != XbmcRepeatTypes.Off);
             iMonLcdIcons icon;
@@ -424,6 +467,21 @@ namespace iMon.XBMC
             }
 
             this.display.SetIcon(icon, true);
+        }
+
+        private void getTime(out TimeSpan position, out TimeSpan length)
+        {
+            position = new TimeSpan();
+            length = new TimeSpan();
+
+            if (this.player is XbmcVideoPlayer)
+            {
+                ((XbmcVideoPlayer)this.player).GetTime(out this.position, out this.length);
+            } 
+            else if (this.player is XbmcAudioPlayer)
+            {
+                ((XbmcAudioPlayer)this.player).GetTime(out this.position, out this.length);
+            }
         }
 
         #endregion

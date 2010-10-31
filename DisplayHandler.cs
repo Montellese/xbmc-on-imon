@@ -69,6 +69,8 @@ namespace iMon.XBMC
                 // Wait until a connection has been established
                 this.semReady.WaitOne();
 
+                Logging.Log("Display Handler", "Start working");
+
                 if (this.lcd)
                 {
                     foreach (KeyValuePair<iMonLcdIcons, bool> icon in this.icons)
@@ -97,7 +99,11 @@ namespace iMon.XBMC
                         this.position += 1;
                     }
                 }
+
+                Logging.Log("Display Handler", "Stop working");
             }
+
+            Logging.Log("Display Handler", "Cancelled");
 
             this.imon.LCD.ScrollFinished -= lcdScrollFinished;
         }
@@ -125,6 +131,8 @@ namespace iMon.XBMC
         {
             lock (this.queueLock)
             {
+                Logging.Log("Display Handler", "Setting text to \"" + lcd + "\"");
+
                 this.queue.Clear();
                 this.queue.Add(new Text(lcd, vfdUpper, vfdLower, delay));
                 this.position = 0;
@@ -147,11 +155,18 @@ namespace iMon.XBMC
         {
             lock (this.queueLock)
             {
+                Logging.Log("Display Handler", "Adding text \"" + lcd + "\" to the queue");
+
                 this.queue.Add(new Text(lcd, vfdUpper, vfdLower, delay));
 
                 if (this.queue.Count == 1)
                 {
-                    this.semWork.Release();
+                    try
+                    {
+                        this.semWork.Release();
+                    }
+                    catch (SemaphoreFullException)
+                    { }
                 }
             }
         }
@@ -178,6 +193,8 @@ namespace iMon.XBMC
 
             if (this.lcd)
             {
+                Logging.Log("Display Handler", "Setting LCD icon " + icon + " to " + show); 
+                
                 this.imon.LCD.Icons.Set(icon, show);
             }
         }
@@ -186,6 +203,11 @@ namespace iMon.XBMC
         {
             foreach (iMonLcdIcons icon in iconList)
             {
+                if (this.lcd) 
+                {
+                    Logging.Log("Display Handler", "Setting LCD icon " + icon + " to " + show);
+                }
+
                 this.icons[icon] = show;
             }
 
@@ -204,6 +226,8 @@ namespace iMon.XBMC
 
             if (this.lcd)
             {
+                Logging.Log("Display Handler", "Hiding all LCD icons");
+
                 this.imon.LCD.Icons.HideAll();
             }
         }
@@ -243,6 +267,8 @@ namespace iMon.XBMC
         {
             Thread.Sleep(Settings.Default.ImonLcdScrollingDelay);
 
+            Logging.Log("Display Handler", "Scrolling finished");
+
             lock (this.queueLock)
             {
                 if (this.position >= this.queue.Count)
@@ -269,15 +295,21 @@ namespace iMon.XBMC
             {
                 if (this.lcd)
                 {
+                    Logging.Log("Display Handler", "LCD.SetText: " + text.Lcd);
+
                     this.imon.LCD.SetText(text.Lcd);
                 }
                 if (this.vfd)
                 {
+                    Logging.Log("Display Handler", "VFD.SetText: " + text.VfdUpper + "; " + text.VfdLower);
+                    
                     this.imon.VFD.SetText(text.VfdUpper, text.VfdLower);
                 }
 
                 if (text.Delay > 0)
                 {
+                    Logging.Log("Display Handler", "Showing text for " + text.Delay + "ms");
+
                     System.Threading.Thread.Sleep(text.Delay);
                 }
             }

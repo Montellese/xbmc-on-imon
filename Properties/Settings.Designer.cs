@@ -230,36 +230,36 @@ namespace iMon.XBMC.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool XbmcGeneralSoundSystemEnable {
+        public bool ImonSoundSystemEnable {
             get {
-                return ((bool)(this["XbmcGeneralSoundSystemEnable"]));
+                return ((bool)(this["ImonSoundSystemEnable"]));
             }
             set {
-                this["XbmcGeneralSoundSystemEnable"] = value;
+                this["ImonSoundSystemEnable"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int XbmcGeneralSoundSystem {
+        public int ImonSoundSystem {
             get {
-                return ((int)(this["XbmcGeneralSoundSystem"]));
+                return ((int)(this["ImonSoundSystem"]));
             }
             set {
-                this["XbmcGeneralSoundSystem"] = value;
+                this["ImonSoundSystem"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool XbmcGeneralSPDIF {
+        public bool ImonSoundSystemSPDIF {
             get {
-                return ((bool)(this["XbmcGeneralSPDIF"]));
+                return ((bool)(this["ImonSoundSystemSPDIF"]));
             }
             set {
-                this["XbmcGeneralSPDIF"] = value;
+                this["ImonSoundSystemSPDIF"] = value;
             }
         }
         
@@ -272,6 +272,18 @@ namespace iMon.XBMC.Properties {
             }
             set {
                 this["XbmcGeneralShowVolume"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool GeneralDebugEnable {
+            get {
+                return ((bool)(this["GeneralDebugEnable"]));
+            }
+            set {
+                this["GeneralDebugEnable"] = value;
             }
         }
     }

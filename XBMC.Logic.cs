@@ -1,11 +1,12 @@
 using System;
 using System.Windows.Forms;
+using System.Threading;
+using System.IO;
 
 using iMon.XBMC.Properties;
 
 using iMon.DisplayApi;
 using XBMC.JsonRpc;
-using System.Threading;
 
 namespace iMon.XBMC
 {
@@ -30,6 +31,28 @@ namespace iMon.XBMC
 
         private void constructor()
         {
+            try
+            {
+                if (File.Exists(Logging.ErrorLog))
+                {
+                    if (File.Exists(Logging.ErrorLog + Logging.OldLog))
+                    {
+                        File.Delete(Logging.ErrorLog + Logging.OldLog);
+                    }
+                    File.Move(Logging.ErrorLog, Logging.ErrorLog + Logging.OldLog);
+                }
+                if (File.Exists(Logging.DebugLog))
+                {
+                    if (File.Exists(Logging.DebugLog + Logging.OldLog))
+                    {
+                        File.Delete(Logging.DebugLog + Logging.OldLog);
+                    }
+                    File.Move(Logging.DebugLog, Logging.DebugLog + Logging.OldLog);
+                }
+            }
+            catch (Exception)
+            { }
+
             this.xbmcConnectionTimer = new System.Windows.Forms.Timer();
             this.xbmcConnectionTimer.Tick += xbmcTryConnect;
 
@@ -37,14 +60,21 @@ namespace iMon.XBMC
             this.setupSettingsChanges(this.tabOptions);
 
             // Setting up iMON
+            Logging.Log("Setting up iMON");
             this.imon = new iMonWrapperApi();
             this.imon.StateChanged += wrapperApi_StateChanged;
             this.imon.Error += wrapperApi_Error;
+            this.imon.LogError += wrapperApi_iMon_LogError;
+            if (Settings.Default.GeneralDebugEnable)
+            {
+                this.imon.Log += wrapperApi_iMon_Log;
+            }
 
             this.displayHandler = new DisplayHandler(this.imon);
             this.displayHandler.RunWorkerAsync();
 
             // Setting up XBMC
+            Logging.Log("Setting up XBMC connection to " + Settings.Default.XbmcIp + ":" + Settings.Default.XbmcPort);
             this.xbmc = new XbmcJsonRpcConnection(Settings.Default.XbmcIp, Settings.Default.XbmcPort,
                                                   Settings.Default.XbmcUsername, Settings.Default.XbmcPassword);
             this.xbmc.System.Hibernating += xbmcShutdown;
@@ -53,6 +83,11 @@ namespace iMon.XBMC
             this.xbmc.System.Sleeping += xbmcShutdown;
             this.xbmc.System.Suspending += xbmcShutdown;
             this.xbmc.Aborted += xbmcShutdown;
+            this.xbmc.LogError += wrapperApi_XBMC_LogError;
+            if (Settings.Default.GeneralDebugEnable)
+            {
+                this.xbmc.Log += wrapperApi_XBMC_Log;
+            }
 
             this.xbmcHandler = new XbmcHandler(this.xbmc, this.displayHandler);
             this.xbmcHandler.RunWorkerAsync();
@@ -61,6 +96,7 @@ namespace iMon.XBMC
 
             if (Settings.Default.GeneralStartupConnect)
             {
+                Logging.Log("Auto-connecting to XBMC at startup");
                 this.xbmcConnect(true);
             }
         }
@@ -73,11 +109,15 @@ namespace iMon.XBMC
                 return;
             }
 
+            Logging.Log("Closing the application...");
+
             this.closing = true;
 
+            Logging.Log("Cancelling the display handler...");
             this.displayHandler.CancelAsync();
             this.iMonUninitialize();
 
+            Logging.Log("Cancelling the XBMC handler...");
             this.xbmcHandler.CancelAsync();
             this.xbmcDisconnect(true);
             
@@ -138,7 +178,13 @@ namespace iMon.XBMC
             this.cbImonGeneralAutoInitialize.Checked = Settings.Default.ImonAutoInitialize;
             this.cbImonGeneralUninitializeOnError.Checked = Settings.Default.ImonUninitializeOnError;
 
+            this.cbGeneralDebugEnable.Checked = Settings.Default.GeneralDebugEnable;
+
             this.nudImonLcdScrollingDelay.Value = Settings.Default.ImonLcdScrollingDelay;
+
+            this.cbImonSoundSystemEnable.Checked = Settings.Default.ImonSoundSystemEnable;
+            this.cbImonSoundSystem.SelectedIndex = Settings.Default.ImonSoundSystem;
+            this.cbImonSoundSystemSPDIF.Checked = Settings.Default.ImonSoundSystemSPDIF;
 
             this.tbXbmcConnectionIp.Text = Settings.Default.XbmcIp;
             this.tbXbmcConnectionPort.Text = Settings.Default.XbmcPort.ToString();
@@ -150,17 +196,17 @@ namespace iMon.XBMC
             this.tbXbmcIdleStaticText.Text = Settings.Default.XbmcIdleStaticText;
 
             this.nudXbmcIconsUpdateInterval.Value = Settings.Default.XbmcGeneralUpdateInterval;
-            this.cbXbmcIconsSoundSystemEnable.Checked = Settings.Default.XbmcGeneralSoundSystemEnable;
-            this.cbXbmcIconsSoundSystem.SelectedIndex = Settings.Default.XbmcGeneralSoundSystem;
-            this.cbXbmcIconsSPDIF.Checked = Settings.Default.XbmcGeneralSPDIF;
             this.cbXbmcIconsVolEnable.Checked = Settings.Default.XbmcGeneralShowVolume;
 
             this.trayIcon.Visible = Settings.Default.GeneralTrayEnabled;
             this.xbmcConnectionTimer.Interval = Settings.Default.XbmcConnectionInterval * 1000;
 
+            Logging.Log("Settings successfully applied to the GUI");
+
             if (Settings.Default.ImonAutoInitialize &&  this.imon != null && 
                 !this.imon.IsInitialized && this.xbmc != null && this.xbmc.IsAlive)
             {
+                Logging.Log("Auto-initializing iMON");
                 this.iMonInitialize();
             }
         }
@@ -175,16 +221,31 @@ namespace iMon.XBMC
             {
                 if (this.cbGeneralStartupConnect.Checked && !this.xbmc.IsAlive)
                 {
+                    Logging.Log("Auto-connecting to XBMC");
                     this.xbmcConnect(true);
                 }
                 else if (!this.cbGeneralStartupConnect.Checked && this.xbmcConnectionTimer.Enabled)
                 {
+                    Logging.Log("Stopping XBMC auto-connection interval");
                     this.xbmcConnectionTimer.Stop();
                 }
             }
             if (Settings.Default.XbmcConnectionInterval != Convert.ToInt32(this.nudXbmcConnectionInterval.Value)) 
             {
                 this.xbmcConnectionTimer.Interval = Convert.ToInt32(this.nudXbmcConnectionInterval.Value) * 1000;
+            }
+            if (Settings.Default.GeneralDebugEnable != this.cbGeneralDebugEnable.Checked)
+            {
+                if (this.cbGeneralDebugEnable.Checked)
+                {
+                    this.imon.Log += wrapperApi_iMon_Log;
+                    this.xbmc.Log += wrapperApi_XBMC_Log;
+                }
+                else
+                {
+                    this.imon.Log -= wrapperApi_iMon_Log;
+                    this.xbmc.Log -= wrapperApi_XBMC_Log;
+                }
             }
 
             Settings.Default.GeneralStartupAuto = this.cbGeneralStartupAuto.Checked;
@@ -195,10 +256,17 @@ namespace iMon.XBMC
             Settings.Default.GeneralTrayHideOnMinimize = this.cbGeneralTrayHideOnMinimize.Checked;
             Settings.Default.GeneralTrayHideOnClose = this.cbGeneralTrayHideOnClose.Checked;
 
+            Settings.Default.GeneralDebugEnable = this.cbGeneralDebugEnable.Checked;
+
+
             Settings.Default.ImonAutoInitialize = this.cbImonGeneralAutoInitialize.Checked;
             Settings.Default.ImonUninitializeOnError = this.cbImonGeneralUninitializeOnError.Checked;
 
             Settings.Default.ImonLcdScrollingDelay = Convert.ToInt32(this.nudImonLcdScrollingDelay.Value);
+
+            Settings.Default.ImonSoundSystemEnable = this.cbImonSoundSystemEnable.Checked;
+            Settings.Default.ImonSoundSystem = this.cbImonSoundSystem.SelectedIndex;
+            Settings.Default.ImonSoundSystemSPDIF = this.cbImonSoundSystemSPDIF.Checked;
 
             Settings.Default.XbmcIp = this.tbXbmcConnectionIp.Text;
             Settings.Default.XbmcPort = Int32.Parse(this.tbXbmcConnectionPort.Text);
@@ -210,12 +278,10 @@ namespace iMon.XBMC
             Settings.Default.XbmcIdleStaticText = this.tbXbmcIdleStaticText.Text;
 
             Settings.Default.XbmcGeneralUpdateInterval = Convert.ToInt32(this.nudXbmcIconsUpdateInterval.Value);
-            Settings.Default.XbmcGeneralSoundSystemEnable = this.cbXbmcIconsSoundSystemEnable.Checked;
-            Settings.Default.XbmcGeneralSoundSystem = this.cbXbmcIconsSoundSystem.SelectedIndex;
-            Settings.Default.XbmcGeneralSPDIF = this.cbXbmcIconsSPDIF.Checked;
             Settings.Default.XbmcGeneralShowVolume = this.cbXbmcIconsVolEnable.Checked;
 
             Settings.Default.Save();
+            Logging.Log("Settings saved");
             this.xbmcHandler.Update();
 
             this.trayIcon.Visible = Settings.Default.GeneralTrayEnabled;
@@ -227,6 +293,7 @@ namespace iMon.XBMC
 
         private void iMonInitialize()
         {
+            Logging.Log("Initializing iMON");
             this.imon.Initialize();
         }
 
@@ -234,9 +301,8 @@ namespace iMon.XBMC
         {
             if (this.imon != null && this.imon.IsInitialized)
             {
+                Logging.Log("Uninitializing iMON");
                 this.imon.Uninitialize();
-                //this.imon.StateChanged -= wrapperApi_StateChanged;
-                //this.imon.Error -= wrapperApi_Error;
             }
         }
 
@@ -265,6 +331,8 @@ namespace iMon.XBMC
                     }
                 }
 
+                Logging.Log("iMON " + display + " initialized");
+
                 this.trayIcon.Text = "XBMC on iMON" + Environment.NewLine + "Running";
                 this.showBalloonTip("Connected to XBMC at " + Settings.Default.XbmcIp + ":" + Settings.Default.XbmcPort +
                                     Environment.NewLine + "iMON " + display + " initialized", ToolTipIcon.Info);
@@ -273,6 +341,8 @@ namespace iMon.XBMC
             }
             else
             {
+                Logging.Log("iMON uninitialized");
+
                 this.trayIcon.Text = "XBMC on iMON" + Environment.NewLine + "Connected";
                 this.showBalloonTip("iMON uninitialized", ToolTipIcon.Warning);
 
@@ -282,6 +352,8 @@ namespace iMon.XBMC
 
         private void iMonError(iMonErrorType error)
         {
+            Logging.Error("iMON reports an error of type " + error);
+
             switch (error)
             {
                 case iMonErrorType.Unknown:
@@ -357,6 +429,7 @@ namespace iMon.XBMC
         {
             this.xbmcConnectionTimer.Stop();
 
+            Logging.Log("Trying to auto-connect with XBMC");
             this.xbmcConnect(true);
         }
 
@@ -364,6 +437,7 @@ namespace iMon.XBMC
         {
             if (!this.xbmc.IsAlive)
             {
+                Logging.Log("Asynchronous starting to connect with XBMC");
                 this.xbmcConnectingDeletage.BeginInvoke(auto, xbmcConnectingFinished, auto);
             }
         }
@@ -385,6 +459,8 @@ namespace iMon.XBMC
 
             if (this.xbmcConnectingDeletage.EndInvoke(ar) && this.xbmc.IsAlive)
             {
+                Logging.Log("Connection with XBMC established");
+
                 this.trayIcon.Text = "XBMC on iMON" + Environment.NewLine + "Connected";
                 if (!Settings.Default.ImonAutoInitialize)
                 {
@@ -411,6 +487,8 @@ namespace iMon.XBMC
             }
             else if (!auto)
             {
+                Logging.Log("Connection with XBMC failed");
+
                 if (MessageBox.Show("Cannot connect to XBMC at" + Environment.NewLine + Settings.Default.XbmcIp + ":" + Settings.Default.XbmcPort, "XBMC Connection",
                                 MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
                 {
@@ -419,6 +497,8 @@ namespace iMon.XBMC
             }
             else
             {
+                Logging.Log("Connection with XBMC failed");
+
                 this.xbmcConnectionTimer.Start();
             }
         }
@@ -428,6 +508,7 @@ namespace iMon.XBMC
             this.iMonUninitialize();
             if (forceClose)
             {
+                Logging.Log("Disconnecting from XBMC");
                 this.xbmc.Close();
             }
             else
@@ -459,6 +540,8 @@ namespace iMon.XBMC
                 this.BeginInvoke(new MethodInvoker(delegate() { this.xbmcShutdown(sender, args); }));
                 return;
             }
+
+            Logging.Log("XBMC has been closed");
 
             this.displayHandler.SetText("XBMC Shutdown", "XBMC", "Shutdown");
             System.Threading.Thread.Sleep(2000);

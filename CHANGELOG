@@ -1,15 +1,18 @@
 ﻿CHANGELOG for "XBMC on iMON Display"
 ====================================
 
-v0.2.0.0 Beta: November ??, 2010
+v0.1.1.0 Beta: November 31, 2010
 -------------------------------
+ - General:
+   - Logging of errors added (see error.log in the application directory)
+   - Option to enable detailed debug logging (see debug.log in the application directory)
  - iMON:
    - Custom delay at the end of a scrolling text before the next / same text starts scrolling again
    - Interaction with the display is now handled in a seperate thread which avoids user interface freezes
+   - Possibility to enable/disable displaying a sound system setup and choosing between different sound systems
  - XBMC:
    - Option to enable/disable displaying a custom static text when XBMC is idle (no file is playing)
    - Interaction with XBMC is now handled in a seperate thread which avoids user interface freezes
-   - Possibility to enable/disable displaying a sound system setup and choosing between different sound systems
 
 v0.1.0.0 Beta: October 27, 2010
 -------------------------------

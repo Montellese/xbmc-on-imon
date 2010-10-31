@@ -72,9 +72,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.cbXbmcIconsScreen = new System.Windows.Forms.CheckBox();
             this.cbXbmcIconsVolEnable = new System.Windows.Forms.CheckBox();
-            this.cbXbmcIconsSPDIF = new System.Windows.Forms.CheckBox();
-            this.cbXbmcIconsSoundSystem = new System.Windows.Forms.ComboBox();
-            this.cbXbmcIconsSoundSystemEnable = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.nudXbmcConnectionInterval = new System.Windows.Forms.NumericUpDown();
@@ -123,6 +120,12 @@
             this.trayMenuImon = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.trayMenuClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupBox14 = new System.Windows.Forms.GroupBox();
+            this.cbImonSoundSystemSPDIF = new System.Windows.Forms.CheckBox();
+            this.cbImonSoundSystem = new System.Windows.Forms.ComboBox();
+            this.cbImonSoundSystemEnable = new System.Windows.Forms.CheckBox();
+            this.groupBox15 = new System.Windows.Forms.GroupBox();
+            this.cbGeneralDebugEnable = new System.Windows.Forms.CheckBox();
             this.bNavigationXbmc = new iMon.XBMC.NavigationButton();
             this.bNavigationImon = new iMon.XBMC.NavigationButton();
             this.bNavigationGeneral = new iMon.XBMC.NavigationButton();
@@ -150,6 +153,8 @@
             this.groupBox8.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.trayMenu.SuspendLayout();
+            this.groupBox14.SuspendLayout();
+            this.groupBox15.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -330,6 +335,7 @@
             // tpImon
             // 
             this.tpImon.BackColor = System.Drawing.SystemColors.Control;
+            this.tpImon.Controls.Add(this.groupBox14);
             this.tpImon.Controls.Add(this.groupBox13);
             this.tpImon.Controls.Add(this.groupBox3);
             this.tpImon.Location = new System.Drawing.Point(4, 22);
@@ -417,6 +423,7 @@
             // tpGeneral
             // 
             this.tpGeneral.BackColor = System.Drawing.SystemColors.Control;
+            this.tpGeneral.Controls.Add(this.groupBox15);
             this.tpGeneral.Controls.Add(this.groupBox4);
             this.tpGeneral.Controls.Add(this.groupBox2);
             this.tpGeneral.Location = new System.Drawing.Point(4, 22);
@@ -546,12 +553,10 @@
             this.groupBox7.Controls.Add(this.label7);
             this.groupBox7.Controls.Add(this.cbXbmcIconsScreen);
             this.groupBox7.Controls.Add(this.cbXbmcIconsVolEnable);
-            this.groupBox7.Controls.Add(this.cbXbmcIconsSPDIF);
-            this.groupBox7.Controls.Add(this.cbXbmcIconsSoundSystem);
-            this.groupBox7.Controls.Add(this.cbXbmcIconsSoundSystemEnable);
+            this.groupBox7.Enabled = false;
             this.groupBox7.Location = new System.Drawing.Point(6, 187);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(369, 116);
+            this.groupBox7.Size = new System.Drawing.Size(369, 70);
             this.groupBox7.TabIndex = 3;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "General icons";
@@ -592,7 +597,7 @@
             // 
             this.cbXbmcIconsScreen.AutoSize = true;
             this.cbXbmcIconsScreen.Enabled = false;
-            this.cbXbmcIconsScreen.Location = new System.Drawing.Point(191, 97);
+            this.cbXbmcIconsScreen.Location = new System.Drawing.Point(191, 45);
             this.cbXbmcIconsScreen.Name = "cbXbmcIconsScreen";
             this.cbXbmcIconsScreen.Size = new System.Drawing.Size(131, 17);
             this.cbXbmcIconsScreen.TabIndex = 4;
@@ -603,50 +608,12 @@
             // 
             this.cbXbmcIconsVolEnable.AutoSize = true;
             this.cbXbmcIconsVolEnable.Enabled = false;
-            this.cbXbmcIconsVolEnable.Location = new System.Drawing.Point(6, 97);
+            this.cbXbmcIconsVolEnable.Location = new System.Drawing.Point(6, 45);
             this.cbXbmcIconsVolEnable.Name = "cbXbmcIconsVolEnable";
             this.cbXbmcIconsVolEnable.Size = new System.Drawing.Size(135, 17);
             this.cbXbmcIconsVolEnable.TabIndex = 3;
             this.cbXbmcIconsVolEnable.Text = "Show VOL if not muted";
             this.cbXbmcIconsVolEnable.UseVisualStyleBackColor = true;
-            // 
-            // cbXbmcIconsSPDIF
-            // 
-            this.cbXbmcIconsSPDIF.AutoSize = true;
-            this.cbXbmcIconsSPDIF.Location = new System.Drawing.Point(191, 72);
-            this.cbXbmcIconsSPDIF.Name = "cbXbmcIconsSPDIF";
-            this.cbXbmcIconsSPDIF.Size = new System.Drawing.Size(62, 17);
-            this.cbXbmcIconsSPDIF.TabIndex = 2;
-            this.cbXbmcIconsSPDIF.Text = "S/PDIF";
-            this.cbXbmcIconsSPDIF.UseVisualStyleBackColor = true;
-            // 
-            // cbXbmcIconsSoundSystem
-            // 
-            this.cbXbmcIconsSoundSystem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbXbmcIconsSoundSystem.FormattingEnabled = true;
-            this.cbXbmcIconsSoundSystem.Items.AddRange(new object[] {
-            "1.0 Mono",
-            "2.0 Stereo",
-            "2.1 Stereo",
-            "4.0 Quad",
-            "5.1 Surround",
-            "5.1 Side",
-            "7.1 Surround"});
-            this.cbXbmcIconsSoundSystem.Location = new System.Drawing.Point(33, 69);
-            this.cbXbmcIconsSoundSystem.Name = "cbXbmcIconsSoundSystem";
-            this.cbXbmcIconsSoundSystem.Size = new System.Drawing.Size(121, 21);
-            this.cbXbmcIconsSoundSystem.TabIndex = 1;
-            // 
-            // cbXbmcIconsSoundSystemEnable
-            // 
-            this.cbXbmcIconsSoundSystemEnable.AutoSize = true;
-            this.cbXbmcIconsSoundSystemEnable.Location = new System.Drawing.Point(6, 45);
-            this.cbXbmcIconsSoundSystemEnable.Name = "cbXbmcIconsSoundSystemEnable";
-            this.cbXbmcIconsSoundSystemEnable.Size = new System.Drawing.Size(120, 17);
-            this.cbXbmcIconsSoundSystemEnable.TabIndex = 0;
-            this.cbXbmcIconsSoundSystemEnable.Text = "Show sound system";
-            this.cbXbmcIconsSoundSystemEnable.UseVisualStyleBackColor = true;
-            this.cbXbmcIconsSoundSystemEnable.CheckedChanged += new System.EventHandler(this.cbXbmcIconsSoundSystemEnable_CheckedChanged);
             // 
             // groupBox1
             // 
@@ -775,7 +742,7 @@
             // groupBox11
             // 
             this.groupBox11.Enabled = false;
-            this.groupBox11.Location = new System.Drawing.Point(6, 753);
+            this.groupBox11.Location = new System.Drawing.Point(6, 707);
             this.groupBox11.Name = "groupBox11";
             this.groupBox11.Size = new System.Drawing.Size(369, 97);
             this.groupBox11.TabIndex = 7;
@@ -834,7 +801,7 @@
             this.groupBox6.Controls.Add(this.cbXbmcPlayingShowMediaType);
             this.groupBox6.Controls.Add(this.cbXbmcPlayingShowProgress);
             this.groupBox6.Enabled = false;
-            this.groupBox6.Location = new System.Drawing.Point(6, 309);
+            this.groupBox6.Location = new System.Drawing.Point(6, 263);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(369, 117);
             this.groupBox6.TabIndex = 2;
@@ -922,7 +889,7 @@
             // groupBox12
             // 
             this.groupBox12.Enabled = false;
-            this.groupBox12.Location = new System.Drawing.Point(6, 856);
+            this.groupBox12.Location = new System.Drawing.Point(6, 810);
             this.groupBox12.Name = "groupBox12";
             this.groupBox12.Size = new System.Drawing.Size(369, 97);
             this.groupBox12.TabIndex = 8;
@@ -932,7 +899,7 @@
             // groupBox10
             // 
             this.groupBox10.Enabled = false;
-            this.groupBox10.Location = new System.Drawing.Point(6, 662);
+            this.groupBox10.Location = new System.Drawing.Point(6, 616);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(369, 85);
             this.groupBox10.TabIndex = 6;
@@ -946,7 +913,7 @@
             this.groupBox8.Controls.Add(this.rbXbmcMovieSingleText);
             this.groupBox8.Controls.Add(this.tbXbmcMovieSingleText);
             this.groupBox8.Enabled = false;
-            this.groupBox8.Location = new System.Drawing.Point(6, 432);
+            this.groupBox8.Location = new System.Drawing.Point(6, 386);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(369, 100);
             this.groupBox8.TabIndex = 4;
@@ -1000,7 +967,7 @@
             this.groupBox9.Controls.Add(this.cbXbmcTvShowTvHdtvIcon);
             this.groupBox9.Controls.Add(this.cbXbmcTvMediaTypeIcon);
             this.groupBox9.Enabled = false;
-            this.groupBox9.Location = new System.Drawing.Point(6, 538);
+            this.groupBox9.Location = new System.Drawing.Point(6, 492);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(369, 118);
             this.groupBox9.TabIndex = 5;
@@ -1123,6 +1090,75 @@
             this.trayMenuClose.Text = "Close";
             this.trayMenuClose.Click += new System.EventHandler(this.trayMenuClose_Click);
             // 
+            // groupBox14
+            // 
+            this.groupBox14.Controls.Add(this.cbImonSoundSystemSPDIF);
+            this.groupBox14.Controls.Add(this.cbImonSoundSystem);
+            this.groupBox14.Controls.Add(this.cbImonSoundSystemEnable);
+            this.groupBox14.Location = new System.Drawing.Point(11, 135);
+            this.groupBox14.Name = "groupBox14";
+            this.groupBox14.Size = new System.Drawing.Size(385, 74);
+            this.groupBox14.TabIndex = 2;
+            this.groupBox14.TabStop = false;
+            this.groupBox14.Text = "Sound system";
+            // 
+            // cbImonSoundSystemSPDIF
+            // 
+            this.cbImonSoundSystemSPDIF.AutoSize = true;
+            this.cbImonSoundSystemSPDIF.Location = new System.Drawing.Point(194, 46);
+            this.cbImonSoundSystemSPDIF.Name = "cbImonSoundSystemSPDIF";
+            this.cbImonSoundSystemSPDIF.Size = new System.Drawing.Size(62, 17);
+            this.cbImonSoundSystemSPDIF.TabIndex = 5;
+            this.cbImonSoundSystemSPDIF.Text = "S/PDIF";
+            this.cbImonSoundSystemSPDIF.UseVisualStyleBackColor = true;
+            // 
+            // cbImonSoundSystem
+            // 
+            this.cbImonSoundSystem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbImonSoundSystem.FormattingEnabled = true;
+            this.cbImonSoundSystem.Items.AddRange(new object[] {
+            "1.0 Mono",
+            "2.0 Stereo",
+            "2.1 Stereo",
+            "4.0 Quad",
+            "5.1 Surround",
+            "5.1 Side",
+            "7.1 Surround"});
+            this.cbImonSoundSystem.Location = new System.Drawing.Point(36, 43);
+            this.cbImonSoundSystem.Name = "cbImonSoundSystem";
+            this.cbImonSoundSystem.Size = new System.Drawing.Size(121, 21);
+            this.cbImonSoundSystem.TabIndex = 4;
+            // 
+            // cbImonSoundSystemEnable
+            // 
+            this.cbImonSoundSystemEnable.AutoSize = true;
+            this.cbImonSoundSystemEnable.Location = new System.Drawing.Point(9, 19);
+            this.cbImonSoundSystemEnable.Name = "cbImonSoundSystemEnable";
+            this.cbImonSoundSystemEnable.Size = new System.Drawing.Size(120, 17);
+            this.cbImonSoundSystemEnable.TabIndex = 3;
+            this.cbImonSoundSystemEnable.Text = "Show sound system";
+            this.cbImonSoundSystemEnable.UseVisualStyleBackColor = true;
+            // 
+            // groupBox15
+            // 
+            this.groupBox15.Controls.Add(this.cbGeneralDebugEnable);
+            this.groupBox15.Location = new System.Drawing.Point(11, 202);
+            this.groupBox15.Name = "groupBox15";
+            this.groupBox15.Size = new System.Drawing.Size(385, 45);
+            this.groupBox15.TabIndex = 2;
+            this.groupBox15.TabStop = false;
+            this.groupBox15.Text = "Debugging";
+            // 
+            // cbGeneralDebugEnable
+            // 
+            this.cbGeneralDebugEnable.AutoSize = true;
+            this.cbGeneralDebugEnable.Location = new System.Drawing.Point(6, 20);
+            this.cbGeneralDebugEnable.Name = "cbGeneralDebugEnable";
+            this.cbGeneralDebugEnable.Size = new System.Drawing.Size(206, 17);
+            this.cbGeneralDebugEnable.TabIndex = 0;
+            this.cbGeneralDebugEnable.Text = "Enable detailed logging into debug.log";
+            this.cbGeneralDebugEnable.UseVisualStyleBackColor = true;
+            // 
             // bNavigationXbmc
             // 
             this.bNavigationXbmc.ActiveImageIndex = 7;
@@ -1227,6 +1263,10 @@
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
             this.trayMenu.ResumeLayout(false);
+            this.groupBox14.ResumeLayout(false);
+            this.groupBox14.PerformLayout();
+            this.groupBox15.ResumeLayout(false);
+            this.groupBox15.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1303,11 +1343,8 @@
         private System.Windows.Forms.Button bXbmcPlayingAudioCodecs;
         private System.Windows.Forms.Button bXbmcPlayingVideoCodecs;
         private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.CheckBox cbXbmcIconsSoundSystemEnable;
-        private System.Windows.Forms.ComboBox cbXbmcIconsSoundSystem;
         private System.Windows.Forms.CheckBox cbXbmcIconsScreen;
         private System.Windows.Forms.CheckBox cbXbmcIconsVolEnable;
-        private System.Windows.Forms.CheckBox cbXbmcIconsSPDIF;
         private System.Windows.Forms.GroupBox groupBox12;
         private System.Windows.Forms.GroupBox groupBox11;
         private System.Windows.Forms.GroupBox groupBox10;
@@ -1330,6 +1367,12 @@
         private System.Windows.Forms.GroupBox groupBox13;
         private System.Windows.Forms.NumericUpDown nudImonLcdScrollingDelay;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.GroupBox groupBox14;
+        private System.Windows.Forms.CheckBox cbImonSoundSystemSPDIF;
+        private System.Windows.Forms.ComboBox cbImonSoundSystem;
+        private System.Windows.Forms.CheckBox cbImonSoundSystemEnable;
+        private System.Windows.Forms.GroupBox groupBox15;
+        private System.Windows.Forms.CheckBox cbGeneralDebugEnable;
 
 
     }

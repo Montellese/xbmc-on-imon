@@ -53,16 +53,19 @@
     <Setting Name="XbmcGeneralUpdateInterval" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
-    <Setting Name="XbmcGeneralSoundSystemEnable" Type="System.Boolean" Scope="User">
+    <Setting Name="ImonSoundSystemEnable" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="XbmcGeneralSoundSystem" Type="System.Int32" Scope="User">
+    <Setting Name="ImonSoundSystem" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="XbmcGeneralSPDIF" Type="System.Boolean" Scope="User">
+    <Setting Name="ImonSoundSystemSPDIF" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="XbmcGeneralShowVolume" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="GeneralDebugEnable" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>

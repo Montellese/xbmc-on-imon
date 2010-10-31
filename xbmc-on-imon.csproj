@@ -105,6 +105,7 @@
     <Compile Include="DisplayHandler.Text.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Logging.cs" />
     <Compile Include="NavigationButton.cs">
       <SubType>Component</SubType>
     </Compile>
