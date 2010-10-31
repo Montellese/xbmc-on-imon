@@ -357,6 +357,12 @@ namespace iMon.XBMC
                             icons.Add(iMonLcdIcons.SpeakerRearRight);
                             break;
 
+                        case XbmcSoundSystems.Surround_5_0:
+                            icons.Add(iMonLcdIcons.SpeakerRearLeft);
+                            icons.Add(iMonLcdIcons.SpeakerRearRight);
+                            icons.Add(iMonLcdIcons.SpeakerCenter);
+                            break;
+
                         case XbmcSoundSystems.Surround_5_1:
                             icons.Add(iMonLcdIcons.SpeakerRearLeft);
                             icons.Add(iMonLcdIcons.SpeakerRearRight);

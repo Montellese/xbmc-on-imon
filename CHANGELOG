@@ -1,7 +1,17 @@
 ﻿CHANGELOG for "XBMC on iMON Display"
 ====================================
 
-v0.1.1.0 Beta: November 31, 2010
+v0.1.2.0 Beta: November ??, 2010
+-------------------------------
+ - General:
+   - ???
+ - iMON:
+   - "5.0 Surround" (4 sattelites and a center speaker) added to sound system setup (Ticket #4)
+ - XBMC:
+   - Option to enable/disable displaying a custom static text when XBMC is idle (no file is playing)
+   - Interaction with XBMC is now handled in a seperate thread which avoids user interface freezes
+
+v0.1.1.0 Beta: October 31, 2010
 -------------------------------
  - General:
    - Logging of errors added (see error.log in the application directory)

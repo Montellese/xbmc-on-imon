@@ -50,6 +50,10 @@
             this.iLOptions = new System.Windows.Forms.ImageList(this.components);
             this.tabOptions = new System.Windows.Forms.TabControl();
             this.tpImon = new System.Windows.Forms.TabPage();
+            this.groupBox14 = new System.Windows.Forms.GroupBox();
+            this.cbImonSoundSystemSPDIF = new System.Windows.Forms.CheckBox();
+            this.cbImonSoundSystem = new System.Windows.Forms.ComboBox();
+            this.cbImonSoundSystemEnable = new System.Windows.Forms.CheckBox();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
             this.nudImonLcdScrollingDelay = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
@@ -57,6 +61,8 @@
             this.cbImonGeneralUninitializeOnError = new System.Windows.Forms.CheckBox();
             this.cbImonGeneralAutoInitialize = new System.Windows.Forms.CheckBox();
             this.tpGeneral = new System.Windows.Forms.TabPage();
+            this.groupBox15 = new System.Windows.Forms.GroupBox();
+            this.cbGeneralDebugEnable = new System.Windows.Forms.CheckBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.cbGeneralTrayHideOnMinimize = new System.Windows.Forms.CheckBox();
             this.cbGeneralTrayHideOnClose = new System.Windows.Forms.CheckBox();
@@ -120,12 +126,6 @@
             this.trayMenuImon = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.trayMenuClose = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupBox14 = new System.Windows.Forms.GroupBox();
-            this.cbImonSoundSystemSPDIF = new System.Windows.Forms.CheckBox();
-            this.cbImonSoundSystem = new System.Windows.Forms.ComboBox();
-            this.cbImonSoundSystemEnable = new System.Windows.Forms.CheckBox();
-            this.groupBox15 = new System.Windows.Forms.GroupBox();
-            this.cbGeneralDebugEnable = new System.Windows.Forms.CheckBox();
             this.bNavigationXbmc = new iMon.XBMC.NavigationButton();
             this.bNavigationImon = new iMon.XBMC.NavigationButton();
             this.bNavigationGeneral = new iMon.XBMC.NavigationButton();
@@ -136,10 +136,12 @@
             this.pNavigation.SuspendLayout();
             this.tabOptions.SuspendLayout();
             this.tpImon.SuspendLayout();
+            this.groupBox14.SuspendLayout();
             this.groupBox13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudImonLcdScrollingDelay)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.tpGeneral.SuspendLayout();
+            this.groupBox15.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tpXBMC.SuspendLayout();
@@ -153,8 +155,6 @@
             this.groupBox8.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.trayMenu.SuspendLayout();
-            this.groupBox14.SuspendLayout();
-            this.groupBox15.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -345,6 +345,56 @@
             this.tpImon.TabIndex = 1;
             this.tpImon.Text = "iMON";
             // 
+            // groupBox14
+            // 
+            this.groupBox14.Controls.Add(this.cbImonSoundSystemSPDIF);
+            this.groupBox14.Controls.Add(this.cbImonSoundSystem);
+            this.groupBox14.Controls.Add(this.cbImonSoundSystemEnable);
+            this.groupBox14.Location = new System.Drawing.Point(11, 135);
+            this.groupBox14.Name = "groupBox14";
+            this.groupBox14.Size = new System.Drawing.Size(385, 74);
+            this.groupBox14.TabIndex = 2;
+            this.groupBox14.TabStop = false;
+            this.groupBox14.Text = "Sound system";
+            // 
+            // cbImonSoundSystemSPDIF
+            // 
+            this.cbImonSoundSystemSPDIF.AutoSize = true;
+            this.cbImonSoundSystemSPDIF.Location = new System.Drawing.Point(194, 46);
+            this.cbImonSoundSystemSPDIF.Name = "cbImonSoundSystemSPDIF";
+            this.cbImonSoundSystemSPDIF.Size = new System.Drawing.Size(62, 17);
+            this.cbImonSoundSystemSPDIF.TabIndex = 5;
+            this.cbImonSoundSystemSPDIF.Text = "S/PDIF";
+            this.cbImonSoundSystemSPDIF.UseVisualStyleBackColor = true;
+            // 
+            // cbImonSoundSystem
+            // 
+            this.cbImonSoundSystem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbImonSoundSystem.FormattingEnabled = true;
+            this.cbImonSoundSystem.Items.AddRange(new object[] {
+            "1.0 Mono",
+            "2.0 Stereo",
+            "2.1 Stereo",
+            "4.0 Quad",
+            "5.0 Surround",
+            "5.1 Surround",
+            "5.1 Side",
+            "7.1 Surround"});
+            this.cbImonSoundSystem.Location = new System.Drawing.Point(36, 43);
+            this.cbImonSoundSystem.Name = "cbImonSoundSystem";
+            this.cbImonSoundSystem.Size = new System.Drawing.Size(121, 21);
+            this.cbImonSoundSystem.TabIndex = 4;
+            // 
+            // cbImonSoundSystemEnable
+            // 
+            this.cbImonSoundSystemEnable.AutoSize = true;
+            this.cbImonSoundSystemEnable.Location = new System.Drawing.Point(9, 19);
+            this.cbImonSoundSystemEnable.Name = "cbImonSoundSystemEnable";
+            this.cbImonSoundSystemEnable.Size = new System.Drawing.Size(120, 17);
+            this.cbImonSoundSystemEnable.TabIndex = 3;
+            this.cbImonSoundSystemEnable.Text = "Show sound system";
+            this.cbImonSoundSystemEnable.UseVisualStyleBackColor = true;
+            // 
             // groupBox13
             // 
             this.groupBox13.Controls.Add(this.nudImonLcdScrollingDelay);
@@ -432,6 +482,26 @@
             this.tpGeneral.Size = new System.Drawing.Size(412, 437);
             this.tpGeneral.TabIndex = 0;
             this.tpGeneral.Text = "General";
+            // 
+            // groupBox15
+            // 
+            this.groupBox15.Controls.Add(this.cbGeneralDebugEnable);
+            this.groupBox15.Location = new System.Drawing.Point(11, 202);
+            this.groupBox15.Name = "groupBox15";
+            this.groupBox15.Size = new System.Drawing.Size(385, 45);
+            this.groupBox15.TabIndex = 2;
+            this.groupBox15.TabStop = false;
+            this.groupBox15.Text = "Debugging";
+            // 
+            // cbGeneralDebugEnable
+            // 
+            this.cbGeneralDebugEnable.AutoSize = true;
+            this.cbGeneralDebugEnable.Location = new System.Drawing.Point(6, 20);
+            this.cbGeneralDebugEnable.Name = "cbGeneralDebugEnable";
+            this.cbGeneralDebugEnable.Size = new System.Drawing.Size(206, 17);
+            this.cbGeneralDebugEnable.TabIndex = 0;
+            this.cbGeneralDebugEnable.Text = "Enable detailed logging into debug.log";
+            this.cbGeneralDebugEnable.UseVisualStyleBackColor = true;
             // 
             // groupBox4
             // 
@@ -1090,75 +1160,6 @@
             this.trayMenuClose.Text = "Close";
             this.trayMenuClose.Click += new System.EventHandler(this.trayMenuClose_Click);
             // 
-            // groupBox14
-            // 
-            this.groupBox14.Controls.Add(this.cbImonSoundSystemSPDIF);
-            this.groupBox14.Controls.Add(this.cbImonSoundSystem);
-            this.groupBox14.Controls.Add(this.cbImonSoundSystemEnable);
-            this.groupBox14.Location = new System.Drawing.Point(11, 135);
-            this.groupBox14.Name = "groupBox14";
-            this.groupBox14.Size = new System.Drawing.Size(385, 74);
-            this.groupBox14.TabIndex = 2;
-            this.groupBox14.TabStop = false;
-            this.groupBox14.Text = "Sound system";
-            // 
-            // cbImonSoundSystemSPDIF
-            // 
-            this.cbImonSoundSystemSPDIF.AutoSize = true;
-            this.cbImonSoundSystemSPDIF.Location = new System.Drawing.Point(194, 46);
-            this.cbImonSoundSystemSPDIF.Name = "cbImonSoundSystemSPDIF";
-            this.cbImonSoundSystemSPDIF.Size = new System.Drawing.Size(62, 17);
-            this.cbImonSoundSystemSPDIF.TabIndex = 5;
-            this.cbImonSoundSystemSPDIF.Text = "S/PDIF";
-            this.cbImonSoundSystemSPDIF.UseVisualStyleBackColor = true;
-            // 
-            // cbImonSoundSystem
-            // 
-            this.cbImonSoundSystem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbImonSoundSystem.FormattingEnabled = true;
-            this.cbImonSoundSystem.Items.AddRange(new object[] {
-            "1.0 Mono",
-            "2.0 Stereo",
-            "2.1 Stereo",
-            "4.0 Quad",
-            "5.1 Surround",
-            "5.1 Side",
-            "7.1 Surround"});
-            this.cbImonSoundSystem.Location = new System.Drawing.Point(36, 43);
-            this.cbImonSoundSystem.Name = "cbImonSoundSystem";
-            this.cbImonSoundSystem.Size = new System.Drawing.Size(121, 21);
-            this.cbImonSoundSystem.TabIndex = 4;
-            // 
-            // cbImonSoundSystemEnable
-            // 
-            this.cbImonSoundSystemEnable.AutoSize = true;
-            this.cbImonSoundSystemEnable.Location = new System.Drawing.Point(9, 19);
-            this.cbImonSoundSystemEnable.Name = "cbImonSoundSystemEnable";
-            this.cbImonSoundSystemEnable.Size = new System.Drawing.Size(120, 17);
-            this.cbImonSoundSystemEnable.TabIndex = 3;
-            this.cbImonSoundSystemEnable.Text = "Show sound system";
-            this.cbImonSoundSystemEnable.UseVisualStyleBackColor = true;
-            // 
-            // groupBox15
-            // 
-            this.groupBox15.Controls.Add(this.cbGeneralDebugEnable);
-            this.groupBox15.Location = new System.Drawing.Point(11, 202);
-            this.groupBox15.Name = "groupBox15";
-            this.groupBox15.Size = new System.Drawing.Size(385, 45);
-            this.groupBox15.TabIndex = 2;
-            this.groupBox15.TabStop = false;
-            this.groupBox15.Text = "Debugging";
-            // 
-            // cbGeneralDebugEnable
-            // 
-            this.cbGeneralDebugEnable.AutoSize = true;
-            this.cbGeneralDebugEnable.Location = new System.Drawing.Point(6, 20);
-            this.cbGeneralDebugEnable.Name = "cbGeneralDebugEnable";
-            this.cbGeneralDebugEnable.Size = new System.Drawing.Size(206, 17);
-            this.cbGeneralDebugEnable.TabIndex = 0;
-            this.cbGeneralDebugEnable.Text = "Enable detailed logging into debug.log";
-            this.cbGeneralDebugEnable.UseVisualStyleBackColor = true;
-            // 
             // bNavigationXbmc
             // 
             this.bNavigationXbmc.ActiveImageIndex = 7;
@@ -1236,12 +1237,16 @@
             this.pNavigation.ResumeLayout(false);
             this.tabOptions.ResumeLayout(false);
             this.tpImon.ResumeLayout(false);
+            this.groupBox14.ResumeLayout(false);
+            this.groupBox14.PerformLayout();
             this.groupBox13.ResumeLayout(false);
             this.groupBox13.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudImonLcdScrollingDelay)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.tpGeneral.ResumeLayout(false);
+            this.groupBox15.ResumeLayout(false);
+            this.groupBox15.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -1263,10 +1268,6 @@
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
             this.trayMenu.ResumeLayout(false);
-            this.groupBox14.ResumeLayout(false);
-            this.groupBox14.PerformLayout();
-            this.groupBox15.ResumeLayout(false);
-            this.groupBox15.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
