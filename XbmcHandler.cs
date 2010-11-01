@@ -416,6 +416,11 @@ namespace iMon.XBMC
 
         private void playbackStopped()
         {
+            this.display.SetIcons(new List<iMonLcdIcons>() { 
+                iMonLcdIcons.Music, iMonLcdIcons.Movie, iMonLcdIcons.Tv, 
+                iMonLcdIcons.Photo, iMonLcdIcons.Webcast, iMonLcdIcons.NewsWeather
+            }, false);
+
             this.player = null;
             this.currentlyPlaying = null;
 
@@ -444,7 +449,44 @@ namespace iMon.XBMC
             {
                 icon = iMonLcdIcons.Music;
                 this.currentlyPlaying = this.xbmc.Playlist.Audio.GetCurrentItem();
-                this.display.SetText(((XbmcSong)this.currentlyPlaying).Artist + " - " + this.currentlyPlaying.Title);
+                if (this.currentlyPlaying != null)
+                {
+                    this.display.SetText(((XbmcSong)this.currentlyPlaying).Artist + " - " + this.currentlyPlaying.Title, ((XbmcSong)this.currentlyPlaying).Artist, this.currentlyPlaying.Title);
+                }
+                else
+                {
+                    // Using InfoLabels as backup
+                    IDictionary<string, string> info = this.xbmc.System.GetInfoLabels("MusicPlayer.Title", "MusicPlayer.Artist");
+                    if (info.Count > 0)
+                    {
+                        string lcd = string.Empty;
+                        string vfdUpper = string.Empty;
+                        string vfdLower = string.Empty;
+
+                        if (info.ContainsKey("MusicPlayer.Artist"))
+                        {
+                            lcd = info["MusicPlayer.Artist"];
+                            vfdUpper = info["MusicPlayer.Artist"];
+                        }
+                        if (info.ContainsKey("MusicPlayer.Title"))
+                        {
+                            if (!string.IsNullOrEmpty(lcd))
+                            {
+                                lcd += " - ";
+                            }
+                            lcd += info["MusicPlayer.Title"];
+                            vfdLower = info["MusicPlayer.Title"];
+                        }
+
+                        this.display.SetText(lcd, vfdUpper, vfdLower);
+                    }
+                    else
+                    {
+                        string path = this.xbmc.System.GetInfoLabel("Player.Filenameandpath");
+
+                        // TODO: Use file path as last way to display info
+                    }
+                }
 
                 XbmcAudioPlayer audio = (XbmcAudioPlayer)this.player;
 
@@ -458,14 +500,21 @@ namespace iMon.XBMC
             {
                 icon = iMonLcdIcons.Movie;
                 this.currentlyPlaying = this.xbmc.Playlist.Video.GetCurrentItem();
-                if (this.currentlyPlaying is XbmcTvEpisode)
+                if (this.currentlyPlaying != null)
                 {
-                    XbmcTvEpisode ep = (XbmcTvEpisode)this.currentlyPlaying;
-                    this.display.SetText(ep.ShowTitle + ": S" + ep.Season.ToString("00") + "E" + ep.Episodes.ToString("00") + " " + ep.Title);
+                    if (this.currentlyPlaying is XbmcTvEpisode)
+                    {
+                        XbmcTvEpisode ep = (XbmcTvEpisode)this.currentlyPlaying;
+                        this.display.SetText(ep.ShowTitle + ": S" + ep.Season.ToString("00") + "E" + ep.Episodes.ToString("00") + " " + ep.Title);
+                    }
+                    else
+                    {
+                        this.display.SetText(this.currentlyPlaying.Title);
+                    }
                 }
                 else
                 {
-                    this.display.SetText(this.currentlyPlaying.Title);
+                    // TODO: Using InfoLabels as backup
                 }
 
                 XbmcVideoPlayer video = (XbmcVideoPlayer)this.player;
