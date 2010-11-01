@@ -3,6 +3,7 @@ using System.Threading;
 using System.Timers;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 
 using iMon.DisplayApi;
 using XBMC.JsonRpc;
@@ -106,7 +107,7 @@ namespace iMon.XBMC
             {
                 this.updateCurrentlyPlaying();
             }
-            else
+            else if (!Settings.Default.XbmcControlModeEnable)
             {
                 this.displayIdle();
             }
@@ -572,7 +573,10 @@ namespace iMon.XBMC
                     {
                         string path = this.xbmc.System.GetInfoLabel("Player.Filenameandpath");
 
-                        // TODO: Use file path as last way to display info
+                        if (!string.IsNullOrEmpty(path))
+                        {
+                            this.display.SetText(Path.GetFileNameWithoutExtension(path));
+                        }
                     }
                 }
 
@@ -602,7 +606,42 @@ namespace iMon.XBMC
                 }
                 else
                 {
-                    // TODO: Using InfoLabels as backup
+                    // Using InfoLabels as backup
+                    IDictionary<string, string> info = this.xbmc.System.GetInfoLabels("VideoPlayer.Title", "VideoPlayer.TVShowTitle");
+                    if (info.Count > 0)
+                    {
+                        string lcd = string.Empty;
+                        string vfdUpper = string.Empty;
+                        string vfdLower = string.Empty;
+
+                        if (info.ContainsKey("VideoPlayer.TVShowTitle"))
+                        {
+                            lcd = info["VideoPlayer.TVShowTitle"];
+                            vfdUpper = info["VideoPlayer.TVShowTitle"];
+                        }
+                        if (info.ContainsKey("VideoPlayer.Title"))
+                        {
+                            if (!string.IsNullOrEmpty(lcd))
+                            {
+                                lcd += ": ";
+                            }
+                            string title = Path.GetFileNameWithoutExtension(info["VideoPlayer.Title"]);
+
+                            lcd += title;
+                            vfdLower = title;
+                        }
+
+                        this.display.SetText(lcd, vfdUpper, vfdLower);
+                    }
+                    else
+                    {
+                        string path = this.xbmc.System.GetInfoLabel("Player.Filenameandpath");
+
+                        if (!string.IsNullOrEmpty(path))
+                        {
+                            this.display.SetText(Path.GetFileNameWithoutExtension(path));
+                        }
+                    }
                 }
 
                 XbmcVideoPlayer video = (XbmcVideoPlayer)this.player;

@@ -95,8 +95,17 @@ namespace iMon.XBMC
 
                     lock (this.queueLock)
                     {
+                        if (this.position >= this.queue.Count) 
+                        {
+                            this.position = 0;
+                        }
+
                         this.display(this.queue[this.position]);
-                        this.position += 1;
+
+                        if (this.queue.Count > this.position + 1)
+                        {
+                            this.position += 1;
+                        }
                     }
                 }
 
@@ -137,12 +146,7 @@ namespace iMon.XBMC
                 this.queue.Add(new Text(lcd, vfdUpper, vfdLower, delay));
                 this.position = 0;
 
-                try
-                {
-                    this.semWork.Release();
-                }
-                catch (SemaphoreFullException)
-                { }
+                this.update();
             }
         }
 
@@ -161,12 +165,7 @@ namespace iMon.XBMC
 
                 if (this.queue.Count == 1)
                 {
-                    try
-                    {
-                        this.semWork.Release();
-                    }
-                    catch (SemaphoreFullException)
-                    { }
+                    this.update();
                 }
             }
         }
@@ -236,6 +235,16 @@ namespace iMon.XBMC
 
         #region Event handlers
 
+        private void update()
+        {
+            try
+            {
+                this.semWork.Release();
+            }
+            catch (SemaphoreFullException)
+            { }
+        }
+
         private void stateChanged(object sender, iMonStateChangedEventArgs e)
         {
             lock (this.displayLock)
@@ -281,7 +290,7 @@ namespace iMon.XBMC
                     return;
                 }
 
-                this.semWork.Release();
+                this.update();
             }
         }
 
