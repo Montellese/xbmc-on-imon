@@ -74,31 +74,8 @@ namespace iMon.XBMC
             this.displayHandler.RunWorkerAsync();
 
             // Setting up XBMC
-            Logging.Log("Setting up XBMC connection to " + Settings.Default.XbmcIp + ":" + Settings.Default.XbmcPort);
-            this.xbmc = new XbmcJsonRpcConnection(Settings.Default.XbmcIp, Settings.Default.XbmcPort,
-                                                  Settings.Default.XbmcUsername, Settings.Default.XbmcPassword);
-            this.xbmc.System.Hibernating += xbmcShutdown;
-            this.xbmc.System.ShuttingDown += xbmcShutdown;
-            this.xbmc.System.Rebooting += xbmcShutdown;
-            this.xbmc.System.Sleeping += xbmcShutdown;
-            this.xbmc.System.Suspending += xbmcShutdown;
-            this.xbmc.Aborted += xbmcShutdown;
-            this.xbmc.LogError += wrapperApi_XBMC_LogError;
-            if (Settings.Default.GeneralDebugEnable)
-            {
-                this.xbmc.Log += wrapperApi_XBMC_Log;
-            }
-
-            this.xbmcHandler = new XbmcHandler(this.xbmc, this.displayHandler);
-            this.xbmcHandler.RunWorkerAsync();
-
             this.xbmcConnectingDeletage = new XbmcConnectingDelegate(xbmcConnecting);
-
-            if (Settings.Default.GeneralStartupConnect)
-            {
-                Logging.Log("Auto-connecting to XBMC at startup");
-                this.xbmcConnect(true);
-            }
+            this.xbmcSetup();
         }
 
         private void close(bool force)
@@ -213,6 +190,8 @@ namespace iMon.XBMC
 
         private void settingsSave()
         {
+            bool xbmcConnectionChanged = false;
+
             if (Settings.Default.GeneralStartupAuto != this.cbGeneralStartupAuto.Checked)
             {
                 // TODO: Handle auto start with windows
@@ -228,6 +207,31 @@ namespace iMon.XBMC
                 {
                     Logging.Log("Stopping XBMC auto-connection interval");
                     this.xbmcConnectionTimer.Stop();
+                }
+            }
+            if (Settings.Default.XbmcIp != this.tbXbmcConnectionIp.Text || Settings.Default.XbmcPort != Convert.ToInt32(this.tbXbmcConnectionPort.Text) ||
+                Settings.Default.XbmcUsername != this.tbXbmcConnectionUsername.Text || Settings.Default.XbmcPassword != this.tbXbmcConnectionPassword.Text)
+            {
+                xbmcConnectionChanged = true;
+
+                this.xbmcHandler.CancelAsync();
+                this.xbmcHandler.Dispose();
+
+                if (this.xbmc.IsAlive)
+                {
+                    this.xbmcDisconnect(true);
+                    this.xbmc.System.Hibernating -= xbmcShutdown;
+                    this.xbmc.System.ShuttingDown -= xbmcShutdown;
+                    this.xbmc.System.Rebooting -= xbmcShutdown;
+                    this.xbmc.System.Sleeping -= xbmcShutdown;
+                    this.xbmc.System.Suspending -= xbmcShutdown;
+                    this.xbmc.Aborted -= xbmcShutdown;
+                    this.xbmc.LogError -= wrapperApi_XBMC_LogError;
+                    if (Settings.Default.GeneralDebugEnable)
+                    {
+                        this.xbmc.Log -= wrapperApi_XBMC_Log;
+                    }
+                    this.xbmc.Dispose();
                 }
             }
             if (Settings.Default.XbmcConnectionInterval != Convert.ToInt32(this.nudXbmcConnectionInterval.Value)) 
@@ -282,6 +286,11 @@ namespace iMon.XBMC
 
             Settings.Default.Save();
             Logging.Log("Settings saved");
+            if (xbmcConnectionChanged)
+            {
+                this.xbmcSetup();
+            }
+
             this.xbmcHandler.Update();
 
             this.trayIcon.Visible = Settings.Default.GeneralTrayEnabled;
@@ -425,6 +434,33 @@ namespace iMon.XBMC
 
         #region XBMC functions
 
+        private void xbmcSetup()
+        {
+            Logging.Log("Setting up XBMC connection to " + Settings.Default.XbmcIp + ":" + Settings.Default.XbmcPort);
+            this.xbmc = new XbmcJsonRpcConnection(Settings.Default.XbmcIp, Settings.Default.XbmcPort,
+                                                  Settings.Default.XbmcUsername, Settings.Default.XbmcPassword);
+            this.xbmc.System.Hibernating += xbmcShutdown;
+            this.xbmc.System.ShuttingDown += xbmcShutdown;
+            this.xbmc.System.Rebooting += xbmcShutdown;
+            this.xbmc.System.Sleeping += xbmcShutdown;
+            this.xbmc.System.Suspending += xbmcShutdown;
+            this.xbmc.Aborted += xbmcShutdown;
+            this.xbmc.LogError += wrapperApi_XBMC_LogError;
+            if (Settings.Default.GeneralDebugEnable)
+            {
+                this.xbmc.Log += wrapperApi_XBMC_Log;
+            }
+
+            this.xbmcHandler = new XbmcHandler(this.xbmc, this.displayHandler);
+            this.xbmcHandler.RunWorkerAsync();
+
+            if (Settings.Default.GeneralStartupConnect)
+            {
+                Logging.Log("Auto-connecting to XBMC at startup");
+                this.xbmcConnect(true);
+            }
+        }
+
         private void xbmcTryConnect(object sender, EventArgs e)
         {
             this.xbmcConnectionTimer.Stop();
@@ -470,7 +506,7 @@ namespace iMon.XBMC
 
                 this.miXbmcConnect.Enabled = false;
                 this.miXbmcDisconnect.Enabled = true;
-                this.miXbmcInfo.Text = "Build " + this.xbmc.Xbmc.BuildVersion + "(" + this.xbmc.Xbmc.BuildDate + ")";
+                this.miXbmcInfo.Text = "Build " + this.xbmc.Xbmc.BuildVersion + " (" + this.xbmc.Xbmc.BuildDate.ToShortDateString() + ")";
 
                 this.miImon.Enabled = true;
                 this.miImonInitialize.Enabled = true;
