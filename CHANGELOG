@@ -10,6 +10,7 @@ v0.1.2.0 Beta: November ??, 2010
  - XBMC:
    - Option to enable/disable displaying a custom static text when XBMC is idle (no file is playing)
    - Interaction with XBMC is now handled in a seperate thread which avoids user interface freezes
+   - Added experimental "Control mode" which can display the currently active control (and window) from XBMC for navigation purposes
 
 v0.1.1.0 Beta: October 31, 2010
 -------------------------------

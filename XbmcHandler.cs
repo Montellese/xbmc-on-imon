@@ -10,12 +10,14 @@ using iMon.XBMC.Properties;
 
 namespace iMon.XBMC
 {
-    internal class XbmcHandler : BackgroundWorker
+    internal partial class XbmcHandler : BackgroundWorker
     {
         #region Private variables
 
         private const int ProgressUpdateInterval = 5000;
         private const int DefaultTextDelay = 2000;
+        private const int ControlModeUpdateInterval = 500;
+        private const int ControlModeUnchangedDelay = 10000;
 
         private Semaphore semReady;
         private Semaphore semWork;
@@ -31,6 +33,10 @@ namespace iMon.XBMC
         private TimeSpan length;
         private TimeSpan position;
         private System.Timers.Timer progressTimer;
+
+        private ControlState controlModeState;
+        private System.Timers.Timer controlModeTimer;
+        private int controlModeUnchanged;
 
         #endregion
 
@@ -73,6 +79,12 @@ namespace iMon.XBMC
             this.WorkerReportsProgress = false;
             this.WorkerSupportsCancellation = true;
 
+            this.controlModeState = new ControlState();
+            this.controlModeTimer = new System.Timers.Timer();
+            this.controlModeTimer.Interval = ControlModeUpdateInterval;
+            this.controlModeTimer.Elapsed += controlModeTimerUpdate;
+            this.controlModeTimer.AutoReset = true;
+
             this.semReady = new Semaphore(0, 1);
             this.semWork = new Semaphore(0, 1);
         }
@@ -84,6 +96,11 @@ namespace iMon.XBMC
         public void Update()
         {
             Logging.Log("XBMC Handler", "Update");
+            if (!this.connected)
+            {
+                // No need to do anything as long as we are not connected with XBMC
+                return;
+            }
 
             if (this.player != null)
             {
@@ -95,6 +112,18 @@ namespace iMon.XBMC
             }
 
             this.updateIcons();
+
+            // Updating the control mode timer
+            this.controlModeState.Window = null;
+            this.controlModeState.Control = null;
+            if (Settings.Default.XbmcControlModeEnable && !this.controlModeTimer.Enabled)
+            {
+                this.controlModeTimer.Start();
+            }
+            else if (!Settings.Default.XbmcControlModeEnable && this.controlModeTimer.Enabled)
+            {
+                this.controlModeTimer.Stop();
+            }
         }
 
         #endregion
@@ -109,6 +138,11 @@ namespace iMon.XBMC
                 this.semReady.WaitOne();
 
                 Logging.Log("XBMC Handler", "Start working");
+
+                if (Settings.Default.XbmcControlModeEnable)
+                {
+                    this.controlModeTimer.Start();
+                }
 
                 while (!this.CancellationPending && this.connected)
                 {
@@ -294,6 +328,60 @@ namespace iMon.XBMC
         {
             this.position += TimeSpan.FromMilliseconds(ProgressUpdateInterval);
             this.updateProgress();
+        }
+
+        private void controlModeTimerUpdate(object sender, ElapsedEventArgs e)
+        {
+            if (!Settings.Default.XbmcControlModeEnable || !this.connected)
+            {
+                this.controlModeTimer.Stop();
+                this.updateCurrentlyPlaying();
+
+                return;
+            }
+
+            if (this.controlModeUnchanged >= 0)
+            {
+                this.controlModeUnchanged += Convert.ToInt32(this.controlModeTimer.Interval);
+            }
+
+            if (this.player != null && Settings.Default.XbmcControlModeDisableDuringPlayback)
+            {
+                this.checkControlModeUnchanged();
+                return;
+            }
+
+            IDictionary<string, string> info = xbmc.System.GetInfoLabels("System.CurrentWindow", "System.CurrentControl");
+            if (info.Count != 2 || string.IsNullOrEmpty(info["System.CurrentControl"]))
+            {
+                this.checkControlModeUnchanged();
+                return;
+            }
+
+            string display = string.Empty;
+            if (Settings.Default.XbmcControlModeDisplayWindowName && !string.IsNullOrEmpty(info["System.CurrentWindow"]))
+            {
+                display = info["System.CurrentWindow"] + ": ";
+            }
+
+            string control = info["System.CurrentControl"];
+            if (Settings.Default.XbmcControlModeRemoveBrackets && control.StartsWith("[") && control.EndsWith("]"))
+            {
+                control = control.Remove(0, 1);
+                control = control.Remove(control.Length - 1, 1);
+            }
+
+            if (this.controlModeState.Window == info["System.CurrentWindow"] && this.controlModeState.Control == control)
+            {
+                this.checkControlModeUnchanged();
+                return;
+            }
+
+            this.display.SetText(display + control);
+
+            this.controlModeState.Window = info["System.CurrentWindow"];
+            this.controlModeState.Control = control;
+            this.controlModeUnchanged = 0;
         }
 
         #endregion
@@ -536,6 +624,15 @@ namespace iMon.XBMC
             else if (this.player is XbmcAudioPlayer)
             {
                 ((XbmcAudioPlayer)this.player).GetTime(out this.position, out this.length);
+            }
+        }
+
+        private void checkControlModeUnchanged()
+        {
+            if (this.controlModeUnchanged >= ControlModeUnchangedDelay)
+            {
+                this.controlModeUnchanged = -1;
+                this.updateCurrentlyPlaying();
             }
         }
 

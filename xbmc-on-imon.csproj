@@ -123,6 +123,9 @@
     <Compile Include="XBMC.Logic.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="XbmcHandler.ControlState.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="XbmcSoundSystems.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -179,6 +182,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(ProjectDir)lib\iMonDisplayApiWrapperSharp\iMONDisplay.dll" "$(TargetDir)iMONDisplay.dll"</PostBuildEvent>

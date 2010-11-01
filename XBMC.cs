@@ -172,6 +172,13 @@ namespace iMon.XBMC
             this.cbImonSoundSystemSPDIF.Enabled = this.cbImonSoundSystemEnable.Checked;
         }
 
+        private void cbXbmcControlModeEnable_CheckedChanged(object sender, EventArgs e)
+        {
+            this.cbXbmcControlModeDisableDuringPlayback.Enabled = this.cbXbmcControlModeEnable.Checked;
+            this.cbXbmcControlModeRemoveBrackets.Enabled = this.cbXbmcControlModeEnable.Checked;
+            this.cbXbmcControlModeShowWindow.Enabled = this.cbXbmcControlModeEnable.Checked;
+        }
+
         #endregion
 
         #region Event handling

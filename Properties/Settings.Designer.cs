@@ -286,5 +286,53 @@ namespace iMon.XBMC.Properties {
                 this["GeneralDebugEnable"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool XbmcControlModeEnable {
+            get {
+                return ((bool)(this["XbmcControlModeEnable"]));
+            }
+            set {
+                this["XbmcControlModeEnable"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool XbmcControlModeDisableDuringPlayback {
+            get {
+                return ((bool)(this["XbmcControlModeDisableDuringPlayback"]));
+            }
+            set {
+                this["XbmcControlModeDisableDuringPlayback"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool XbmcControlModeRemoveBrackets {
+            get {
+                return ((bool)(this["XbmcControlModeRemoveBrackets"]));
+            }
+            set {
+                this["XbmcControlModeRemoveBrackets"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool XbmcControlModeDisplayWindowName {
+            get {
+                return ((bool)(this["XbmcControlModeDisplayWindowName"]));
+            }
+            set {
+                this["XbmcControlModeDisplayWindowName"] = value;
+            }
+        }
     }
 }

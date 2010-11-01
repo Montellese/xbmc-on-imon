@@ -129,6 +129,13 @@
             this.bNavigationXbmc = new iMon.XBMC.NavigationButton();
             this.bNavigationImon = new iMon.XBMC.NavigationButton();
             this.bNavigationGeneral = new iMon.XBMC.NavigationButton();
+            this.groupBox16 = new System.Windows.Forms.GroupBox();
+            this.cbXbmcControlModeEnable = new System.Windows.Forms.CheckBox();
+            this.cbXbmcControlModeDisableDuringPlayback = new System.Windows.Forms.CheckBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.cbXbmcControlModeShowWindow = new System.Windows.Forms.CheckBox();
+            this.cbXbmcControlModeRemoveBrackets = new System.Windows.Forms.CheckBox();
             this.menu.SuspendLayout();
             this.splitter.Panel1.SuspendLayout();
             this.splitter.Panel2.SuspendLayout();
@@ -155,6 +162,7 @@
             this.groupBox8.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.trayMenu.SuspendLayout();
+            this.groupBox16.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -397,6 +405,7 @@
             // 
             // groupBox13
             // 
+            this.groupBox13.Controls.Add(this.label12);
             this.groupBox13.Controls.Add(this.nudImonLcdScrollingDelay);
             this.groupBox13.Controls.Add(this.label8);
             this.groupBox13.Location = new System.Drawing.Point(10, 81);
@@ -413,7 +422,7 @@
             0,
             0,
             0});
-            this.nudImonLcdScrollingDelay.Location = new System.Drawing.Point(72, 19);
+            this.nudImonLcdScrollingDelay.Location = new System.Drawing.Point(50, 19);
             this.nudImonLcdScrollingDelay.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -435,9 +444,9 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(7, 21);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(59, 13);
+            this.label8.Size = new System.Drawing.Size(37, 13);
             this.label8.TabIndex = 0;
-            this.label8.Text = "Delay [ms]:";
+            this.label8.Text = "Delay:";
             // 
             // groupBox3
             // 
@@ -612,6 +621,7 @@
             this.panel1.Controls.Add(this.groupBox10);
             this.panel1.Controls.Add(this.groupBox8);
             this.panel1.Controls.Add(this.groupBox9);
+            this.panel1.Controls.Add(this.groupBox16);
             this.panel1.Location = new System.Drawing.Point(9, 2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(395, 426);
@@ -619,12 +629,13 @@
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.label10);
             this.groupBox7.Controls.Add(this.nudXbmcIconsUpdateInterval);
             this.groupBox7.Controls.Add(this.label7);
             this.groupBox7.Controls.Add(this.cbXbmcIconsScreen);
             this.groupBox7.Controls.Add(this.cbXbmcIconsVolEnable);
             this.groupBox7.Enabled = false;
-            this.groupBox7.Location = new System.Drawing.Point(6, 187);
+            this.groupBox7.Location = new System.Drawing.Point(6, 286);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(369, 70);
             this.groupBox7.TabIndex = 3;
@@ -812,7 +823,7 @@
             // groupBox11
             // 
             this.groupBox11.Enabled = false;
-            this.groupBox11.Location = new System.Drawing.Point(6, 707);
+            this.groupBox11.Location = new System.Drawing.Point(6, 806);
             this.groupBox11.Name = "groupBox11";
             this.groupBox11.Size = new System.Drawing.Size(369, 97);
             this.groupBox11.TabIndex = 7;
@@ -844,6 +855,7 @@
             // 
             // tbXbmcIdleStaticText
             // 
+            this.tbXbmcIdleStaticText.Enabled = false;
             this.tbXbmcIdleStaticText.Location = new System.Drawing.Point(34, 43);
             this.tbXbmcIdleStaticText.Name = "tbXbmcIdleStaticText";
             this.tbXbmcIdleStaticText.Size = new System.Drawing.Size(149, 20);
@@ -871,7 +883,7 @@
             this.groupBox6.Controls.Add(this.cbXbmcPlayingShowMediaType);
             this.groupBox6.Controls.Add(this.cbXbmcPlayingShowProgress);
             this.groupBox6.Enabled = false;
-            this.groupBox6.Location = new System.Drawing.Point(6, 263);
+            this.groupBox6.Location = new System.Drawing.Point(6, 362);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(369, 117);
             this.groupBox6.TabIndex = 2;
@@ -959,7 +971,7 @@
             // groupBox12
             // 
             this.groupBox12.Enabled = false;
-            this.groupBox12.Location = new System.Drawing.Point(6, 810);
+            this.groupBox12.Location = new System.Drawing.Point(6, 909);
             this.groupBox12.Name = "groupBox12";
             this.groupBox12.Size = new System.Drawing.Size(369, 97);
             this.groupBox12.TabIndex = 8;
@@ -969,7 +981,7 @@
             // groupBox10
             // 
             this.groupBox10.Enabled = false;
-            this.groupBox10.Location = new System.Drawing.Point(6, 616);
+            this.groupBox10.Location = new System.Drawing.Point(6, 715);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(369, 85);
             this.groupBox10.TabIndex = 6;
@@ -983,7 +995,7 @@
             this.groupBox8.Controls.Add(this.rbXbmcMovieSingleText);
             this.groupBox8.Controls.Add(this.tbXbmcMovieSingleText);
             this.groupBox8.Enabled = false;
-            this.groupBox8.Location = new System.Drawing.Point(6, 386);
+            this.groupBox8.Location = new System.Drawing.Point(6, 485);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(369, 100);
             this.groupBox8.TabIndex = 4;
@@ -1037,7 +1049,7 @@
             this.groupBox9.Controls.Add(this.cbXbmcTvShowTvHdtvIcon);
             this.groupBox9.Controls.Add(this.cbXbmcTvMediaTypeIcon);
             this.groupBox9.Enabled = false;
-            this.groupBox9.Location = new System.Drawing.Point(6, 492);
+            this.groupBox9.Location = new System.Drawing.Point(6, 591);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(369, 118);
             this.groupBox9.TabIndex = 5;
@@ -1214,6 +1226,81 @@
             this.bNavigationGeneral.UseVisualStyleBackColor = false;
             this.bNavigationGeneral.Click += new System.EventHandler(this.bNavigationGeneral_Click);
             // 
+            // groupBox16
+            // 
+            this.groupBox16.Controls.Add(this.cbXbmcControlModeRemoveBrackets);
+            this.groupBox16.Controls.Add(this.cbXbmcControlModeShowWindow);
+            this.groupBox16.Controls.Add(this.cbXbmcControlModeDisableDuringPlayback);
+            this.groupBox16.Controls.Add(this.cbXbmcControlModeEnable);
+            this.groupBox16.Location = new System.Drawing.Point(6, 188);
+            this.groupBox16.Name = "groupBox16";
+            this.groupBox16.Size = new System.Drawing.Size(371, 92);
+            this.groupBox16.TabIndex = 9;
+            this.groupBox16.TabStop = false;
+            this.groupBox16.Text = "Control mode (highly experimental)";
+            // 
+            // cbXbmcControlModeEnable
+            // 
+            this.cbXbmcControlModeEnable.AutoSize = true;
+            this.cbXbmcControlModeEnable.Location = new System.Drawing.Point(8, 20);
+            this.cbXbmcControlModeEnable.Name = "cbXbmcControlModeEnable";
+            this.cbXbmcControlModeEnable.Size = new System.Drawing.Size(59, 17);
+            this.cbXbmcControlModeEnable.TabIndex = 0;
+            this.cbXbmcControlModeEnable.Text = "Enable";
+            this.cbXbmcControlModeEnable.UseVisualStyleBackColor = true;
+            this.cbXbmcControlModeEnable.CheckedChanged += new System.EventHandler(this.cbXbmcControlModeEnable_CheckedChanged);
+            // 
+            // cbXbmcControlModeDisableDuringPlayback
+            // 
+            this.cbXbmcControlModeDisableDuringPlayback.AutoSize = true;
+            this.cbXbmcControlModeDisableDuringPlayback.Enabled = false;
+            this.cbXbmcControlModeDisableDuringPlayback.Location = new System.Drawing.Point(36, 43);
+            this.cbXbmcControlModeDisableDuringPlayback.Name = "cbXbmcControlModeDisableDuringPlayback";
+            this.cbXbmcControlModeDisableDuringPlayback.Size = new System.Drawing.Size(139, 17);
+            this.cbXbmcControlModeDisableDuringPlayback.TabIndex = 1;
+            this.cbXbmcControlModeDisableDuringPlayback.Text = "Disable during playback";
+            this.cbXbmcControlModeDisableDuringPlayback.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(140, 23);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(47, 13);
+            this.label10.TabIndex = 11;
+            this.label10.Text = "seconds";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(106, 21);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(63, 13);
+            this.label12.TabIndex = 13;
+            this.label12.Text = "milliseconds";
+            // 
+            // cbXbmcControlModeShowWindow
+            // 
+            this.cbXbmcControlModeShowWindow.AutoSize = true;
+            this.cbXbmcControlModeShowWindow.Enabled = false;
+            this.cbXbmcControlModeShowWindow.Location = new System.Drawing.Point(192, 66);
+            this.cbXbmcControlModeShowWindow.Name = "cbXbmcControlModeShowWindow";
+            this.cbXbmcControlModeShowWindow.Size = new System.Drawing.Size(121, 17);
+            this.cbXbmcControlModeShowWindow.TabIndex = 13;
+            this.cbXbmcControlModeShowWindow.Text = "Show window name";
+            this.cbXbmcControlModeShowWindow.UseVisualStyleBackColor = true;
+            // 
+            // cbXbmcControlModeRemoveBrackets
+            // 
+            this.cbXbmcControlModeRemoveBrackets.AutoSize = true;
+            this.cbXbmcControlModeRemoveBrackets.Enabled = false;
+            this.cbXbmcControlModeRemoveBrackets.Location = new System.Drawing.Point(36, 66);
+            this.cbXbmcControlModeRemoveBrackets.Name = "cbXbmcControlModeRemoveBrackets";
+            this.cbXbmcControlModeRemoveBrackets.Size = new System.Drawing.Size(122, 17);
+            this.cbXbmcControlModeRemoveBrackets.TabIndex = 14;
+            this.cbXbmcControlModeRemoveBrackets.Text = "Remove brackets [ ]";
+            this.cbXbmcControlModeRemoveBrackets.UseVisualStyleBackColor = true;
+            // 
             // XBMC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1268,6 +1355,8 @@
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
             this.trayMenu.ResumeLayout(false);
+            this.groupBox16.ResumeLayout(false);
+            this.groupBox16.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1374,6 +1463,13 @@
         private System.Windows.Forms.CheckBox cbImonSoundSystemEnable;
         private System.Windows.Forms.GroupBox groupBox15;
         private System.Windows.Forms.CheckBox cbGeneralDebugEnable;
+        private System.Windows.Forms.GroupBox groupBox16;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.CheckBox cbXbmcControlModeDisableDuringPlayback;
+        private System.Windows.Forms.CheckBox cbXbmcControlModeEnable;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.CheckBox cbXbmcControlModeRemoveBrackets;
+        private System.Windows.Forms.CheckBox cbXbmcControlModeShowWindow;
 
 
     }

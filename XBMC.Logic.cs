@@ -172,6 +172,11 @@ namespace iMon.XBMC
             this.cbXbmcIdleStaticTextEnable.Checked = Settings.Default.XbmcIdleStaticTextEnable;
             this.tbXbmcIdleStaticText.Text = Settings.Default.XbmcIdleStaticText;
 
+            this.cbXbmcControlModeEnable.Checked = Settings.Default.XbmcControlModeEnable;
+            this.cbXbmcControlModeDisableDuringPlayback.Checked = Settings.Default.XbmcControlModeDisableDuringPlayback;
+            this.cbXbmcControlModeRemoveBrackets.Checked = Settings.Default.XbmcControlModeRemoveBrackets;
+            this.cbXbmcControlModeShowWindow.Checked = Settings.Default.XbmcControlModeDisplayWindowName;
+
             this.nudXbmcIconsUpdateInterval.Value = Settings.Default.XbmcGeneralUpdateInterval;
             this.cbXbmcIconsVolEnable.Checked = Settings.Default.XbmcGeneralShowVolume;
 
@@ -280,6 +285,11 @@ namespace iMon.XBMC
 
             Settings.Default.XbmcIdleStaticTextEnable = this.cbXbmcIdleStaticTextEnable.Checked;
             Settings.Default.XbmcIdleStaticText = this.tbXbmcIdleStaticText.Text;
+
+            Settings.Default.XbmcControlModeEnable = this.cbXbmcControlModeEnable.Checked;
+            Settings.Default.XbmcControlModeDisableDuringPlayback = this.cbXbmcControlModeDisableDuringPlayback.Checked;
+            Settings.Default.XbmcControlModeRemoveBrackets = this.cbXbmcControlModeRemoveBrackets.Checked;
+            Settings.Default.XbmcControlModeDisplayWindowName = this.cbXbmcControlModeShowWindow.Checked;
 
             Settings.Default.XbmcGeneralUpdateInterval = Convert.ToInt32(this.nudXbmcIconsUpdateInterval.Value);
             Settings.Default.XbmcGeneralShowVolume = this.cbXbmcIconsVolEnable.Checked;
