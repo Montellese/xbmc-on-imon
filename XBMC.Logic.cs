@@ -7,12 +7,15 @@ using iMon.XBMC.Properties;
 
 using iMon.DisplayApi;
 using XBMC.JsonRpc;
+using Microsoft.Win32;
 
 namespace iMon.XBMC
 {
     public partial class XBMC
     {
         #region Variables
+
+        private const string AutostartRegistry = @"Software\Microsoft\Windows\CurrentVersion\Run";
 
         private bool closing;
 
@@ -199,7 +202,19 @@ namespace iMon.XBMC
 
             if (Settings.Default.GeneralStartupAuto != this.cbGeneralStartupAuto.Checked)
             {
-                // TODO: Handle auto start with windows
+                // Handle auto start with windows
+                RegistryKey key = Registry.CurrentUser.CreateSubKey(AutostartRegistry);
+                RegistryKey check = Registry.CurrentUser.OpenSubKey(AutostartRegistry);
+                if (this.cbGeneralStartupAuto.Checked)
+                {
+                    Logging.Log("Adding Windows Registry entry for autostart on windows start...");
+                    key.SetValue(Application.ProductName, Application.ExecutablePath);
+                }
+                else if (check != null && !string.IsNullOrEmpty((string)check.GetValue(Application.ProductName)))
+                {
+                    Logging.Log("Removing Windows Registry entry for autostart on windows start...");
+                    key.DeleteValue(Application.ProductName);
+                }
             }
             if (Settings.Default.GeneralStartupConnect != this.cbGeneralStartupConnect.Checked)
             {

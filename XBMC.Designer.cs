@@ -47,7 +47,10 @@
             this.miAboutXbmcOniMon = new System.Windows.Forms.ToolStripMenuItem();
             this.splitter = new System.Windows.Forms.SplitContainer();
             this.pNavigation = new System.Windows.Forms.Panel();
+            this.bNavigationXbmc = new iMon.XBMC.NavigationButton();
             this.iLOptions = new System.Windows.Forms.ImageList(this.components);
+            this.bNavigationImon = new iMon.XBMC.NavigationButton();
+            this.bNavigationGeneral = new iMon.XBMC.NavigationButton();
             this.tabOptions = new System.Windows.Forms.TabControl();
             this.tpImon = new System.Windows.Forms.TabPage();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
@@ -55,6 +58,7 @@
             this.cbImonSoundSystem = new System.Windows.Forms.ComboBox();
             this.cbImonSoundSystemEnable = new System.Windows.Forms.CheckBox();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.nudImonLcdScrollingDelay = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -74,6 +78,7 @@
             this.tpXBMC = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.nudXbmcIconsUpdateInterval = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.cbXbmcIconsScreen = new System.Windows.Forms.CheckBox();
@@ -118,6 +123,11 @@
             this.tbXbmcTvSingleText = new System.Windows.Forms.TextBox();
             this.cbXbmcTvShowTvHdtvIcon = new System.Windows.Forms.CheckBox();
             this.cbXbmcTvMediaTypeIcon = new System.Windows.Forms.CheckBox();
+            this.groupBox16 = new System.Windows.Forms.GroupBox();
+            this.cbXbmcControlModeRemoveBrackets = new System.Windows.Forms.CheckBox();
+            this.cbXbmcControlModeShowWindow = new System.Windows.Forms.CheckBox();
+            this.cbXbmcControlModeDisableDuringPlayback = new System.Windows.Forms.CheckBox();
+            this.cbXbmcControlModeEnable = new System.Windows.Forms.CheckBox();
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.trayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.trayMenuOpen = new System.Windows.Forms.ToolStripMenuItem();
@@ -126,16 +136,6 @@
             this.trayMenuImon = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.trayMenuClose = new System.Windows.Forms.ToolStripMenuItem();
-            this.bNavigationXbmc = new iMon.XBMC.NavigationButton();
-            this.bNavigationImon = new iMon.XBMC.NavigationButton();
-            this.bNavigationGeneral = new iMon.XBMC.NavigationButton();
-            this.groupBox16 = new System.Windows.Forms.GroupBox();
-            this.cbXbmcControlModeEnable = new System.Windows.Forms.CheckBox();
-            this.cbXbmcControlModeDisableDuringPlayback = new System.Windows.Forms.CheckBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.cbXbmcControlModeShowWindow = new System.Windows.Forms.CheckBox();
-            this.cbXbmcControlModeRemoveBrackets = new System.Windows.Forms.CheckBox();
             this.menu.SuspendLayout();
             this.splitter.Panel1.SuspendLayout();
             this.splitter.Panel2.SuspendLayout();
@@ -161,8 +161,8 @@
             this.groupBox6.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox9.SuspendLayout();
-            this.trayMenu.SuspendLayout();
             this.groupBox16.SuspendLayout();
+            this.trayMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -314,6 +314,24 @@
             this.pNavigation.Size = new System.Drawing.Size(76, 425);
             this.pNavigation.TabIndex = 0;
             // 
+            // bNavigationXbmc
+            // 
+            this.bNavigationXbmc.ActiveImageIndex = 7;
+            this.bNavigationXbmc.BackColor = System.Drawing.Color.Transparent;
+            this.bNavigationXbmc.DefaultImageIndex = 6;
+            this.bNavigationXbmc.FlatAppearance.BorderSize = 0;
+            this.bNavigationXbmc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bNavigationXbmc.HoverImageIndex = 8;
+            this.bNavigationXbmc.ImageIndex = 6;
+            this.bNavigationXbmc.ImageList = this.iLOptions;
+            this.bNavigationXbmc.Location = new System.Drawing.Point(-1, 147);
+            this.bNavigationXbmc.Margin = new System.Windows.Forms.Padding(0);
+            this.bNavigationXbmc.Name = "bNavigationXbmc";
+            this.bNavigationXbmc.Size = new System.Drawing.Size(74, 74);
+            this.bNavigationXbmc.TabIndex = 5;
+            this.bNavigationXbmc.UseVisualStyleBackColor = false;
+            this.bNavigationXbmc.Click += new System.EventHandler(this.bNavigationXbmc_Click);
+            // 
             // iLOptions
             // 
             this.iLOptions.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("iLOptions.ImageStream")));
@@ -327,6 +345,42 @@
             this.iLOptions.Images.SetKeyName(6, "XBMC");
             this.iLOptions.Images.SetKeyName(7, "XBMCActive");
             this.iLOptions.Images.SetKeyName(8, "XBMCHover");
+            // 
+            // bNavigationImon
+            // 
+            this.bNavigationImon.ActiveImageIndex = 4;
+            this.bNavigationImon.BackColor = System.Drawing.Color.Transparent;
+            this.bNavigationImon.DefaultImageIndex = 3;
+            this.bNavigationImon.FlatAppearance.BorderSize = 0;
+            this.bNavigationImon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bNavigationImon.HoverImageIndex = 5;
+            this.bNavigationImon.ImageIndex = 3;
+            this.bNavigationImon.ImageList = this.iLOptions;
+            this.bNavigationImon.Location = new System.Drawing.Point(-1, 73);
+            this.bNavigationImon.Margin = new System.Windows.Forms.Padding(0);
+            this.bNavigationImon.Name = "bNavigationImon";
+            this.bNavigationImon.Size = new System.Drawing.Size(74, 74);
+            this.bNavigationImon.TabIndex = 4;
+            this.bNavigationImon.UseVisualStyleBackColor = false;
+            this.bNavigationImon.Click += new System.EventHandler(this.bNavigationImon_Click);
+            // 
+            // bNavigationGeneral
+            // 
+            this.bNavigationGeneral.ActiveImageIndex = 1;
+            this.bNavigationGeneral.BackColor = System.Drawing.Color.Transparent;
+            this.bNavigationGeneral.DefaultImageIndex = 0;
+            this.bNavigationGeneral.FlatAppearance.BorderSize = 0;
+            this.bNavigationGeneral.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bNavigationGeneral.HoverImageIndex = 2;
+            this.bNavigationGeneral.ImageIndex = 0;
+            this.bNavigationGeneral.ImageList = this.iLOptions;
+            this.bNavigationGeneral.Location = new System.Drawing.Point(-1, -1);
+            this.bNavigationGeneral.Margin = new System.Windows.Forms.Padding(0);
+            this.bNavigationGeneral.Name = "bNavigationGeneral";
+            this.bNavigationGeneral.Size = new System.Drawing.Size(74, 74);
+            this.bNavigationGeneral.TabIndex = 3;
+            this.bNavigationGeneral.UseVisualStyleBackColor = false;
+            this.bNavigationGeneral.Click += new System.EventHandler(this.bNavigationGeneral_Click);
             // 
             // tabOptions
             // 
@@ -414,6 +468,15 @@
             this.groupBox13.TabIndex = 1;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "LCD text scrolling";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(106, 21);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(63, 13);
+            this.label12.TabIndex = 13;
+            this.label12.Text = "milliseconds";
             // 
             // nudImonLcdScrollingDelay
             // 
@@ -590,7 +653,6 @@
             // cbGeneralStartupAuto
             // 
             this.cbGeneralStartupAuto.AutoSize = true;
-            this.cbGeneralStartupAuto.Enabled = false;
             this.cbGeneralStartupAuto.Location = new System.Drawing.Point(7, 20);
             this.cbGeneralStartupAuto.Name = "cbGeneralStartupAuto";
             this.cbGeneralStartupAuto.Size = new System.Drawing.Size(140, 17);
@@ -641,6 +703,15 @@
             this.groupBox7.TabIndex = 3;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "General icons";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(140, 23);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(47, 13);
+            this.label10.TabIndex = 11;
+            this.label10.Text = "seconds";
             // 
             // nudXbmcIconsUpdateInterval
             // 
@@ -1114,6 +1185,63 @@
             this.cbXbmcTvMediaTypeIcon.Text = "Show TV media type icon";
             this.cbXbmcTvMediaTypeIcon.UseVisualStyleBackColor = true;
             // 
+            // groupBox16
+            // 
+            this.groupBox16.Controls.Add(this.cbXbmcControlModeRemoveBrackets);
+            this.groupBox16.Controls.Add(this.cbXbmcControlModeShowWindow);
+            this.groupBox16.Controls.Add(this.cbXbmcControlModeDisableDuringPlayback);
+            this.groupBox16.Controls.Add(this.cbXbmcControlModeEnable);
+            this.groupBox16.Location = new System.Drawing.Point(6, 188);
+            this.groupBox16.Name = "groupBox16";
+            this.groupBox16.Size = new System.Drawing.Size(371, 92);
+            this.groupBox16.TabIndex = 9;
+            this.groupBox16.TabStop = false;
+            this.groupBox16.Text = "Control mode (highly experimental)";
+            // 
+            // cbXbmcControlModeRemoveBrackets
+            // 
+            this.cbXbmcControlModeRemoveBrackets.AutoSize = true;
+            this.cbXbmcControlModeRemoveBrackets.Enabled = false;
+            this.cbXbmcControlModeRemoveBrackets.Location = new System.Drawing.Point(36, 66);
+            this.cbXbmcControlModeRemoveBrackets.Name = "cbXbmcControlModeRemoveBrackets";
+            this.cbXbmcControlModeRemoveBrackets.Size = new System.Drawing.Size(122, 17);
+            this.cbXbmcControlModeRemoveBrackets.TabIndex = 14;
+            this.cbXbmcControlModeRemoveBrackets.Text = "Remove brackets [ ]";
+            this.cbXbmcControlModeRemoveBrackets.UseVisualStyleBackColor = true;
+            // 
+            // cbXbmcControlModeShowWindow
+            // 
+            this.cbXbmcControlModeShowWindow.AutoSize = true;
+            this.cbXbmcControlModeShowWindow.Enabled = false;
+            this.cbXbmcControlModeShowWindow.Location = new System.Drawing.Point(192, 66);
+            this.cbXbmcControlModeShowWindow.Name = "cbXbmcControlModeShowWindow";
+            this.cbXbmcControlModeShowWindow.Size = new System.Drawing.Size(121, 17);
+            this.cbXbmcControlModeShowWindow.TabIndex = 13;
+            this.cbXbmcControlModeShowWindow.Text = "Show window name";
+            this.cbXbmcControlModeShowWindow.UseVisualStyleBackColor = true;
+            // 
+            // cbXbmcControlModeDisableDuringPlayback
+            // 
+            this.cbXbmcControlModeDisableDuringPlayback.AutoSize = true;
+            this.cbXbmcControlModeDisableDuringPlayback.Enabled = false;
+            this.cbXbmcControlModeDisableDuringPlayback.Location = new System.Drawing.Point(36, 43);
+            this.cbXbmcControlModeDisableDuringPlayback.Name = "cbXbmcControlModeDisableDuringPlayback";
+            this.cbXbmcControlModeDisableDuringPlayback.Size = new System.Drawing.Size(139, 17);
+            this.cbXbmcControlModeDisableDuringPlayback.TabIndex = 1;
+            this.cbXbmcControlModeDisableDuringPlayback.Text = "Disable during playback";
+            this.cbXbmcControlModeDisableDuringPlayback.UseVisualStyleBackColor = true;
+            // 
+            // cbXbmcControlModeEnable
+            // 
+            this.cbXbmcControlModeEnable.AutoSize = true;
+            this.cbXbmcControlModeEnable.Location = new System.Drawing.Point(8, 20);
+            this.cbXbmcControlModeEnable.Name = "cbXbmcControlModeEnable";
+            this.cbXbmcControlModeEnable.Size = new System.Drawing.Size(59, 17);
+            this.cbXbmcControlModeEnable.TabIndex = 0;
+            this.cbXbmcControlModeEnable.Text = "Enable";
+            this.cbXbmcControlModeEnable.UseVisualStyleBackColor = true;
+            this.cbXbmcControlModeEnable.CheckedChanged += new System.EventHandler(this.cbXbmcControlModeEnable_CheckedChanged);
+            // 
             // trayIcon
             // 
             this.trayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("trayIcon.Icon")));
@@ -1172,135 +1300,6 @@
             this.trayMenuClose.Text = "Close";
             this.trayMenuClose.Click += new System.EventHandler(this.trayMenuClose_Click);
             // 
-            // bNavigationXbmc
-            // 
-            this.bNavigationXbmc.ActiveImageIndex = 7;
-            this.bNavigationXbmc.BackColor = System.Drawing.Color.Transparent;
-            this.bNavigationXbmc.DefaultImageIndex = 6;
-            this.bNavigationXbmc.FlatAppearance.BorderSize = 0;
-            this.bNavigationXbmc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bNavigationXbmc.HoverImageIndex = 8;
-            this.bNavigationXbmc.ImageIndex = 6;
-            this.bNavigationXbmc.ImageList = this.iLOptions;
-            this.bNavigationXbmc.Location = new System.Drawing.Point(-1, 147);
-            this.bNavigationXbmc.Margin = new System.Windows.Forms.Padding(0);
-            this.bNavigationXbmc.Name = "bNavigationXbmc";
-            this.bNavigationXbmc.Size = new System.Drawing.Size(74, 74);
-            this.bNavigationXbmc.TabIndex = 5;
-            this.bNavigationXbmc.UseVisualStyleBackColor = false;
-            this.bNavigationXbmc.Click += new System.EventHandler(this.bNavigationXbmc_Click);
-            // 
-            // bNavigationImon
-            // 
-            this.bNavigationImon.ActiveImageIndex = 4;
-            this.bNavigationImon.BackColor = System.Drawing.Color.Transparent;
-            this.bNavigationImon.DefaultImageIndex = 3;
-            this.bNavigationImon.FlatAppearance.BorderSize = 0;
-            this.bNavigationImon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bNavigationImon.HoverImageIndex = 5;
-            this.bNavigationImon.ImageIndex = 3;
-            this.bNavigationImon.ImageList = this.iLOptions;
-            this.bNavigationImon.Location = new System.Drawing.Point(-1, 73);
-            this.bNavigationImon.Margin = new System.Windows.Forms.Padding(0);
-            this.bNavigationImon.Name = "bNavigationImon";
-            this.bNavigationImon.Size = new System.Drawing.Size(74, 74);
-            this.bNavigationImon.TabIndex = 4;
-            this.bNavigationImon.UseVisualStyleBackColor = false;
-            this.bNavigationImon.Click += new System.EventHandler(this.bNavigationImon_Click);
-            // 
-            // bNavigationGeneral
-            // 
-            this.bNavigationGeneral.ActiveImageIndex = 1;
-            this.bNavigationGeneral.BackColor = System.Drawing.Color.Transparent;
-            this.bNavigationGeneral.DefaultImageIndex = 0;
-            this.bNavigationGeneral.FlatAppearance.BorderSize = 0;
-            this.bNavigationGeneral.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bNavigationGeneral.HoverImageIndex = 2;
-            this.bNavigationGeneral.ImageIndex = 0;
-            this.bNavigationGeneral.ImageList = this.iLOptions;
-            this.bNavigationGeneral.Location = new System.Drawing.Point(-1, -1);
-            this.bNavigationGeneral.Margin = new System.Windows.Forms.Padding(0);
-            this.bNavigationGeneral.Name = "bNavigationGeneral";
-            this.bNavigationGeneral.Size = new System.Drawing.Size(74, 74);
-            this.bNavigationGeneral.TabIndex = 3;
-            this.bNavigationGeneral.UseVisualStyleBackColor = false;
-            this.bNavigationGeneral.Click += new System.EventHandler(this.bNavigationGeneral_Click);
-            // 
-            // groupBox16
-            // 
-            this.groupBox16.Controls.Add(this.cbXbmcControlModeRemoveBrackets);
-            this.groupBox16.Controls.Add(this.cbXbmcControlModeShowWindow);
-            this.groupBox16.Controls.Add(this.cbXbmcControlModeDisableDuringPlayback);
-            this.groupBox16.Controls.Add(this.cbXbmcControlModeEnable);
-            this.groupBox16.Location = new System.Drawing.Point(6, 188);
-            this.groupBox16.Name = "groupBox16";
-            this.groupBox16.Size = new System.Drawing.Size(371, 92);
-            this.groupBox16.TabIndex = 9;
-            this.groupBox16.TabStop = false;
-            this.groupBox16.Text = "Control mode (highly experimental)";
-            // 
-            // cbXbmcControlModeEnable
-            // 
-            this.cbXbmcControlModeEnable.AutoSize = true;
-            this.cbXbmcControlModeEnable.Location = new System.Drawing.Point(8, 20);
-            this.cbXbmcControlModeEnable.Name = "cbXbmcControlModeEnable";
-            this.cbXbmcControlModeEnable.Size = new System.Drawing.Size(59, 17);
-            this.cbXbmcControlModeEnable.TabIndex = 0;
-            this.cbXbmcControlModeEnable.Text = "Enable";
-            this.cbXbmcControlModeEnable.UseVisualStyleBackColor = true;
-            this.cbXbmcControlModeEnable.CheckedChanged += new System.EventHandler(this.cbXbmcControlModeEnable_CheckedChanged);
-            // 
-            // cbXbmcControlModeDisableDuringPlayback
-            // 
-            this.cbXbmcControlModeDisableDuringPlayback.AutoSize = true;
-            this.cbXbmcControlModeDisableDuringPlayback.Enabled = false;
-            this.cbXbmcControlModeDisableDuringPlayback.Location = new System.Drawing.Point(36, 43);
-            this.cbXbmcControlModeDisableDuringPlayback.Name = "cbXbmcControlModeDisableDuringPlayback";
-            this.cbXbmcControlModeDisableDuringPlayback.Size = new System.Drawing.Size(139, 17);
-            this.cbXbmcControlModeDisableDuringPlayback.TabIndex = 1;
-            this.cbXbmcControlModeDisableDuringPlayback.Text = "Disable during playback";
-            this.cbXbmcControlModeDisableDuringPlayback.UseVisualStyleBackColor = true;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(140, 23);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(47, 13);
-            this.label10.TabIndex = 11;
-            this.label10.Text = "seconds";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(106, 21);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(63, 13);
-            this.label12.TabIndex = 13;
-            this.label12.Text = "milliseconds";
-            // 
-            // cbXbmcControlModeShowWindow
-            // 
-            this.cbXbmcControlModeShowWindow.AutoSize = true;
-            this.cbXbmcControlModeShowWindow.Enabled = false;
-            this.cbXbmcControlModeShowWindow.Location = new System.Drawing.Point(192, 66);
-            this.cbXbmcControlModeShowWindow.Name = "cbXbmcControlModeShowWindow";
-            this.cbXbmcControlModeShowWindow.Size = new System.Drawing.Size(121, 17);
-            this.cbXbmcControlModeShowWindow.TabIndex = 13;
-            this.cbXbmcControlModeShowWindow.Text = "Show window name";
-            this.cbXbmcControlModeShowWindow.UseVisualStyleBackColor = true;
-            // 
-            // cbXbmcControlModeRemoveBrackets
-            // 
-            this.cbXbmcControlModeRemoveBrackets.AutoSize = true;
-            this.cbXbmcControlModeRemoveBrackets.Enabled = false;
-            this.cbXbmcControlModeRemoveBrackets.Location = new System.Drawing.Point(36, 66);
-            this.cbXbmcControlModeRemoveBrackets.Name = "cbXbmcControlModeRemoveBrackets";
-            this.cbXbmcControlModeRemoveBrackets.Size = new System.Drawing.Size(122, 17);
-            this.cbXbmcControlModeRemoveBrackets.TabIndex = 14;
-            this.cbXbmcControlModeRemoveBrackets.Text = "Remove brackets [ ]";
-            this.cbXbmcControlModeRemoveBrackets.UseVisualStyleBackColor = true;
-            // 
             // XBMC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1354,9 +1353,9 @@
             this.groupBox8.PerformLayout();
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
-            this.trayMenu.ResumeLayout(false);
             this.groupBox16.ResumeLayout(false);
             this.groupBox16.PerformLayout();
+            this.trayMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

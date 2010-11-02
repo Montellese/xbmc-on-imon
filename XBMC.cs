@@ -46,7 +46,7 @@ namespace iMon.XBMC
 
         private void xbmc_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!this.closing)
+            if (!this.closing && !Environment.HasShutdownStarted)
             {
                 this.close(false);
 
