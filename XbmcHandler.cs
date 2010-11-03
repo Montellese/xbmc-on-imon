@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 
+using Newtonsoft.Json;
+
 using iMon.DisplayApi;
 using XBMC.JsonRpc;
 using iMon.XBMC.Properties;
@@ -103,6 +105,8 @@ namespace iMon.XBMC
                 return;
             }
 
+            this.updateIcons();
+
             if (this.player != null)
             {
                 this.updateCurrentlyPlaying();
@@ -112,7 +116,7 @@ namespace iMon.XBMC
                 this.displayIdle();
             }
 
-            this.updateIcons();
+            this.updateProgress();
 
             // Updating the control mode timer
             this.controlModeState.Window = null;
@@ -414,7 +418,28 @@ namespace iMon.XBMC
                 iMonLcdIcons.SpeakerSideRight,
                 iMonLcdIcons.SpeakerRearLeft,
                 iMonLcdIcons.SpeakerSPDIF,
-                iMonLcdIcons.SpeakerRearRight
+                iMonLcdIcons.SpeakerRearRight,
+
+                iMonLcdIcons.Music, 
+                iMonLcdIcons.Movie, 
+                iMonLcdIcons.Tv, 
+                iMonLcdIcons.Photo, 
+                iMonLcdIcons.Webcast, 
+                iMonLcdIcons.NewsWeather,
+
+                iMonLcdIcons.AudioMP3,
+                iMonLcdIcons.AudioOGG,
+                iMonLcdIcons.AudioWAV,
+                iMonLcdIcons.AudioWMA,
+
+                iMonLcdIcons.VideoAC3,
+                iMonLcdIcons.VideoDTS,
+                iMonLcdIcons.VideoMPGAudio,
+                iMonLcdIcons.VideoWMA,
+                iMonLcdIcons.VideoDivX,
+                iMonLcdIcons.VideoXviD,
+                iMonLcdIcons.VideoMPG,
+                iMonLcdIcons.VideoWMV,
             }, false);
 
             List<iMonLcdIcons> icons = new List<iMonLcdIcons>();
@@ -500,16 +525,17 @@ namespace iMon.XBMC
 
         private void updateProgress()
         {
+            /* TODO: How to disable the progress indicator?
+            if (!Settings.Default.XbmcIconsPlaybackProgress)
+            {
+                this.display.SetProgress(0, 0);
+            }*/
+
             this.display.SetProgress(this.position, this.length);
         }
 
         private void playbackStopped()
         {
-            this.display.SetIcons(new List<iMonLcdIcons>() { 
-                iMonLcdIcons.Music, iMonLcdIcons.Movie, iMonLcdIcons.Tv, 
-                iMonLcdIcons.Photo, iMonLcdIcons.Webcast, iMonLcdIcons.NewsWeather
-            }, false);
-
             this.player = null;
             this.currentlyPlaying = null;
 
@@ -517,9 +543,7 @@ namespace iMon.XBMC
             this.position = new TimeSpan();
             this.length = new TimeSpan();
 
-            this.updateProgress();
-
-            this.display.HideAllIcons();
+            this.Update();
         }
 
         private void updateCurrentlyPlaying()
@@ -531,8 +555,8 @@ namespace iMon.XBMC
 
             Logging.Log("XBMC Handler", "Updating currently playing file");
 
-            this.display.SetIcon(iMonLcdIcons.Shuffle, this.player.Random);
-            this.display.SetIcon(iMonLcdIcons.Repeat, this.player.Repeat != XbmcRepeatTypes.Off);
+            // TODO: Show SFL this.display.SetIcon(iMonLcdIcons.Shuffle, this.player.Random);
+            // TODO: Show REP this.display.SetIcon(iMonLcdIcons.Repeat, this.player.Repeat != XbmcRepeatTypes.Off);
             iMonLcdIcons icon;
             if (this.player is XbmcAudioPlayer)
             {
@@ -541,9 +565,25 @@ namespace iMon.XBMC
                 if (this.currentlyPlaying != null)
                 {
                     this.display.SetText(((XbmcSong)this.currentlyPlaying).Artist + " - " + this.currentlyPlaying.Title, ((XbmcSong)this.currentlyPlaying).Artist, this.currentlyPlaying.Title);
+
+                    string codec = ((XbmcAudioPlayer)this.player).Codec;
+                    if (!string.IsNullOrEmpty(codec))
+                    {
+                        Dictionary<string, List<string>> mapping = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(Settings.Default.XbmcIconsPlaybackAudioCodecsMappings);
+                        foreach (KeyValuePair<string, List<string>> map in mapping)
+                        {
+                            if (this.listContains(map.Value, codec))
+                            {
+                                this.displayAudioCodec(map.Key, true);
+                                break;
+                            }
+                        }
+                    }
                 }
                 else
                 {
+                    Logging.Log("No information about this song available from the audio library => fall back to player info labels");
+                    
                     // Using InfoLabels as backup
                     IDictionary<string, string> info = this.xbmc.System.GetInfoLabels("MusicPlayer.Title", "MusicPlayer.Artist");
                     if (info.Count > 0)
@@ -571,6 +611,7 @@ namespace iMon.XBMC
                     }
                     else
                     {
+                        Logging.Log("No information about this song from the player info labels either => fall back to the filename");
                         string path = this.xbmc.System.GetInfoLabel("Player.Filenameandpath");
 
                         if (!string.IsNullOrEmpty(path))
@@ -596,12 +637,41 @@ namespace iMon.XBMC
                 {
                     if (this.currentlyPlaying is XbmcTvEpisode)
                     {
+                        icon = iMonLcdIcons.Tv;
                         XbmcTvEpisode ep = (XbmcTvEpisode)this.currentlyPlaying;
                         this.display.SetText(ep.ShowTitle + ": S" + ep.Season.ToString("00") + "E" + ep.Episodes.ToString("00") + " " + ep.Title);
                     }
                     else
                     {
                         this.display.SetText(this.currentlyPlaying.Title);
+                    }
+
+                    string codec = ((XbmcVideoPlayer)this.player).VideoCodec;
+                    if (!string.IsNullOrEmpty(codec))
+                    {
+                        Dictionary<string, List<string>> mapping = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(Settings.Default.XbmcIconsPlaybackVideoCodecsMappings);
+                        foreach (KeyValuePair<string, List<string>> map in mapping)
+                        {
+                            if (this.listContains(map.Value, codec))
+                            {
+                                this.displayVideoCodec(map.Key);
+                                break;
+                            }
+                        }
+                    }
+
+                    codec = ((XbmcVideoPlayer)this.player).AudioCodec;
+                    if (!string.IsNullOrEmpty(codec))
+                    {
+                        Dictionary<string, List<string>> mapping = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(Settings.Default.XbmcIconsPlaybackAudioCodecsMappings);
+                        foreach (KeyValuePair<string, List<string>> map in mapping)
+                        {
+                            if (this.listContains(map.Value, codec))
+                            {
+                                this.displayAudioCodec(map.Key, false);
+                                break;
+                            }
+                        }
                     }
                 }
                 else
@@ -648,7 +718,10 @@ namespace iMon.XBMC
 
             }
 
-            this.display.SetIcon(icon, true);
+            if (Settings.Default.XbmcIconsPlaybackMediaType)
+            {
+                this.display.SetIcon(icon, true);
+            }
         }
 
         private void getTime(out TimeSpan position, out TimeSpan length)
@@ -673,6 +746,78 @@ namespace iMon.XBMC
                 this.controlModeUnchanged = -1;
                 this.updateCurrentlyPlaying();
             }
+        }
+
+        private void displayVideoCodec(string codec)
+        {
+            if (codec == "DivX")
+            {
+                this.display.SetIcon(iMonLcdIcons.VideoDivX, true);
+            }
+            if (codec == "XviD")
+            {
+                this.display.SetIcon(iMonLcdIcons.VideoXviD, true);
+            }
+            if (codec == "WMV")
+            {
+                this.display.SetIcon(iMonLcdIcons.VideoWMV, true);
+            }
+            if (codec == "MPG")
+            {
+                this.display.SetIcon(iMonLcdIcons.VideoMPG, true);
+            }
+        }
+
+        private void displayAudioCodec(string codec, bool audio)
+        {
+            if (codec == "MP3")
+            {
+                this.display.SetIcon(iMonLcdIcons.AudioMP3, true);
+            }
+            else if (codec == "OGG")
+            {
+                this.display.SetIcon(iMonLcdIcons.AudioOGG, true);
+            }
+            else if (codec == "WAV")
+            {
+                this.display.SetIcon(iMonLcdIcons.AudioWAV, true);
+            }
+            else if (codec == "AC3")
+            {
+                this.display.SetIcon(iMonLcdIcons.VideoAC3, true);
+            }
+            else if (codec == "DTS")
+            {
+                this.display.SetIcon(iMonLcdIcons.VideoDTS, true);
+            }
+            else if (codec == "MPG")
+            {
+                this.display.SetIcon(iMonLcdIcons.VideoMPGAudio, true);
+            }
+            else if (codec == "WMA")
+            {
+                if (audio)
+                {
+                    this.display.SetIcon(iMonLcdIcons.AudioWMA, true);
+                }
+                else
+                {
+                    this.display.SetIcon(iMonLcdIcons.VideoWMA, true);
+                }
+            }
+        }
+
+        private bool listContains(ICollection<string> list, string value)
+        {
+            foreach (string val in list)
+            {
+                if (val.Equals(value, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         #endregion

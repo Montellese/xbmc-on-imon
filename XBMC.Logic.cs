@@ -147,6 +147,7 @@ namespace iMon.XBMC
 
         private void settingsUpdate()
         {
+            // General settings
             this.cbGeneralStartupAuto.Checked = Settings.Default.GeneralStartupAuto;
             this.cbGeneralStartupConnect.Checked = Settings.Default.GeneralStartupConnect;
 
@@ -155,10 +156,11 @@ namespace iMon.XBMC
             this.cbGeneralTrayHideOnMinimize.Checked = Settings.Default.GeneralTrayHideOnMinimize;
             this.cbGeneralTrayHideOnClose.Checked = Settings.Default.GeneralTrayHideOnClose;
 
+            this.cbGeneralDebugEnable.Checked = Settings.Default.GeneralDebugEnable;
+
+            // iMON settings
             this.cbImonGeneralAutoInitialize.Checked = Settings.Default.ImonAutoInitialize;
             this.cbImonGeneralUninitializeOnError.Checked = Settings.Default.ImonUninitializeOnError;
-
-            this.cbGeneralDebugEnable.Checked = Settings.Default.GeneralDebugEnable;
 
             this.nudImonLcdScrollingDelay.Value = Settings.Default.ImonLcdScrollingDelay;
 
@@ -166,6 +168,7 @@ namespace iMon.XBMC
             this.cbImonSoundSystem.SelectedIndex = Settings.Default.ImonSoundSystem;
             this.cbImonSoundSystemSPDIF.Checked = Settings.Default.ImonSoundSystemSPDIF;
 
+            // XBMC settings
             this.tbXbmcConnectionIp.Text = Settings.Default.XbmcIp;
             this.tbXbmcConnectionPort.Text = Settings.Default.XbmcPort.ToString();
             this.tbXbmcConnectionUsername.Text = Settings.Default.XbmcUsername;
@@ -182,6 +185,11 @@ namespace iMon.XBMC
 
             this.nudXbmcIconsUpdateInterval.Value = Settings.Default.XbmcGeneralUpdateInterval;
             this.cbXbmcIconsVolEnable.Checked = Settings.Default.XbmcGeneralShowVolume;
+
+            this.cbXbmcPlayingShowProgress.Checked = Settings.Default.XbmcIconsPlaybackProgress;
+            this.cbXbmcPlayingShowMediaType.Checked = Settings.Default.XbmcIconsPlaybackMediaType;
+            this.cbXbmcPlayingVideoCodecs.Checked = Settings.Default.XbmcIconsPlaybackVideoCodecs;
+            this.cbXbmcPlayingAudioCodecs.Checked = Settings.Default.XbmcIconsPlaybackAudioCodecs;
 
             this.trayIcon.Visible = Settings.Default.GeneralTrayEnabled;
             this.xbmcConnectionTimer.Interval = Settings.Default.XbmcConnectionInterval * 1000;
@@ -272,6 +280,7 @@ namespace iMon.XBMC
                 }
             }
 
+            // General settings
             Settings.Default.GeneralStartupAuto = this.cbGeneralStartupAuto.Checked;
             Settings.Default.GeneralStartupConnect = this.cbGeneralStartupConnect.Checked;
 
@@ -282,7 +291,7 @@ namespace iMon.XBMC
 
             Settings.Default.GeneralDebugEnable = this.cbGeneralDebugEnable.Checked;
 
-
+            // iMON settings
             Settings.Default.ImonAutoInitialize = this.cbImonGeneralAutoInitialize.Checked;
             Settings.Default.ImonUninitializeOnError = this.cbImonGeneralUninitializeOnError.Checked;
 
@@ -292,6 +301,7 @@ namespace iMon.XBMC
             Settings.Default.ImonSoundSystem = this.cbImonSoundSystem.SelectedIndex;
             Settings.Default.ImonSoundSystemSPDIF = this.cbImonSoundSystemSPDIF.Checked;
 
+            // XBMC settings
             Settings.Default.XbmcIp = this.tbXbmcConnectionIp.Text;
             Settings.Default.XbmcPort = Int32.Parse(this.tbXbmcConnectionPort.Text);
             Settings.Default.XbmcUsername = this.tbXbmcConnectionUsername.Text;
@@ -308,6 +318,11 @@ namespace iMon.XBMC
 
             Settings.Default.XbmcGeneralUpdateInterval = Convert.ToInt32(this.nudXbmcIconsUpdateInterval.Value);
             Settings.Default.XbmcGeneralShowVolume = this.cbXbmcIconsVolEnable.Checked;
+
+            Settings.Default.XbmcIconsPlaybackProgress = this.cbXbmcPlayingShowProgress.Checked;
+            Settings.Default.XbmcIconsPlaybackMediaType = this.cbXbmcPlayingShowMediaType.Checked;
+            Settings.Default.XbmcIconsPlaybackVideoCodecs = this.cbXbmcPlayingVideoCodecs.Checked;
+            Settings.Default.XbmcIconsPlaybackAudioCodecs = this.cbXbmcPlayingAudioCodecs.Checked;
 
             Settings.Default.Save();
             Logging.Log("Settings saved");

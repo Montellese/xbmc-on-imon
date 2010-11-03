@@ -91,14 +91,27 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\iMonDisplayApiWrapperSharp\iMonDisplayApiWrapperSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json.Net20, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\XbmcJsonRpcSharp\Newtonsoft.Json.Net20.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
     <Reference Include="XBMCJsonRpcSharp">
       <HintPath>lib\XbmcJsonRpcSharp\XBMCJsonRpcSharp.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComplexSettings.cs" />
+    <Compile Include="dialogs\MappingDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dialogs\MappingDialog.Designer.cs">
+      <DependentUpon>MappingDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="DisplayHandler.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -108,6 +121,11 @@
     <Compile Include="Logging.cs" />
     <Compile Include="NavigationButton.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="XbmcHandler.cs">
       <SubType>Component</SubType>
@@ -127,6 +145,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="XbmcSoundSystems.cs" />
+    <EmbeddedResource Include="dialogs\MappingDialog.resx">
+      <DependentUpon>MappingDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -148,11 +169,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
     <None Include="README">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

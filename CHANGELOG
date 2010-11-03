@@ -1,28 +1,37 @@
 ﻿CHANGELOG for "XBMC on iMON Display"
 ====================================
 
+[+]: new feature
+[-]: removed
+[x]: fixed
+[p]: patched
+
 v0.1.2.0 Beta: November ??, 2010
 -------------------------------
  - General:
-   - Option to enable XBMC on iMON Display to autostart with Windows added
+   [+] Option to enable XBMC on iMON Display to autostart with Windows
  - iMON:
-   - "5.0 Surround" (4 sattelites and a center speaker) added to sound system setup (Ticket #4)
+   [+] "5.0 Surround" (4 sattelites and a center speaker) added to sound system setup (Ticket #4)
  - XBMC:
-   - Added experimental "Control mode" which can display the currently active control (and window) from XBMC for navigation purposes
-   - Added two fallback strategies when XBMC doesn't provide meta data information for playing files
+   [x] Changes to the Connection settings now take effect immediately as well (Ticket #3)
+   [+] Experimental "Control mode" which can display the currently active control (and window) of XBMC for navigation purposes
+   [+] Two fallback strategies when XBMC doesn't provide meta data information for playing files (Ticket #8)
+   [+] Option to enable/disable the usage of the media type icons (Music, Movie, Tv, Webcast, News/Weather)
+   [+] Option to enable/disable the usage of the audio/video codec icons
+   [+] Option to define mappings for audio/video codecs to the available icons
 
 v0.1.1.0 Beta: October 31, 2010
 -------------------------------
  - General:
-   - Logging of errors added (see error.log in the application directory)
-   - Option to enable detailed debug logging (see debug.log in the application directory)
+   [+] Logging of errors added (see error.log in the application directory)
+   [+] Option to enable detailed debug logging (see debug.log in the application directory)
  - iMON:
-   - Custom delay at the end of a scrolling text before the next / same text starts scrolling again
-   - Interaction with the display is now handled in a seperate thread which avoids user interface freezes
-   - Possibility to enable/disable displaying a sound system setup and choosing between different sound systems
+   [+] Custom delay at the end of a scrolling text before the next / same text starts scrolling again
+   [x] Interaction with the display is now handled in a seperate thread which avoids user interface freezes
+   [+] Possibility to enable/disable displaying a sound system setup and choosing between different sound systems
  - XBMC:
-   - Option to enable/disable displaying a custom static text when XBMC is idle (no file is playing)
-   - Interaction with XBMC is now handled in a seperate thread which avoids user interface freezes
+   [+] Option to enable/disable displaying a custom static text when XBMC is idle (no file is playing)
+   [x] Interaction with XBMC is now handled in a seperate thread which avoids user interface freezes
 
 v0.1.0.0 Beta: October 27, 2010
 -------------------------------

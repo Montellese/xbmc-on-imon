@@ -334,5 +334,78 @@ namespace iMon.XBMC.Properties {
                 this["XbmcControlModeDisplayWindowName"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool XbmcIconsPlaybackProgress {
+            get {
+                return ((bool)(this["XbmcIconsPlaybackProgress"]));
+            }
+            set {
+                this["XbmcIconsPlaybackProgress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool XbmcIconsPlaybackMediaType {
+            get {
+                return ((bool)(this["XbmcIconsPlaybackMediaType"]));
+            }
+            set {
+                this["XbmcIconsPlaybackMediaType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool XbmcIconsPlaybackVideoCodecs {
+            get {
+                return ((bool)(this["XbmcIconsPlaybackVideoCodecs"]));
+            }
+            set {
+                this["XbmcIconsPlaybackVideoCodecs"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool XbmcIconsPlaybackAudioCodecs {
+            get {
+                return ((bool)(this["XbmcIconsPlaybackAudioCodecs"]));
+            }
+            set {
+                this["XbmcIconsPlaybackAudioCodecs"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{\"DivX\":[\"DivX\"],\"XviD\":[\"XviD\"],\"MPG\":[\"MPG\",\"MP4\"],\"WMV\":[\"WMV\"]}")]
+        public string XbmcIconsPlaybackVideoCodecsMappings {
+            get {
+                return ((string)(this["XbmcIconsPlaybackVideoCodecsMappings"]));
+            }
+            set {
+                this["XbmcIconsPlaybackVideoCodecsMappings"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{\"AC3\":[\"AC3\"],\"DTS\":[\"DTS\"],\"MPG\":[\"MP1\",\"MP2\", \"MP3\"],\"WMA\":[\"WMA\"], \"MP3\":[\"MP" +
+            "3\"], \"OGG\":[\"OGG\"], \"WAV\":[\"WAV\"]}")]
+        public string XbmcIconsPlaybackAudioCodecsMappings {
+            get {
+                return ((string)(this["XbmcIconsPlaybackAudioCodecsMappings"]));
+            }
+            set {
+                this["XbmcIconsPlaybackAudioCodecsMappings"] = value;
+            }
+        }
     }
 }

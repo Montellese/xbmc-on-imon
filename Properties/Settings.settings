@@ -80,5 +80,23 @@
     <Setting Name="XbmcControlModeDisplayWindowName" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="XbmcIconsPlaybackProgress" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="XbmcIconsPlaybackMediaType" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="XbmcIconsPlaybackVideoCodecs" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="XbmcIconsPlaybackAudioCodecs" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="XbmcIconsPlaybackVideoCodecsMappings" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{"DivX":["DivX"],"XviD":["XviD"],"MPG":["MPG","MP4"],"WMV":["WMV"]}</Value>
+    </Setting>
+    <Setting Name="XbmcIconsPlaybackAudioCodecsMappings" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{"AC3":["AC3"],"DTS":["DTS"],"MPG":["MP1","MP2", "MP3"],"WMA":["WMA"], "MP3":["MP3"], "OGG":["OGG"], "WAV":["WAV"]}</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

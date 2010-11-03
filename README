@@ -46,6 +46,13 @@ and choose "Send to" --> "Desktop".
 ===============
 Before you start "XBMC on iMON Display" you need to make some configurations.
 
+General
+-------
+Make sure no other running software on your computer is using TCP port 9090.
+You can do that by using NMap (http://nmap.org/) to scan the port and see if
+it is currently used. Unfortunately this port is currently hardcoded within
+XBMC and therefore can't be changed.
+
 iMON Manager
 ------------
 Open iMON Manager and go to "Options" --> "Plug-in Mode" and activate the "Use 
@@ -79,6 +86,7 @@ Here is a list of a few known issues. Please DO NOT report these as bugs!
  - The iMON Display stays dark after initialization when it is deactivated in
    iMON Manager
  - The progress bar does not adjust correctly when Fast Forwarding / Rewinding
+ - The display freezes for a short time when pressing a button on a remote
 
 7. Support
 ==========

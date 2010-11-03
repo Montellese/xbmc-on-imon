@@ -1,16 +1,30 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Net.Sockets;
+using System.Collections.Generic;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
+using iMon.XBMC.Dialogs;
+using iMon.XBMC.Properties;
 
 using iMon.DisplayApi;
-using iMon.XBMC.Properties;
 using XBMC.JsonRpc;
-using System.Net.Sockets;
 
 namespace iMon.XBMC
 {
     public partial class XBMC : Form
     {
+        #region Private variables
+
+        private MappingDialog mappingDialog;
+
+        #endregion
+
+        #region Constructor
+
         public XBMC()
         {
             this.InitializeComponent();
@@ -24,6 +38,8 @@ namespace iMon.XBMC
 
             this.constructor();
         }
+
+        #endregion
 
         #region GUI action handling
 
@@ -177,6 +193,42 @@ namespace iMon.XBMC
             this.cbXbmcControlModeDisableDuringPlayback.Enabled = this.cbXbmcControlModeEnable.Checked;
             this.cbXbmcControlModeRemoveBrackets.Enabled = this.cbXbmcControlModeEnable.Checked;
             this.cbXbmcControlModeShowWindow.Enabled = this.cbXbmcControlModeEnable.Checked;
+        }
+
+        private void cbXbmcPlayingVideoCodecs_CheckedChanged(object sender, EventArgs e)
+        {
+            this.bXbmcPlayingVideoCodecs.Enabled = this.cbXbmcPlayingVideoCodecs.Checked;
+        }
+
+        private void cbXbmcPlayingAudioCodecs_CheckedChanged(object sender, EventArgs e)
+        {
+            this.bXbmcPlayingAudioCodecs.Enabled = this.cbXbmcPlayingAudioCodecs.Checked;
+        }
+
+        private void bXbmcPlayingVideoCodecs_Click(object sender, EventArgs e)
+        {
+            using (this.mappingDialog = new MappingDialog("Video Codec Mapping", "Video Codec Icons", "Video Codecs", 
+                JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(Settings.Default.XbmcIconsPlaybackVideoCodecsMappings)))
+            {
+                if (this.mappingDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    Settings.Default.XbmcIconsPlaybackVideoCodecsMappings = JsonConvert.SerializeObject(this.mappingDialog.Mapping);
+                    this.settingsSave();
+                }
+            }
+        }
+
+        private void bXbmcPlayingAudioCodecs_Click(object sender, EventArgs e)
+        {
+            using (this.mappingDialog = new MappingDialog("Audio Codec Mapping", "Audio Codec Icons", "Audio Codecs",
+                JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(Settings.Default.XbmcIconsPlaybackAudioCodecsMappings)))
+            {
+                if (this.mappingDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    Settings.Default.XbmcIconsPlaybackAudioCodecsMappings = JsonConvert.SerializeObject(this.mappingDialog.Mapping);
+                    this.settingsSave();
+                }
+            }
         }
 
         #endregion
